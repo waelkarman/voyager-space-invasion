@@ -1,5 +1,5 @@
 # SoE-JavaGame
 Software Engineering project
-Members:
-Status: 
-Description:
+Members: waelkarman
+Status: in development
+Description: Arcade retrò game like space inveders
