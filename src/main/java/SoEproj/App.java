@@ -10,7 +10,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Ciao Wael, Vittorio, Francesco, Michele! La classe che hai creato funziona!" );
+        System.out.println( "Ciao Wael, Vittorio, Francesco, Michele, Alessio! La classe che hai creato funziona!" );
         imptest sd = new imptest();        
         sd.stamp();
 
