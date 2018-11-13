@@ -7,9 +7,14 @@ package SoEproj;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class CollisionEx extends JFrame {
+
+    private Image iconWindows;
 
     public CollisionEx() {
         initUI();
@@ -22,10 +27,19 @@ public class CollisionEx extends JFrame {
         setResizable(false);
         pack();
         setTitle("Voyager On The Edge Of The Solar System");
+        loadWindowsIcon(); 
+        setIconImage(iconWindows);
+
         setLocationRelativeTo(null); // centra
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-  
+ 
+    private void loadWindowsIcon() {
+        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ico.png");
+        iconWindows = ii.getImage();        
+    }
+
+
          public static void main(String[] args) {
         
         EventQueue.invokeLater(() -> {
