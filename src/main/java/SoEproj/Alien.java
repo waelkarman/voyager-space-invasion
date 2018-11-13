@@ -16,7 +16,7 @@ public class Alien extends Sprite {
     }
 
     private void initAlien() {
-        loadImage("./alien.png");
+        loadImage("C:\\Users\\waelk\\MEGA\\GitHub\\SoE\\SoE-Voyager_on_the_edge_of_the_solar_system\\src\\main\\java\\SoEproj\\Resource\\alien.png");
         getImageDimensions();
     }
 

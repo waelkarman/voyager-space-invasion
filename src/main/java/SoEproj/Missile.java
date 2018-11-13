@@ -16,7 +16,7 @@ public class Missile extends Sprite {
     }
     
     private void initMissile() {
-        loadImage("./missile.png");
+        loadImage("C:\\Users\\waelk\\MEGA\\GitHub\\SoE\\SoE-Voyager_on_the_edge_of_the_solar_system\\src\\main\\java\\SoEproj\\Resource\\missile.png");
         getImageDimensions();        
     }
 
