@@ -12,7 +12,7 @@ public class CollisionEx extends JFrame {
 
     public CollisionEx() {
         initUI();
-    }
+    }                                               
     
     private void initUI() {
         
@@ -25,8 +25,8 @@ public class CollisionEx extends JFrame {
         setLocationRelativeTo(null); // centra
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-    public static void main(String[] args) {
+  
+         public static void main(String[] args) {
         
         EventQueue.invokeLater(() -> {
             CollisionEx ex = new CollisionEx();
