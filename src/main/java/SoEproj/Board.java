@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -18,10 +19,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Board extends JPanel implements ActionListener {
+public class Board extends JPanel implements Runnable {
+//WAEL : MUST IMPLEMENTS RUNNABLE
+
 
     private Timer timer;
     private SpaceShip spaceship;
@@ -33,6 +39,8 @@ public class Board extends JPanel implements ActionListener {
     private final int B_HEIGHT = 300;
     private final int DELAY = 15;
 
+    private Thread animator;
+    private Image background;
     // These are the initial positions of alien ships
     // partono fuori dallo schermo per arrivare con tempi diversi
     private final int[][] pos = {               
@@ -56,6 +64,7 @@ public class Board extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
+        loadBackground();
         ingame = true;
 
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
@@ -64,8 +73,6 @@ public class Board extends JPanel implements ActionListener {
 
         initAliens();
 
-        timer = new Timer(DELAY, this);
-        timer.start();
     }
 
     public void initAliens() {
@@ -76,6 +83,20 @@ public class Board extends JPanel implements ActionListener {
             aliens.add(new Alien(p[0], p[1]));
         }
     }
+
+    private void loadBackground() {
+        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\back.png");
+        background = ii.getImage();        
+    }
+
+
+
+
+
+
+
+
+
 
     @Override
    // This method will be executed by the painting subsystem whenever you component needs to be rendered
@@ -95,7 +116,10 @@ public class Board extends JPanel implements ActionListener {
 
     private void drawObjects(Graphics g) {
 
+        
+
         if (spaceship.isVisible()) {
+            g.drawImage(background, 0, 0, null);
             g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(),
                     this);
         }
@@ -117,9 +141,13 @@ public class Board extends JPanel implements ActionListener {
         }
 
         // In the top-left corner of the window, we draw how many aliens are left.
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLACK);
         g.drawString("Aliens left: " + aliens.size(), 5, 15);
     }
+
+
+
+
 
     //  draws a game over message in the middle of the window. The message is 
     // displayed at the end of the game, either when we destroy all alien 
@@ -136,25 +164,102 @@ public class Board extends JPanel implements ActionListener {
                 B_HEIGHT / 2);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Override
-    public void actionPerformed(ActionEvent e) {
-        //Each action event represents one game cycle
-        inGame();
-        System.out.println(e.getActionCommand());
+    public void run() {
+
+        long beforeTime, timeDiff, sleep;
+
+        beforeTime = System.currentTimeMillis();
+
+        while (true) {
+
+            inGame();
+            cycle();
+            checkCollisions();
+            repaint();
+
+            timeDiff = System.currentTimeMillis() - beforeTime;
+            sleep = DELAY - timeDiff;
+
+            if (sleep < 0) {
+                sleep = 2;
+            }
+
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                
+                String msg = String.format("Thread interrupted: %s", e.getMessage());
+                
+                JOptionPane.showMessageDialog(this, msg, "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+
+            beforeTime = System.currentTimeMillis();
+        }
+    }
+
+
+
+    private void cycle() {
         updateShip();
         updateMissiles();
-        updateAliens();
-        
-        checkCollisions();
-        
-        repaint();  // calls the paintComponent() method
+        updateAliens(); 
     }
+
 
     private void inGame() {
         if (!ingame) {
-            timer.stop();
+            System.out.println("STOP");
+            //timer.stop();
         }
     }
+
+
+
+    @Override
+    public void addNotify() {
+        super.addNotify();
+
+        animator = new Thread(this);
+        animator.start();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void updateShip() {
         if (spaceship.isVisible()) {        
@@ -196,6 +301,13 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
+
+
+
+
+
+
+
     public void checkCollisions() {
 
         Rectangle r3 = spaceship.getBounds();
@@ -230,6 +342,14 @@ public class Board extends JPanel implements ActionListener {
             }
         }
     }
+
+
+
+
+
+
+
+
 
     private class TAdapter extends KeyAdapter {
 
