@@ -20,6 +20,8 @@ public class Sprite {
     protected int height;
     protected boolean visible;
     protected Image image;
+    protected int countRefresh;      // counts the number of interface updates
+    protected int SPACE;
 
     public Sprite(int x, int y) {
         this.x = x;

@@ -11,13 +11,19 @@ import java.util.List;
 
 public class SpaceShip extends Sprite {
 
+    private final int level;       // indicates the spaceship type 1 hard, 2 medium, 3 easy 
     private int dx;
     private int dy;
+    private boolean firing;
     private List<Missile> missiles;
 
-    public SpaceShip(int x, int y) {
+    public SpaceShip(int x, int y, int level) {
         super(x, y);
         initCraft();
+        firing = false;
+        this.level = level;
+        countRefresh = 0;
+        SPACE = 3;
     }
 
     private void initCraft() {       
@@ -26,18 +32,25 @@ public class SpaceShip extends Sprite {
         getImageDimensions();
     }
 
+    // in order to set the right speed 
     public void move() {
+        
+        if(countRefresh == level){
+            x += dx;
+            y += dy;
+    
+            if (x < 1) {
+                x = 1;
+            }
+    
+            if (y < 1) {
+                y = 1;
+            }
 
-        x += dx;
-        y += dy;
-
-        if (x < 1) {
-            x = 1;
+            countRefresh = 0;
         }
 
-        if (y < 1) {
-            y = 1;
-        }
+        countRefresh += 1;
     }
 
     public List<Missile> getMissiles() {
@@ -49,33 +62,40 @@ public class SpaceShip extends Sprite {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE) {
+            firing = true;
             fire();
         }
 
         if (key == KeyEvent.VK_LEFT) {
-            dx = -1;
+            dx = -SPACE;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 1;
+            dx = SPACE;
         }
 
         if (key == KeyEvent.VK_UP) {
-            dy = -1;
+            dy = -SPACE;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            dy = 1;
+            dy = SPACE;
         }
     }
 
     public void fire() {
-        missiles.add(new Missile(x + width, y + height / 2));
+        if(firing) {
+            missiles.add(new Missile(x + width, y + height / 2, 3));
+        }
     }
 
     public void keyReleased(KeyEvent e) {
 
         int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_SPACE) {
+            firing = false;
+        }
 
         if (key == KeyEvent.VK_LEFT) {
             dx = 0;

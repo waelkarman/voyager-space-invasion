@@ -8,11 +8,14 @@ package SoEproj;
 public class Missile extends Sprite {
 
     private final int BOARD_WIDTH = 390;
-    private final int MISSILE_SPEED = 2;
+    private final int type;       // indicates the spaceship type 1 hard, 2 medium, 3 easy
 
-    public Missile(int x, int y) {
+    public Missile(int x, int y, int type) {
         super(x, y);
         initMissile();
+        this.type = type;
+        countRefresh = 0;
+        SPACE = 4;
     }
     
     private void initMissile() {
@@ -22,10 +25,18 @@ public class Missile extends Sprite {
 
     // Missiles move in one direction only. They disappear after 
     // they reach the right window border
-    public void move() {        
-        x += MISSILE_SPEED;
+    public void move() {   
+        if(countRefresh == type) {
 
-        if (x > BOARD_WIDTH)
-            visible = false;
+            x += SPACE;
+
+            if (x > BOARD_WIDTH)
+                visible = false;
+
+            countRefresh = 0;
+        }
+
+        countRefresh += 1;
+        
     }
 }
