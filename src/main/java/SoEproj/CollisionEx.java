@@ -5,6 +5,7 @@
  */
 package SoEproj;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 
@@ -20,8 +21,7 @@ public class CollisionEx extends JFrame {
         
         setResizable(false);
         pack();
-   
-        setTitle("Collision");
+        setTitle("Voyager On The Edge Of The Solar System");
         setLocationRelativeTo(null); // centra
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

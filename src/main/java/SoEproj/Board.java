@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -38,7 +40,7 @@ public class Board extends JPanel implements Runnable {
     private final int DELAY = 15;
 
     private Thread animator;
-
+    private Image background;
     // These are the initial positions of alien ships
     // partono fuori dallo schermo per arrivare con tempi diversi
     private final int[][] pos = {               
@@ -62,6 +64,7 @@ public class Board extends JPanel implements Runnable {
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
+        loadBackground();
         ingame = true;
 
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
@@ -81,7 +84,10 @@ public class Board extends JPanel implements Runnable {
         }
     }
 
-
+    private void loadBackground() {
+        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\back.png");
+        background = ii.getImage();        
+    }
 
 
 
@@ -110,7 +116,10 @@ public class Board extends JPanel implements Runnable {
 
     private void drawObjects(Graphics g) {
 
+        
+
         if (spaceship.isVisible()) {
+            g.drawImage(background, 0, 0, null);
             g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(),
                     this);
         }
@@ -132,7 +141,7 @@ public class Board extends JPanel implements Runnable {
         }
 
         // In the top-left corner of the window, we draw how many aliens are left.
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLACK);
         g.drawString("Aliens left: " + aliens.size(), 5, 15);
     }
 
