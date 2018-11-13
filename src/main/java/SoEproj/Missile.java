@@ -8,11 +8,7 @@ package SoEproj;
 public class Missile extends Sprite {
 
     private final int BOARD_WIDTH = 390;
-<<<<<<< HEAD
     private final int type;       // indicates the spaceship type 1 hard, 2 medium, 3 easy
-=======
-    private final int MISSILE_SPEED = 20;
->>>>>>> 9ee228652628c635bdd1650c3a9947e827344768
 
     public Missile(int x, int y, int type) {
         super(x, y);

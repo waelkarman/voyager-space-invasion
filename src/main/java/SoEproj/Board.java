@@ -69,7 +69,7 @@ public class Board extends JPanel implements Runnable {
 
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y);
+        spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y, 2);
 
         initAliens();
 
@@ -80,7 +80,7 @@ public class Board extends JPanel implements Runnable {
         aliens = new ArrayList<>();
 
         for (int[] p : pos) {
-            aliens.add(new Alien(p[0], p[1]));
+            aliens.add(new Alien(p[0], p[1], 2));
         }
     }
 
