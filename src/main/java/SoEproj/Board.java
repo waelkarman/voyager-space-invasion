@@ -174,8 +174,7 @@ public class Board extends JPanel implements Runnable {
     private void drawGame(Graphics g) {
 
         if (spaceship.isVisible()) {
-            ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\back.png");
-            background = ii.getImage();
+            loadBackground();
             g.drawImage(background, 0, 0, null);
             g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(),
                     this);
