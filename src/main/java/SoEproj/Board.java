@@ -13,25 +13,18 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class Board extends JPanel implements Runnable {
 //WAEL : MUST IMPLEMENTS RUNNABLE
 
-
-    private Timer timer;
     private SpaceShip spaceship;
     private List<Alien> aliens;
     private int gameStat = 0;
