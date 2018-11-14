@@ -5,18 +5,16 @@
  */
 package SoEproj;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-public class CollisionEx extends JFrame {
+public class VoyagerGame extends JFrame {
 
     private Image iconWindows;
 
-    public CollisionEx() {
+    public VoyagerGame() {
         initUI();
     }                                               
     
@@ -39,11 +37,11 @@ public class CollisionEx extends JFrame {
         iconWindows = ii.getImage();         
     }
 
-
-         public static void main(String[] args) {
+      
+       public static void main(String[] args) {
         
         EventQueue.invokeLater(() -> {
-            CollisionEx ex = new CollisionEx();
+            VoyagerGame ex = new VoyagerGame();
             ex.setVisible(true);
         });
     }

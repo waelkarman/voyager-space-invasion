@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -33,7 +34,8 @@ public class Board extends JPanel implements Runnable {
     private Timer timer;
     private SpaceShip spaceship;
     private List<Alien> aliens;
-    private boolean ingame;
+    private int gameStat = 0;
+
     private final int ICRAFT_X = 40;
     private final int ICRAFT_Y = 60;
     private final int B_WIDTH = 400;
@@ -43,6 +45,9 @@ public class Board extends JPanel implements Runnable {
 
     private Thread animator;
     private Image background;
+
+    JLabel start = new JLabel("START");
+    JLabel setting = new JLabel("SETTING");
     // These are the initial positions of alien ships
     // partono fuori dallo schermo per arrivare con tempi diversi
     private final int[][] pos = {               
@@ -58,23 +63,52 @@ public class Board extends JPanel implements Runnable {
     };
 
     public Board() {
-        initBoard();
+        
+        initMenu();
+        animator = new Thread(this);
     }
 
-    private void initBoard() {
 
+
+
+
+
+
+
+
+    public void initMenu() {
+        
+        gameStat = 0;
+        addKeyListener(new TAdapter());
+        setFocusable(true);
+        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
+        setBackground(Color.BLACK);
+        this.add(start);
+        this.add(setting);
+        MenuInteract clkStart  = new MenuInteract(this,start);
+        start.addMouseListener(clkStart);
+        add(start);
+
+    }
+    
+    public void destroyMenu() {
+        start.setVisible(false);
+        setting.setVisible(false);
+
+    }
+
+
+    public void initGame() {
+        gameStat = 1;
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.BLACK);
-        loadBackground();
-        ingame = true;
-
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
         spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y, 1);
 
         initAliens();
-
+        
     }
 
     public void initAliens() {
@@ -86,10 +120,14 @@ public class Board extends JPanel implements Runnable {
         }
     }
 
-    private void loadBackground() {
-        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\back.png");
-        background = ii.getImage();        
-    }
+
+
+
+
+
+
+
+   
 
 
 
@@ -106,27 +144,48 @@ public class Board extends JPanel implements Runnable {
         super.paintComponent(g);
 
         // draw game sprites or write the game over message
-        if (ingame) {
-            drawObjects(g);
+        if(gameStat == 1) {
+            drawGame(g);
         } 
-        else {
+        else if(gameStat == 2) {
             drawGameOver(g);
+        }
+        else if(gameStat == 0){
+            drawMenu(g);
         }
 
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void drawObjects(Graphics g) {
+
+
+
+
+
+
+
+
+
+
+    private void drawMenu(Graphics g) {
+        
+        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\back.png");
+        background = ii.getImage();
+        g.drawImage(background, 0, 0, null);
+    }
+
+    private void drawGame(Graphics g) {
 
         if (spaceship.isVisible()) {
-        
+            ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\back.png");
+            background = ii.getImage();
             g.drawImage(background, 0, 0, null);
             g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(),
                     this);
 
             if (spaceship.isDying()) {
                 spaceship.die();
-                ingame = false;
+                gameStat = 2;
             }
         }
 
@@ -154,10 +213,6 @@ public class Board extends JPanel implements Runnable {
         g.setColor(Color.BLACK);
         g.drawString("Aliens left: " + aliens.size(), 5, 15);
     }
-
-
-
-
 
     //  draws a game over message in the middle of the window. The message is 
     // displayed at the end of the game, either when we destroy all alien 
@@ -233,6 +288,9 @@ public class Board extends JPanel implements Runnable {
 
 
 
+
+
+
     private void cycle() {
         updateShip();
         updateMissiles();
@@ -240,12 +298,16 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    @Override
-    public void addNotify() {
-        super.addNotify();
 
-        animator = new Thread(this);
-        animator.start();
+
+    public void gameLaunch() {
+        
+        
+        if(gameStat == 1){
+            animator.start();
+        }
+
+
     }
 
 
@@ -285,7 +347,7 @@ public class Board extends JPanel implements Runnable {
     private void updateAliens() {
 
         if (aliens.isEmpty()) {
-            ingame = false;
+            gameStat = 2;
             return;
         }
 
@@ -324,6 +386,7 @@ public class Board extends JPanel implements Runnable {
                 spaceship.setDying(true);
                 ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explShip.png");
                 spaceship.setImage(i2.getImage());
+                gameStat = 2;
             }
         }
 
