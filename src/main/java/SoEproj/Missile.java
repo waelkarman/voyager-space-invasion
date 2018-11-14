@@ -14,29 +14,20 @@ public class Missile extends Sprite {
         super(x, y);
         initMissile();
         this.type = type;
-        countRefresh = 0;
-        SPACE = 4;
+        SPACE = type * 2;
     }
     
     private void initMissile() {
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\missile.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\Laser1.png");
         getImageDimensions();        
     }
 
     // Missiles move in one direction only. They disappear after 
     // they reach the right window border
     public void move() {   
-        if(countRefresh == type) {
+        x += SPACE;
 
-            x += SPACE;
-
-            if (x > BOARD_WIDTH)
-                visible = false;
-
-            countRefresh = 0;
-        }
-
-        countRefresh += 1;
-        
+        if (x > BOARD_WIDTH)
+            visible = false;
     }
 }

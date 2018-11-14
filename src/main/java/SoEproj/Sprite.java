@@ -19,9 +19,9 @@ public class Sprite {
     protected int width;
     protected int height;
     protected boolean visible;
+    protected boolean dying; 
     protected Image image;
-    protected int countRefresh;      // counts the number of interface updates
-    protected int SPACE;
+    protected float SPACE;
 
     public Sprite(int x, int y) {
         this.x = x;
@@ -51,16 +51,36 @@ public class Sprite {
         return y;
     }
 
+    public boolean getIsDying() {
+        return dying;
+    }
+
     public boolean isVisible() {
         return visible;
     }
 
-    public void setVisible(Boolean visible) {
+    public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public void setDying(boolean dying) {
+        this.dying = dying;
     }
 
     // returns the bounding rectangle of the sprite image
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
+    }
+
+    public void die() {    
+        visible = false;
+    }
+
+    public void setImage(Image image) {   
+        this.image = image;
+    }
+
+    public boolean isDying() {   
+        return this.dying;
     }
 }

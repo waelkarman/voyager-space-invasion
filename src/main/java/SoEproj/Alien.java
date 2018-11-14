@@ -9,33 +9,35 @@ package SoEproj;
 public class Alien extends Sprite {
 
     private final int INITIAL_X = 400;
-    private final int level;       // indicates the spaceship type 1 hard, 2 medium, 3 easy 
+    private final int level;       // indicates the alien type 1 easy, 2 medium, 3 hard 
 
     public Alien(int x, int y, int level) {
         super(x, y);
         initAlien();
-        SPACE = 4;
-        countRefresh = 0;
         this.level = level;
+        setSpace(level);
+    }
+
+    private void setSpace(int level) {
+        switch(level){
+            case 1: SPACE = 1;
+            case 2: SPACE = 3/2;
+            case 3: SPACE = 2;
+        }
     }
 
     private void initAlien() {
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\alien.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien_1.png");
         getImageDimensions();
     }
 
 // Aliens return to the screen on the right side after they have disappeared on the left
     public void move() {
         
-        if(countRefresh == level){
-            if (x < 0) {
-                x = INITIAL_X;
-            }
-
-            x -= SPACE;
-            countRefresh = 0;
+        if (x < 0) {
+            x = INITIAL_X;
         }
 
-        countRefresh += 1;
+        x -= SPACE;
     }
 }
