@@ -80,7 +80,6 @@ public class Board extends JPanel implements Runnable {
     public void initMenu() {
         
         gameStat = 0;
-        addKeyListener(new TAdapter());
         setFocusable(true);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setBackground(Color.BLACK);
@@ -102,7 +101,6 @@ public class Board extends JPanel implements Runnable {
     public void initGame() {
         gameStat = 1;
         addKeyListener(new TAdapter());
-        setFocusable(true);
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
