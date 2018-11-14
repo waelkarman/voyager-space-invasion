@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SpaceShip extends Sprite {
 
-    private final int level;       // indicates the spaceship type 1 normal, 2 fast 
+    private final int type;       // indicates the spaceship type 1 normal, 2 fast 
     private float dx;
     private float dy;
     private boolean firing;
@@ -21,7 +21,7 @@ public class SpaceShip extends Sprite {
         super(x, y);
         initCraft();
         firing = false;
-        this.level = level;
+        this.type = level;
         SPACE = level;
     }
 
@@ -32,8 +32,7 @@ public class SpaceShip extends Sprite {
     }
 
     // in order to set the right speed 
-    public void move() {
-        
+    public void move() {       
         x += dx;
         y += dy;
 

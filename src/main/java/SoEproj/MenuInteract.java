@@ -1,7 +1,5 @@
 package SoEproj;
 
-
-
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,21 +10,21 @@ import javax.swing.JPanel;
 
 public class MenuInteract implements MouseListener{
 
-    Board contesto;
-    JLabel tasto;
+    private Board board;
+    private JLabel command;
 
-    public MenuInteract(Board board,JLabel entry) {
-        tasto = entry;
-        contesto = board;
+    public MenuInteract(Board board, JLabel command) {
+        this.command = command;
+        this.board = board;
     }
 
 
     @Override
     public void mouseClicked(MouseEvent e) {
         
-        contesto.initGame();
-        contesto.destroyMenu();
-        contesto.gameLaunch();
+        board.initGame();
+        board.destroyMenu();
+        board.gameLaunch();
     }
 
     @Override

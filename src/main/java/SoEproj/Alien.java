@@ -9,12 +9,13 @@ package SoEproj;
 public class Alien extends Sprite {
 
     private final int INITIAL_X = 400;
-    private final int level;       // indicates the alien type 1 easy, 2 medium, 3 hard 
+    private final int type;       // indicates the alien type 1 easy, 2 medium, 3 hard 
 
     public Alien(int x, int y, int level) {
         super(x, y);
+        
         initAlien();
-        this.level = level;
+        this.type = level;
         setSpace(level);
     }
 
