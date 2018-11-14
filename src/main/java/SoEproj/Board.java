@@ -19,6 +19,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -38,6 +39,7 @@ public class Board extends JPanel implements Runnable {
     private final int B_WIDTH = 400;
     private final int B_HEIGHT = 300;
     private final int DELAY = 15;
+    Random generator = new Random();
 
     private Thread animator;
     private Image background;
@@ -69,7 +71,7 @@ public class Board extends JPanel implements Runnable {
 
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y, 2);
+        spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y, 1);
 
         initAliens();
 
@@ -116,12 +118,16 @@ public class Board extends JPanel implements Runnable {
 
     private void drawObjects(Graphics g) {
 
-        
-
         if (spaceship.isVisible()) {
+        
             g.drawImage(background, 0, 0, null);
             g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(),
                     this);
+
+            if (spaceship.isDying()) {
+                spaceship.die();
+                ingame = false;
+            }
         }
 
         List<Missile> ms = spaceship.getMissiles();
@@ -137,6 +143,10 @@ public class Board extends JPanel implements Runnable {
         for (Alien alien : aliens) {
             if (alien.isVisible()) {    
                 g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
+            }
+
+            if (alien.isDying()) {
+                alien.die();
             }
         }
 
@@ -196,7 +206,6 @@ public class Board extends JPanel implements Runnable {
 
         while (true) {
 
-            inGame();
             cycle();
             checkCollisions();
             repaint();
@@ -229,15 +238,6 @@ public class Board extends JPanel implements Runnable {
         updateMissiles();
         updateAliens(); 
     }
-
-
-    private void inGame() {
-        if (!ingame) {
-            System.out.println("STOP");
-            //timer.stop();
-        }
-    }
-
 
 
     @Override
@@ -316,28 +316,30 @@ public class Board extends JPanel implements Runnable {
             
             Rectangle r2 = alien.getBounds();
 
-            if (r3.intersects(r2)) {
-                
-                spaceship.setVisible(false);
-                alien.setVisible(false);
-                ingame = false;
+            if (r3.intersects(r2)) {             
+                alien.setDying(true);
+                ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");
+                alien.setImage(i1.getImage());
+
+                spaceship.setDying(true);
+                ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explShip.png");
+                spaceship.setImage(i2.getImage());
             }
         }
 
         List<Missile> ms = spaceship.getMissiles();
 
         for (Missile m : ms) {
-
             Rectangle r1 = m.getBounds();
 
             for (Alien alien : aliens) {
-
                 Rectangle r2 = alien.getBounds();
 
-                if (r1.intersects(r2)) {
-                    
+                if (r1.intersects(r2)) {                   
                     m.setVisible(false);
-                    alien.setVisible(false);
+                    alien.setDying(true);
+                    ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");
+                    alien.setImage(i3.getImage());
                 }
             }
         }

@@ -36,7 +36,7 @@ public class CollisionEx extends JFrame {
  
     private void loadWindowsIcon() {
         ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ico.png");
-        iconWindows = ii.getImage();        
+        iconWindows = ii.getImage();         
     }
 
 

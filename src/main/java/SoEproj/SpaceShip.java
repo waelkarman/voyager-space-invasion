@@ -11,9 +11,9 @@ import java.util.List;
 
 public class SpaceShip extends Sprite {
 
-    private final int level;       // indicates the spaceship type 1 hard, 2 medium, 3 easy 
-    private int dx;
-    private int dy;
+    private final int level;       // indicates the spaceship type 1 normal, 2 fast 
+    private float dx;
+    private float dy;
     private boolean firing;
     private List<Missile> missiles;
 
@@ -22,8 +22,7 @@ public class SpaceShip extends Sprite {
         initCraft();
         firing = false;
         this.level = level;
-        countRefresh = 0;
-        SPACE = 3;
+        SPACE = level;
     }
 
     private void initCraft() {       
@@ -35,22 +34,16 @@ public class SpaceShip extends Sprite {
     // in order to set the right speed 
     public void move() {
         
-        if(countRefresh == level){
-            x += dx;
-            y += dy;
-    
-            if (x < 1) {
-                x = 1;
-            }
-    
-            if (y < 1) {
-                y = 1;
-            }
+        x += dx;
+        y += dy;
 
-            countRefresh = 0;
+        if (x < 1) {
+            x = 1;
         }
 
-        countRefresh += 1;
+        if (y < 1) {
+            y = 1;
+        }
     }
 
     public List<Missile> getMissiles() {
@@ -85,7 +78,7 @@ public class SpaceShip extends Sprite {
 
     public void fire() {
         if(firing) {
-            missiles.add(new Missile(x + width, y + height / 2, 3));
+            missiles.add(new Missile(x + width, y + height / 2, 1));
         }
     }
 
