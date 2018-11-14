@@ -19,7 +19,7 @@ public class Missile extends Sprite {
     }
     
     private void initMissile() {
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\missile.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\Laser1.png");
         getImageDimensions();        
     }
 

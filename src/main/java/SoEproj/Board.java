@@ -85,8 +85,9 @@ public class Board extends JPanel implements Runnable {
     }
 
     private void loadBackground() {
-        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\back.png");
-        background = ii.getImage();        
+        
+        background = Toolkit.getDefaultToolkit().getImage(".\\src\\main\\java\\SoEproj\\Resource\\sfondo.gif");
+   
     }
 
 
@@ -300,6 +301,12 @@ public class Board extends JPanel implements Runnable {
             }
         }
     }
+
+   /* public void updateBackground(){
+        
+        g.drawImage(background, 0, 0, null);
+        g.drawImage(background, background.getWidth(null), 0, null);
+    }*/
 
 
 

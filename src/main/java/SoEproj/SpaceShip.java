@@ -28,7 +28,7 @@ public class SpaceShip extends Sprite {
 
     private void initCraft() {       
         missiles = new ArrayList<>();
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\craft.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft_1.png");
         getImageDimensions();
     }
 
