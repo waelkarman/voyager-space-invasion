@@ -38,6 +38,8 @@ public class Board extends JPanel implements Runnable {
     private final int B_WIDTH = 400;
     private final int B_HEIGHT = 300;
     private final int DELAY = 15;
+    private final int SHIFT = 1;
+    private int bg_x_shift = 0;
 
     private Thread animator;
     private Image background;
@@ -105,6 +107,7 @@ public class Board extends JPanel implements Runnable {
 
         // draw game sprites or write the game over message
         if (ingame) {
+            drawBackground(g);
             drawObjects(g);
         } 
         else {
@@ -114,12 +117,24 @@ public class Board extends JPanel implements Runnable {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    private void drawBackground(Graphics g) {
+        if (bg_x_shift > background.getWidth(null)) {
+            bg_x_shift = 0;
+        } else {
+            bg_x_shift += SHIFT;
+
+        }
+
+        g.drawImage(background, -bg_x_shift, 0, null);
+        g.drawImage(background, background.getWidth(null) - bg_x_shift, 0, null);
+    }
+
     private void drawObjects(Graphics g) {
 
         
 
         if (spaceship.isVisible()) {
-            g.drawImage(background, 0, 0, null);
+            //g.drawImage(background, 0, 0, null);
             g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(),
                     this);
         }
