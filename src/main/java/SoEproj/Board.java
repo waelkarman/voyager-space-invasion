@@ -120,9 +120,8 @@ public class Board extends JPanel implements Runnable {
     }
 
     private void loadBackground() {
-        
-        background = Toolkit.getDefaultToolkit().getImage(".\\src\\main\\java\\SoEproj\\Resource\\sfondo.gif");
-   
+        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
+        background = ii.getImage();
     }
 
 
@@ -155,6 +154,8 @@ public class Board extends JPanel implements Runnable {
     }
 
     private void drawBackground(Graphics g) {
+        loadBackground();
+
         if (bg_x_shift > background.getWidth(null)) {
             bg_x_shift = 0;
         } else {
@@ -185,8 +186,7 @@ public class Board extends JPanel implements Runnable {
     private void drawGame(Graphics g) {
 
         if (spaceship.isVisible()) {
-            loadBackground();
-            g.drawImage(background, 0, 0, null);
+            
             g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(),
                     this);
 
