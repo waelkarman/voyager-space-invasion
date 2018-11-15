@@ -25,7 +25,7 @@ public class VoyagerGame extends JFrame {
         setResizable(false);
         pack();
         setTitle("Voyager On The Edge Of The Solar System");
-        loadWindowsIcon();
+        loadWindowsIcon(); 
         setIconImage(iconWindows);
 
         setLocationRelativeTo(null); // centra

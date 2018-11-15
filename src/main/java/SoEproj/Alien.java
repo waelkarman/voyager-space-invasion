@@ -1,9 +1,5 @@
 package SoEproj;
 
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -44,14 +40,5 @@ public class Alien extends Sprite {
         }
 
         x -= SPACE;
-    }
-
-
-    // return the shape of the image
-    @Override
-    public Area getShape() {
-        Ellipse2D shape = new Ellipse2D.Double(x, y, width, height);
-        
-        return new Area(shape);
     }
 }
