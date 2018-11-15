@@ -50,23 +50,16 @@ public class SpaceShip extends Sprite implements Runnable{
     }
 
 
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e) throws InterruptedException{
 
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE) {
-            //if( MissileAnimator.getState() == Thread.State.WAITING ){
-                
-           // }
-            //else{
             if(firing == false){    
                 firing = true;
                 Thread MissileAnimator = new Thread(this);
                 MissileAnimator.start();
-            }    
-                //MissileAnimator.notify();
-           //}
-            
+            }     
         }
 
         if (key == KeyEvent.VK_LEFT) {
