@@ -26,8 +26,8 @@ public class Board extends JPanel implements Runnable {
 
     private final int ICRAFT_X = 40;
     private final int ICRAFT_Y = 60;
-    private final int B_WIDTH = 400;
-    private final int B_HEIGHT = 300;
+    private final int B_WIDTH = 600;
+    private final int B_HEIGHT = 450;
     private final int DELAY = 15;
     private final int BG_SHIFT = 1; // background
 
@@ -46,15 +46,15 @@ public class Board extends JPanel implements Runnable {
     
     // These are the initial positions of alien ships
     private final int[][] pos = {               
-        {2380, 29}, {2500, 59}, {1380, 89},
+        {2380, 129}, {2500, 159}, {1380, 189},
         {780, 109}, {580, 139}, {680, 239},
-        {790, 259}, {760, 50}, {790, 150},
-        {980, 209}, {560, 45}, {510, 70},
-        {930, 159}, {590, 80}, {530, 60},
-        {940, 59}, {990, 30}, {920, 200},
+        {790, 259}, {760, 150}, {790, 150},
+        {980, 209}, {560, 145}, {510, 170},
+        {930, 159}, {590, 80}, {530, 160},
+        {940, 59}, {990, 130}, {920, 200},
         {900, 259}, {660, 50}, {540, 90},
-        {810, 220}, {860, 20}, {740, 180},
-        {820, 128}, {490, 170}, {700, 30}
+        {810, 220}, {860, 120}, {740, 180},
+        {820, 128}, {490, 170}, {700, 130}
     };
 
 
@@ -198,7 +198,7 @@ public class Board extends JPanel implements Runnable {
         }
 
         // In the top-left corner of the window, we draw how many aliens are left.
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.drawString("Aliens left: " + aliens.size(), 5, 15);
     }
 
@@ -207,14 +207,18 @@ public class Board extends JPanel implements Runnable {
     // ships or when we collide with one of them.
     private void drawGameOver(Graphics g) {
 // g is a graphics context that, in some sense, represents the on-screen pixels
-        String msg = "Game Over";
+        /*String msg = "Game Over";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics fm = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
         g.drawString(msg, (B_WIDTH - fm.stringWidth(msg)) / 2,
-                B_HEIGHT / 2);
+                B_HEIGHT / 2);*/
+        Image gamover;
+        ImageIcon gamo = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GameOver.gif");
+        gamover = gamo.getImage();
+        g.drawImage(gamover, 0, 0, null);
     }
 
 
@@ -288,10 +292,17 @@ public class Board extends JPanel implements Runnable {
 
             if (r3.intersects(r2)) {             
                 alien.setDying(true);
+<<<<<<< HEAD
                 spaceship.setDying(true);
                 alien.setImage(i1.getImage());
+=======
+                ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
+                alien.setImage(i1.getImage());
+
+                spaceship.setDying(true);
+                ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
+>>>>>>> a9269b2244f968fe2784ba9945b82b91cb23fcca
                 spaceship.setImage(i2.getImage());
-                gameState = 2;
             }
         }
 
@@ -307,6 +318,10 @@ public class Board extends JPanel implements Runnable {
                     m.setVisible(false);
                     //TODO : in caso di piu livelli qui và solo decrementata una variabile
                     alien.setDying(true);
+<<<<<<< HEAD
+=======
+                    ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
+>>>>>>> a9269b2244f968fe2784ba9945b82b91cb23fcca
                     alien.setImage(i3.getImage());
                 }
             }

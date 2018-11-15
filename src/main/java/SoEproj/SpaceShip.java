@@ -26,7 +26,7 @@ public class SpaceShip extends Sprite implements Runnable{
 
     private void initCraft() {       
         missiles = new ArrayList<>();
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft_1.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png");
         getImageDimensions();
     }
 
