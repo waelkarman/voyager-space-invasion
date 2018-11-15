@@ -161,13 +161,16 @@ public class Board extends JPanel implements Runnable {
 
 
         List<Missile> ms = spaceship.getMissiles();
-
-        for (Missile missile : ms) {
-            if (missile.isVisible()) {
-                g.drawImage(missile.getImage(), missile.getX(), 
-                        missile.getY(), this);
+        synchronized(ms){
+            
+            for (Missile missile : ms) {
+                if (missile.isVisible()) {
+                    g.drawImage(missile.getImage(), missile.getX(), 
+                            missile.getY(), this);
+                }
             }
         }
+        
 
 
         // they are drawn only if they have not been previously destroyed.
@@ -265,17 +268,19 @@ public class Board extends JPanel implements Runnable {
 
     private void updateMissiles() {
         List<Missile> ms = spaceship.getMissiles();
-
-        for (int i = 0; i < ms.size(); i++) {
-            Missile m = ms.get(i);
-            
-            if (m.isVisible()) {
-                m.move();
-            } 
-            else {
-                ms.remove(i);
+        synchronized(ms){
+            for (int i = 0; i < ms.size(); i++) {
+                Missile m = ms.get(i);
+                
+                if (m.isVisible()) {
+                    m.move();
+                } 
+                else {
+                    ms.remove(i);
+                }
             }
         }
+    
     }
 
 
@@ -322,22 +327,24 @@ public class Board extends JPanel implements Runnable {
 
 
         List<Missile> ms = spaceship.getMissiles();
-
-        for (Missile m : ms) {
-            Area r1 = m.getShape();
-            
-            for (Alien alien : aliens) {
-                Area r2 = alien.getShape();
-                r2.intersect(r1);
+        synchronized(ms){
+            for (Missile m : ms) {
+                Area r1 = m.getShape();
                 
-                if (!r2.isEmpty()) {                   
-                    m.setVisible(false);
-                    alien.setDying(true);
-                    ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
-                    alien.setImage(i3.getImage());
+                for (Alien alien : aliens) {
+                    Area r2 = alien.getShape();
+                    r2.intersect(r1);
+                    
+                    if (!r2.isEmpty()) {                   
+                        m.setVisible(false);
+                        alien.setDying(true);
+                        ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
+                        alien.setImage(i3.getImage());
+                    }
                 }
             }
         }
+        
     }
 
 

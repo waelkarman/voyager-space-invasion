@@ -120,13 +120,16 @@ public class SpaceShip extends Sprite implements Runnable{
 
     @Override
     public void run() {
-        while(firing){   
-            fire();
+        while(firing){ 
+            synchronized(missiles){
+                fire();
+            }  
+            
             int sleep = 200;
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
-                String msg = String.format("Thread interrupted: %s", e.getMessage());
+                String msg = String.format("Thread fire interrupted: %s", e.getMessage());
             }
         }
     }
