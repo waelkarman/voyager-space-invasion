@@ -17,13 +17,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Board extends JPanel implements Runnable {
+//WAEL : MUST IMPLEMENTS RUNNABLE
 
     private final int ICRAFT_X = 40;
     private final int ICRAFT_Y = 60;
