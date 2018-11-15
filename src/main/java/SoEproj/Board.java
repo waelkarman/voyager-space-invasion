@@ -11,10 +11,13 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -47,8 +50,6 @@ public class Board extends JPanel implements Runnable {
         {2380, 29}, {2500, 59}, {1380, 89},
         {780, 109}, {580, 139}, {680, 239},
         {790, 259}, {760, 50}, {790, 150},
-        {980, 209}, {560, 45}, {510, 70},
-        {930, 159}, {590, 80}, {530, 60},
         {940, 59}, {990, 30}, {920, 200},
         {900, 259}, {660, 50}, {540, 90},
         {810, 220}, {860, 20}, {740, 180},
@@ -285,7 +286,7 @@ public class Board extends JPanel implements Runnable {
             Alien a = aliens.get(i);
             
             if (a.isVisible()) {
-                a.move();
+                //a.move();
             } 
             else {
                 aliens.remove(i);
@@ -296,13 +297,14 @@ public class Board extends JPanel implements Runnable {
 
     public void checkCollisions() {
 
-        Rectangle r3 = spaceship.getBounds();
+        Area r3 = spaceship.getShape();
 
         for (Alien alien : aliens) {
             
-            Rectangle r2 = alien.getBounds();
+            Area r2 = alien.getShape();
+            r3.intersect(r2);
 
-            if (r3.intersects(r2)) {             
+            if (!r3.isEmpty()) {             
                 alien.setDying(true);
                 ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");
                 alien.setImage(i1.getImage());
@@ -310,7 +312,6 @@ public class Board extends JPanel implements Runnable {
                 spaceship.setDying(true);
                 ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explShip.png");
                 spaceship.setImage(i2.getImage());
-                gameState = 2;
             }
         }
 
@@ -318,12 +319,13 @@ public class Board extends JPanel implements Runnable {
         List<Missile> ms = spaceship.getMissiles();
 
         for (Missile m : ms) {
-            Rectangle r1 = m.getBounds();
-            
-            for (Alien alien : aliens) {
-                Rectangle r2 = alien.getBounds();
+            Area r1 = m.getShape();
 
-                if (r1.intersects(r2)) {                   
+            for (Alien alien : aliens) {
+                Area r2 = alien.getShape();
+                r1.intersect(r2);
+
+                if (!r1.isEmpty()) {                   
                     m.setVisible(false);
                     alien.setDying(true);
                     ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");

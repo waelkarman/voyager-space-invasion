@@ -5,6 +5,8 @@
  */
 package SoEproj;
 
+import java.awt.geom.Area;
+import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,5 +106,15 @@ public class SpaceShip extends Sprite {
         if (key == KeyEvent.VK_DOWN) {
             dy = 0;
         }
+    }
+
+    // return the shape of the image
+    @Override
+    public Area getShape() {
+        int[] xpos = {x, x + width, x};
+        int[] ypos = {y, y + height/2, y + height};
+        Polygon shape = new Polygon(xpos, ypos, 3);
+
+        return new Area(shape); 
     }
 }
