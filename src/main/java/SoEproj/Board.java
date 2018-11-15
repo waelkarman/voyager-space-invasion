@@ -245,7 +245,7 @@ public class Board extends JPanel implements Runnable {
             Alien a = aliens.get(i);
             
             if (a.isVisible()) {
-                //a.move();
+                a.move();
             } 
             else {
                 aliens.remove(i);
