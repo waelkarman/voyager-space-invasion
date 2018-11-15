@@ -37,7 +37,7 @@ public class VoyagerGame extends JFrame {
         iconWindows = ii.getImage();         
     }
 
-      
+         
        public static void main(String[] args) {
         
         EventQueue.invokeLater(() -> {

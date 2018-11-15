@@ -338,7 +338,12 @@ public class Board extends JPanel implements Runnable {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            spaceship.keyReleased(e);
+            try {
+                spaceship.keyReleased(e);
+            } catch (InterruptedException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
         }
 
         @Override
