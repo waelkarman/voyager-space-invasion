@@ -36,6 +36,7 @@ public class VoyagerGame extends JFrame {
         ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ico.png");
         iconWindows = ii.getImage();         
     }
+
          
        public static void main(String[] args) {
         

@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Board extends JPanel implements Runnable {
+//WAEL : MUST IMPLEMENTS RUNNABLE
 
     private final int ICRAFT_X = 40;
     private final int ICRAFT_Y = 60;
@@ -38,9 +39,6 @@ public class Board extends JPanel implements Runnable {
     private Image background;
     private int bg_x_shift = 0;
 
-    ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");
-    ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explShip.png");
-    ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");
     JLabel start = new JLabel(" START ");
     JLabel setting = new JLabel(" SETTING ");
     
@@ -90,7 +88,7 @@ public class Board extends JPanel implements Runnable {
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y, 3);
+        spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y, 1);
 
         initAliens();
         
@@ -148,35 +146,18 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void drawGame(Graphics g) {
 
         if (spaceship.isVisible()) {
+            
             g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(), this);
 
-            if (spaceship.getIsDying()) {
-                
+            if (spaceship.isDying()) {
                 spaceship.die();
                 gameState = 2;
             }
         }
+
 
         List<Missile> ms = spaceship.getMissiles();
 
@@ -186,13 +167,15 @@ public class Board extends JPanel implements Runnable {
                         missile.getY(), this);
             }
         }
+
+
         // they are drawn only if they have not been previously destroyed.
         for (Alien alien : aliens) {
             if (alien.isVisible()) {    
                 g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
             }
 
-            if (alien.getIsDying()) {
+            if (alien.isDying()) {
                 alien.die();
             }
         }
@@ -222,9 +205,42 @@ public class Board extends JPanel implements Runnable {
     }
 
 
+    @Override
+    public void run() {
+
+        long beforeTime, timeDiff, sleep;
+
+        beforeTime = System.currentTimeMillis();
+
+        while (true) {
+
+            cycle();
+            checkCollisions();
+            repaint();
+
+            timeDiff = System.currentTimeMillis() - beforeTime;
+            sleep = DELAY - timeDiff;
+
+            if (sleep < 0) {
+                sleep = 2;
+            }
+
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                
+                String msg = String.format("Thread interrupted: %s", e.getMessage());
+                
+                JOptionPane.showMessageDialog(this, msg, "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+
+            beforeTime = System.currentTimeMillis();
+        }
+    }
 
 
-    private void cycle()  throws InterruptedException {
+    private void cycle() {
         updateShip();
         updateMissiles();
         updateAliens(); 
@@ -282,7 +298,7 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    public void checkCollisions() throws InterruptedException{
+    public void checkCollisions() {
 
         Rectangle r3 = spaceship.getBounds();
 
@@ -292,11 +308,15 @@ public class Board extends JPanel implements Runnable {
 
             if (r3.intersects(r2)) {             
                 alien.setDying(true);
-                spaceship.setDying(true);
+                ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
                 alien.setImage(i1.getImage());
+
+                spaceship.setDying(true);
+                ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
                 spaceship.setImage(i2.getImage());
             }
         }
+
 
         List<Missile> ms = spaceship.getMissiles();
 
@@ -308,19 +328,13 @@ public class Board extends JPanel implements Runnable {
 
                 if (r1.intersects(r2)) {                   
                     m.setVisible(false);
-                    //TODO : in caso di piu livelli qui và solo decrementata una variabile
                     alien.setDying(true);
+                    ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
                     alien.setImage(i3.getImage());
                 }
             }
         }
     }
-
-
-
-
-
-
 
 
     private class TAdapter extends KeyAdapter {
@@ -330,72 +344,14 @@ public class Board extends JPanel implements Runnable {
             try {
                 spaceship.keyReleased(e);
             } catch (InterruptedException e1) {
+                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            try {
-                spaceship.keyPressed(e);
-            } catch (InterruptedException e1) {
-                System.out.println("Vittorio fa");
-                e1.printStackTrace();
-            }
-        }
-    }
-
-
-
-
-    @Override
-    public void run() {
-
-        long beforeTime, timeDiff, sleep;
-
-        beforeTime = System.currentTimeMillis();
-
-        while (gameState == 1) {
-            
-            try{
-                checkCollisions();
-            }
-            catch (InterruptedException e) {
-                System.out.println("Vittorio fa cagare");
-            }
-
-
-            try{
-                cycle();
-                repaint();
-            }
-            catch (InterruptedException e) {
-                System.out.println("Vittorio cagare");
-            }
-            
-
-
-
-            
-
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
-
-            if (sleep < 0) {
-                    sleep = 2;
-            }
-
-                try {
-                    Thread.sleep(sleep);
-                } catch (InterruptedException e) {
-                    System.out.println("Vittorio ");
-                    String msg = String.format("Thread interrupted: %s", e.getMessage());
-                    
-                    JOptionPane.showMessageDialog(this, msg, "Error", 
-                    JOptionPane.ERROR_MESSAGE);
-                }
-
-                beforeTime = System.currentTimeMillis();
+            spaceship.keyPressed(e);
         }
     }
 }
