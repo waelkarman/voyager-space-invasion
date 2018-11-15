@@ -6,13 +6,14 @@
 package SoEproj;
 
 import java.awt.Rectangle;
+import java.awt.geom.Area;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
 // The term sprite has several meanings. It is used to denote an image or an 
 // animation in a scene.
 
-public class Sprite {
+public abstract class Sprite {
 
     protected int x;
     protected int y;
@@ -83,4 +84,7 @@ public class Sprite {
     public boolean isDying() {   
         return this.dying;
     }
+
+    public abstract Area getShape();
+
 }

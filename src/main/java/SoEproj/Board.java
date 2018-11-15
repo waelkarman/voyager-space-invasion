@@ -15,6 +15,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -298,15 +299,17 @@ public class Board extends JPanel implements Runnable {
     }
 
 
+
+
     public void checkCollisions() {
 
-        Rectangle r3 = spaceship.getBounds();
+        Area r3 = spaceship.getShape();
 
         for (Alien alien : aliens) {
             
-            Rectangle r2 = alien.getBounds();
-
-            if (r3.intersects(r2)) {             
+            Area r2 = alien.getShape();
+            r2.intersect(r3);
+            if (!r2.isEmpty()) {             
                 alien.setDying(true);
                 ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
                 alien.setImage(i1.getImage());
@@ -321,12 +324,13 @@ public class Board extends JPanel implements Runnable {
         List<Missile> ms = spaceship.getMissiles();
 
         for (Missile m : ms) {
-            Rectangle r1 = m.getBounds();
+            Area r1 = m.getShape();
             
             for (Alien alien : aliens) {
-                Rectangle r2 = alien.getBounds();
-
-                if (r1.intersects(r2)) {                   
+                Area r2 = alien.getShape();
+                r2.intersect(r1);
+                
+                if (!r2.isEmpty()) {                   
                     m.setVisible(false);
                     alien.setDying(true);
                     ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
