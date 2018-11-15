@@ -292,16 +292,8 @@ public class Board extends JPanel implements Runnable {
 
             if (r3.intersects(r2)) {             
                 alien.setDying(true);
-<<<<<<< HEAD
                 spaceship.setDying(true);
                 alien.setImage(i1.getImage());
-=======
-                ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
-                alien.setImage(i1.getImage());
-
-                spaceship.setDying(true);
-                ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
->>>>>>> a9269b2244f968fe2784ba9945b82b91cb23fcca
                 spaceship.setImage(i2.getImage());
             }
         }
@@ -318,10 +310,6 @@ public class Board extends JPanel implements Runnable {
                     m.setVisible(false);
                     //TODO : in caso di piu livelli qui và solo decrementata una variabile
                     alien.setDying(true);
-<<<<<<< HEAD
-=======
-                    ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
->>>>>>> a9269b2244f968fe2784ba9945b82b91cb23fcca
                     alien.setImage(i3.getImage());
                 }
             }
