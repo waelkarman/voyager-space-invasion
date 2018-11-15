@@ -11,10 +11,13 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -46,10 +49,8 @@ public class Board extends JPanel implements Runnable {
     private final int[][] pos = {               
         {2380, 129}, {2500, 159}, {1380, 189},
         {780, 109}, {580, 139}, {680, 239},
-        {790, 259}, {760, 150}, {790, 150},
-        {980, 209}, {560, 145}, {510, 170},
-        {930, 159}, {590, 80}, {530, 160},
-        {940, 59}, {990, 130}, {920, 200},
+        {790, 259}, {760, 50}, {790, 150},
+        {940, 59}, {990, 30}, {920, 200},
         {900, 259}, {660, 50}, {540, 90},
         {810, 220}, {860, 120}, {740, 180},
         {820, 128}, {490, 170}, {700, 130}
@@ -189,15 +190,6 @@ public class Board extends JPanel implements Runnable {
     // displayed at the end of the game, either when we destroy all alien 
     // ships or when we collide with one of them.
     private void drawGameOver(Graphics g) {
-// g is a graphics context that, in some sense, represents the on-screen pixels
-        /*String msg = "Game Over";
-        Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics fm = getFontMetrics(small);
-
-        g.setColor(Color.white);
-        g.setFont(small);
-        g.drawString(msg, (B_WIDTH - fm.stringWidth(msg)) / 2,
-                B_HEIGHT / 2);*/
         Image gamover;
         ImageIcon gamo = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GameOver.gif");
         gamover = gamo.getImage();
@@ -300,13 +292,14 @@ public class Board extends JPanel implements Runnable {
 
     public void checkCollisions() {
 
-        Rectangle r3 = spaceship.getBounds();
+        Area r3 = spaceship.getShape();
 
         for (Alien alien : aliens) {
             
-            Rectangle r2 = alien.getBounds();
+            Area r2 = alien.getShape();
+            r3.intersect(r2);
 
-            if (r3.intersects(r2)) {             
+            if (!r3.isEmpty()) {             
                 alien.setDying(true);
                 ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
                 alien.setImage(i1.getImage());
@@ -321,12 +314,13 @@ public class Board extends JPanel implements Runnable {
         List<Missile> ms = spaceship.getMissiles();
 
         for (Missile m : ms) {
-            Rectangle r1 = m.getBounds();
-            
-            for (Alien alien : aliens) {
-                Rectangle r2 = alien.getBounds();
+            Area r1 = m.getShape();
 
-                if (r1.intersects(r2)) {                   
+            for (Alien alien : aliens) {
+                Area r2 = alien.getShape();
+                r1.intersect(r2);
+
+                if (!r1.isEmpty()) {                   
                     m.setVisible(false);
                     alien.setDying(true);
                     ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
