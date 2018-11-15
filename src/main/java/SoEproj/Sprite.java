@@ -19,7 +19,7 @@ public abstract class Sprite {
     protected int width;
     protected int height;
     protected boolean visible;
-    protected boolean dying; 
+    protected boolean dying = false; 
     protected Image image;
     protected float SPACE;
 
@@ -75,9 +75,12 @@ public abstract class Sprite {
         this.image = image;
     }
 
+    /*
     public boolean isDying() {   
         return this.dying;
     }
+    */
 
     public abstract Area getShape();
+
 }

@@ -26,12 +26,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Board extends JPanel implements Runnable {
-//WAEL : MUST IMPLEMENTS RUNNABLE
 
     private final int ICRAFT_X = 40;
     private final int ICRAFT_Y = 60;
-    private final int B_WIDTH = 400;
-    private final int B_HEIGHT = 300;
+    private final int B_WIDTH = 600;
+    private final int B_HEIGHT = 450;
     private final int DELAY = 15;
     private final int BG_SHIFT = 1; // background
 
@@ -42,18 +41,21 @@ public class Board extends JPanel implements Runnable {
     private Image background;
     private int bg_x_shift = 0;
 
+    ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");
+    ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explShip.png");
+    ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");
     JLabel start = new JLabel(" START ");
     JLabel setting = new JLabel(" SETTING ");
     
     // These are the initial positions of alien ships
     private final int[][] pos = {               
-        {2380, 29}, {2500, 59}, {1380, 89},
+        {2380, 129}, {2500, 159}, {1380, 189},
         {780, 109}, {580, 139}, {680, 239},
         {790, 259}, {760, 50}, {790, 150},
         {940, 59}, {990, 30}, {920, 200},
         {900, 259}, {660, 50}, {540, 90},
-        {810, 220}, {860, 20}, {740, 180},
-        {820, 128}, {490, 170}, {700, 30}
+        {810, 220}, {860, 120}, {740, 180},
+        {820, 128}, {490, 170}, {700, 130}
     };
 
 
@@ -89,7 +91,7 @@ public class Board extends JPanel implements Runnable {
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y, 1);
+        spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y, 3);
 
         initAliens();
         
@@ -150,15 +152,14 @@ public class Board extends JPanel implements Runnable {
     private void drawGame(Graphics g) {
 
         if (spaceship.isVisible()) {
-            
             g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(), this);
 
-            if (spaceship.isDying()) {
+            if (spaceship.getIsDying()) {
+                
                 spaceship.die();
                 gameState = 2;
             }
         }
-
 
         List<Missile> ms = spaceship.getMissiles();
 
@@ -168,21 +169,19 @@ public class Board extends JPanel implements Runnable {
                         missile.getY(), this);
             }
         }
-
-
         // they are drawn only if they have not been previously destroyed.
         for (Alien alien : aliens) {
             if (alien.isVisible()) {    
                 g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
             }
 
-            if (alien.isDying()) {
+            if (alien.getIsDying()) {
                 alien.die();
             }
         }
 
         // In the top-left corner of the window, we draw how many aliens are left.
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.drawString("Aliens left: " + aliens.size(), 5, 15);
     }
 
@@ -190,54 +189,14 @@ public class Board extends JPanel implements Runnable {
     // displayed at the end of the game, either when we destroy all alien 
     // ships or when we collide with one of them.
     private void drawGameOver(Graphics g) {
-// g is a graphics context that, in some sense, represents the on-screen pixels
-        String msg = "Game Over";
-        Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics fm = getFontMetrics(small);
-
-        g.setColor(Color.white);
-        g.setFont(small);
-        g.drawString(msg, (B_WIDTH - fm.stringWidth(msg)) / 2,
-                B_HEIGHT / 2);
+        Image gamover;
+        ImageIcon gamo = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GameOver.gif");
+        gamover = gamo.getImage();
+        g.drawImage(gamover, 0, 0, null);
     }
 
 
-    @Override
-    public void run() {
-
-        long beforeTime, timeDiff, sleep;
-
-        beforeTime = System.currentTimeMillis();
-
-        while (true) {
-
-            cycle();
-            checkCollisions();
-            repaint();
-
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
-
-            if (sleep < 0) {
-                sleep = 2;
-            }
-
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                
-                String msg = String.format("Thread interrupted: %s", e.getMessage());
-                
-                JOptionPane.showMessageDialog(this, msg, "Error", 
-                    JOptionPane.ERROR_MESSAGE);
-            }
-
-            beforeTime = System.currentTimeMillis();
-        }
-    }
-
-
-    private void cycle() {
+    private void cycle()  throws InterruptedException {
         updateShip();
         updateMissiles();
         updateAliens(); 
@@ -295,7 +254,7 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    public void checkCollisions() {
+    public void checkCollisions() throws InterruptedException{
 
         Area r3 = spaceship.getShape();
 
@@ -306,15 +265,11 @@ public class Board extends JPanel implements Runnable {
 
             if (!r3.isEmpty()) {             
                 alien.setDying(true);
-                ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");
-                alien.setImage(i1.getImage());
-
                 spaceship.setDying(true);
-                ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explShip.png");
+                alien.setImage(i1.getImage());
                 spaceship.setImage(i2.getImage());
             }
         }
-
 
         List<Missile> ms = spaceship.getMissiles();
 
@@ -327,8 +282,8 @@ public class Board extends JPanel implements Runnable {
 
                 if (!r1.isEmpty()) {                   
                     m.setVisible(false);
+                    //TODO : in caso di piu livelli qui và solo decrementata una variabile
                     alien.setDying(true);
-                    ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\explAlien.png");
                     alien.setImage(i3.getImage());
                 }
             }
@@ -340,12 +295,69 @@ public class Board extends JPanel implements Runnable {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            spaceship.keyReleased(e);
+            try {
+                spaceship.keyReleased(e);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            spaceship.keyPressed(e);
+            try {
+                spaceship.keyPressed(e);
+            } catch (InterruptedException e1) {
+                System.out.println("Vittorio fa");
+                e1.printStackTrace();
+            }
+        }
+    }
+
+
+    @Override
+    public void run() {
+
+        long beforeTime, timeDiff, sleep;
+
+        beforeTime = System.currentTimeMillis();
+
+        while (gameState == 1) {
+            
+            try{
+                checkCollisions();
+            }
+            catch (InterruptedException e) {
+                System.out.println("Vittorio fa cagare");
+            }
+
+
+            try{
+                cycle();
+                repaint();
+            }
+            catch (InterruptedException e) {
+                System.out.println("Vittorio cagare");
+            }
+
+
+            timeDiff = System.currentTimeMillis() - beforeTime;
+            sleep = DELAY - timeDiff;
+
+            if (sleep < 0) {
+                    sleep = 2;
+            }
+
+                try {
+                    Thread.sleep(sleep);
+                } catch (InterruptedException e) {
+                    System.out.println("Vittorio ");
+                    String msg = String.format("Thread interrupted: %s", e.getMessage());
+                    
+                    JOptionPane.showMessageDialog(this, msg, "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+                }
+
+                beforeTime = System.currentTimeMillis();
         }
     }
 }

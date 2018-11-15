@@ -10,7 +10,7 @@ import java.awt.geom.Area;
 
 public class Missile extends Sprite {
 
-    private final int BOARD_WIDTH = 390;
+    private final int BOARD_WIDTH = 585;
     private final int type;       // indicates the spaceship type 1 hard, 2 medium, 3 easy
 
     public Missile(int x, int y, int type) {
@@ -21,7 +21,7 @@ public class Missile extends Sprite {
     }
     
     private void initMissile() {
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\Laser1.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\Laser.png");
         getImageDimensions();        
     }
 

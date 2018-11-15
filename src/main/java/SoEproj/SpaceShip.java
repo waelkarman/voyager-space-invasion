@@ -11,25 +11,24 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpaceShip extends Sprite {
+public class SpaceShip extends Sprite implements Runnable{
 
     private final int type;       // indicates the spaceship type 1 normal, 2 fast 
     private float dx;
     private float dy;
-    private boolean firing;
     private List<Missile> missiles;
+    private Boolean firing = false;
 
     public SpaceShip(int x, int y, int level) {
         super(x, y);
         initCraft();
-        firing = false;
         this.type = level;
         SPACE = level;
     }
 
     private void initCraft() {       
         missiles = new ArrayList<>();
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft_1.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png");
         getImageDimensions();
     }
 
@@ -47,17 +46,22 @@ public class SpaceShip extends Sprite {
         }
     }
 
+
     public List<Missile> getMissiles() {
         return missiles;
     }
 
-    public void keyPressed(KeyEvent e) {
+
+    public void keyPressed(KeyEvent e) throws InterruptedException{
 
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE) {
-            firing = true;
-            fire();
+            if(firing == false){    
+                firing = true;
+                Thread MissileAnimator = new Thread(this);
+                MissileAnimator.start();
+            }     
         }
 
         if (key == KeyEvent.VK_LEFT) {
@@ -78,17 +82,16 @@ public class SpaceShip extends Sprite {
     }
 
     public void fire() {
-        if(firing) {
             missiles.add(new Missile(x + width, y + height / 2, 1));
-        }
     }
 
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e) throws InterruptedException {
 
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE) {
             firing = false;
+            //MissileAnimator.wait();
         }
 
         if (key == KeyEvent.VK_LEFT) {
@@ -108,6 +111,7 @@ public class SpaceShip extends Sprite {
         }
     }
 
+    
     // return the shape of the image
     @Override
     public Area getShape() {
@@ -116,5 +120,19 @@ public class SpaceShip extends Sprite {
         Polygon shape = new Polygon(xpos, ypos, 3);
 
         return new Area(shape); 
+    }
+
+
+    @Override
+    public void run() {
+        while(firing){   
+            fire();
+            int sleep = 200;
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                String msg = String.format("Thread interrupted: %s", e.getMessage());
+            }
+        }
     }
 }
