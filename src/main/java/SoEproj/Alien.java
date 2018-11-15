@@ -8,7 +8,7 @@ package SoEproj;
 
 public class Alien extends Sprite {
 
-    private final int INITIAL_X = 400;
+    private final int INITIAL_X = 600;
     private final int type;       // indicates the alien type 1 easy, 2 medium, 3 hard 
 
     public Alien(int x, int y, int level) {
@@ -28,7 +28,7 @@ public class Alien extends Sprite {
     }
 
     private void initAlien() {
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien_1.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png");
         getImageDimensions();
     }
 
