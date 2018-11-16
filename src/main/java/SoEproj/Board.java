@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.util.Random;
 
 public class Board extends JPanel implements Runnable {
 //WAEL : MUST IMPLEMENTS RUNNABLE
@@ -43,20 +44,6 @@ public class Board extends JPanel implements Runnable {
     JLabel start = new JLabel(" START ");
     JLabel setting = new JLabel(" SETTING ");
     
-    // These are the initial positions of alien ships
-    private final int[][] pos = {               
-        {2380, 129}, {2500, 159}, {1380, 189},
-        {780, 109}, {580, 139}, {680, 239},
-        {790, 259}, {760, 150}, {790, 150},
-        {980, 209}, {560, 145}, {510, 170},
-        {930, 159}, {590, 80}, {530, 160},
-        {940, 59}, {990, 130}, {920, 200},
-        {900, 259}, {660, 50}, {540, 90},
-        {810, 220}, {860, 120}, {740, 180},
-        {820, 128}, {490, 170}, {700, 130}
-    };
-
-
     public Board() {
         initMenu();
         animator = new Thread(this);
@@ -97,6 +84,22 @@ public class Board extends JPanel implements Runnable {
 
 
     public void initAliens() {
+
+        int[][] pos = new int [18][2];
+        Random random = new Random();
+        int a = 735; // numero minimo
+        int b = 3570; // numero massimo
+        int aa = 44;
+        int bb = 389;
+        int cc = ((bb-aa) + 1);
+        int c = ((b-a) + 1);
+        int l;
+      
+        for(l=0;l<18;l++){
+            pos[l][0]=random.nextInt(c)+a;
+            pos[l][1]=random.nextInt(cc)+aa;
+        }
+
         aliens = new ArrayList<>();
 
         for (int[] p : pos) {
