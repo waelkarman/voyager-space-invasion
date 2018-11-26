@@ -14,14 +14,13 @@ public class VoyagerGame extends JFrame {
 
     private Image iconWindows;
 
-    public VoyagerGame() {
+     public VoyagerGame() {
         initUI();
     }                                               
     
     private void initUI() {
         
         add(new Board());
-        
         setResizable(false);
         pack();
         setTitle("Voyager On The Edge Of The Solar System");

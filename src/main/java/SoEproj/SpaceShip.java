@@ -18,21 +18,48 @@ public class SpaceShip extends Sprite implements Runnable{
     private float dy;
     private List<Missile> missiles;
     private Boolean firing = false;
+    private int life;
+    private int missiletype; //imposta danno, velocita, image
+    private int upgrade;
 
-    public SpaceShip(int x, int y, int level) {
+    
+
+    public SpaceShip(int x, int y, int color) {
         super(x, y);
-        initCraft();
-        this.type = level;
-        SPACE = level;
+        missiles = new ArrayList<>();
+        this.missiletype = 1;
+        this.life = 1;
+        this.type = color;
+        this.SPACE = 1; //velocita
+        setColor(color);
     }
 
-    private void initCraft() {       
-        missiles = new ArrayList<>();
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png");
+    private void setColor(int color) {
+        String pathImage = "";
+        switch(color){
+            case 1:{
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+            } 
+            case 2:{
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+            } 
+            case 3:{
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+            }
+        }
+
+        loadImage(pathImage);
         getImageDimensions();
     }
 
-    // in order to set the right speed 
+    public int getLife() {
+        return this.life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
     public void move() {       
         x += dx;
         y += dy;
@@ -57,17 +84,12 @@ public class SpaceShip extends Sprite implements Runnable{
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE) {
-            //if( MissileAnimator.getState() == Thread.State.WAITING ){
-                
-           // }
-            //else{
+
             if(firing == false){    
                 firing = true;
-                Thread MissileAnimator = new Thread(this);
-                MissileAnimator.start();
+                Thread SpaceshipMissileAnimator = new Thread(this);
+                SpaceshipMissileAnimator.start();
             }    
-                //MissileAnimator.notify();
-           //}
             
         }
 
@@ -89,7 +111,7 @@ public class SpaceShip extends Sprite implements Runnable{
     }
 
     public void fire() {
-            missiles.add(new Missile(x + width, y + height / 2, 1));
+        missiles.add(new Missile(x + width, y + height / 2, missiletype,1,true));
     }
 
     public void keyReleased(KeyEvent e) throws InterruptedException {
@@ -118,6 +140,7 @@ public class SpaceShip extends Sprite implements Runnable{
         }
     }
 
+    // TODO risolvere spari a raffica
     @Override
     public void run() {
         while(firing){ 
@@ -125,7 +148,7 @@ public class SpaceShip extends Sprite implements Runnable{
                 fire();
             }  
             
-            int sleep = 200;
+            int sleep = 500;
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {

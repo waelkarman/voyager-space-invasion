@@ -24,10 +24,20 @@ public abstract class Sprite {
     protected Image image;
     protected float SPACE;
 
+ 
+
     public Sprite(int x, int y) {
         this.x = x;
         this.y = y;
         visible = true;
+    }
+
+    public float getSPACE() {
+        return this.SPACE;
+    }
+
+    public void setSPACE(float SPACE) {
+        this.SPACE = SPACE;
     }
 
     protected void getImageDimensions() {

@@ -25,7 +25,8 @@ import javax.swing.JPanel;
 import java.util.Random;
 
 public class Board extends JPanel implements Runnable {
-//WAEL : MUST IMPLEMENTS RUNNABLE
+
+    //TODO rallentare velocità sfondo perchè uguale agli alieni
 
     private final int ICRAFT_X = 40;
     private final int ICRAFT_Y = 60;
@@ -34,7 +35,7 @@ public class Board extends JPanel implements Runnable {
     private final int DELAY = 15;
     private final int BG_SHIFT = 1; // background
 
-    private SpaceShip spaceship;
+    private SpaceShip spaceCraft;
     private List<Alien> aliens;
     private int gameState = 0;
     private Thread animator;
@@ -76,7 +77,7 @@ public class Board extends JPanel implements Runnable {
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceship = new SpaceShip(ICRAFT_X, ICRAFT_Y, 1);
+        spaceCraft = new SpaceShip(ICRAFT_X, ICRAFT_Y, 1);
 
         initAliens();
         
@@ -103,7 +104,7 @@ public class Board extends JPanel implements Runnable {
         aliens = new ArrayList<>();
 
         for (int[] p : pos) {
-            aliens.add(new Alien(p[0], p[1], 2));
+            aliens.add(new Alien(p[0], p[1], 2, 8));
         }
     }
 
@@ -152,18 +153,18 @@ public class Board extends JPanel implements Runnable {
 
     private void drawGame(Graphics g) {
 
-        if (spaceship.isVisible()) {
+        if (spaceCraft.isVisible()) {
             
-            g.drawImage(spaceship.getImage(), spaceship.getX(), spaceship.getY(), this);
+            g.drawImage(spaceCraft.getImage(), spaceCraft.getX(), spaceCraft.getY(), this);
 
-            if (spaceship.isDying()) {
-                spaceship.die();
+            if (spaceCraft.isDying()) {
+                spaceCraft.die();
                 gameState = 2;
             }
         }
 
 
-        List<Missile> ms = spaceship.getMissiles();
+        List<Missile> ms = spaceCraft.getMissiles();
         synchronized(ms){
             
             for (Missile missile : ms) {
@@ -173,13 +174,22 @@ public class Board extends JPanel implements Runnable {
                 }
             }
         }
-        
 
 
         // they are drawn only if they have not been previously destroyed.
         for (Alien alien : aliens) {
             if (alien.isVisible()) {    
                 g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
+            }
+
+            List<Missile> as = alien.getMissiles();
+            synchronized(as){
+                for (Missile missile : as) {
+                    if (missile.isVisible()) {
+                        g.drawImage(missile.getImage(), missile.getX(), 
+                                missile.getY(), this);
+                    }
+                }
             }
 
             if (alien.isDying()) {
@@ -263,14 +273,14 @@ public class Board extends JPanel implements Runnable {
 
 
     private void updateShip() {
-        if (spaceship.isVisible()) {        
-            spaceship.move();
+        if (spaceCraft.isVisible()) {        
+            spaceCraft.move();
         }
     }
 
 
     private void updateMissiles() {
-        List<Missile> ms = spaceship.getMissiles();
+        List<Missile> ms = spaceCraft.getMissiles();
         synchronized(ms){
             for (int i = 0; i < ms.size(); i++) {
                 Missile m = ms.get(i);
@@ -295,10 +305,24 @@ public class Board extends JPanel implements Runnable {
         }
 
         for (int i = 0; i < aliens.size(); i++) {
-            Alien a = aliens.get(i);
+            Alien spaceCraft = aliens.get(i);
             
-            if (a.isVisible()) {
-                a.move();
+            if (spaceCraft.isVisible()) {
+                
+                List<Missile> as = spaceCraft.getMissiles();
+                synchronized(as){
+                    for (int k = 0; k < as.size(); k++) {
+                        Missile p = as.get(k);
+                        
+                        if (p.isVisible()) {
+                            p.move();
+                        } 
+                        else {
+                            as.remove(k);
+                        }
+                    }
+                }
+                spaceCraft.move();
             } 
             else {
                 aliens.remove(i);
@@ -311,10 +335,9 @@ public class Board extends JPanel implements Runnable {
 
     public void checkCollisions() {
 
-        Area r3 = spaceship.getShape();
+        Area r3 = spaceCraft.getShape();
 
         for (Alien alien : aliens) {
-            
             Area r2 = alien.getShape();
             r2.intersect(r3);
             if (!r2.isEmpty()) {             
@@ -322,14 +345,49 @@ public class Board extends JPanel implements Runnable {
                 ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
                 alien.setImage(i1.getImage());
 
-                spaceship.setDying(true);
+                spaceCraft.setDying(true);
                 ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
-                spaceship.setImage(i2.getImage());
+                spaceCraft.setImage(i2.getImage());
             }
         }
 
 
-        List<Missile> ms = spaceship.getMissiles();
+
+        for (int i = 0; i < aliens.size(); i++) {
+            Alien a = aliens.get(i);
+            
+
+                
+            List<Missile> as = a.getMissiles();
+            synchronized(as){
+            
+                for (Missile m : as) {
+                    Area r1 = m.getShape();
+                    
+                    
+                    Area r2 = spaceCraft.getShape();
+                    r2.intersect(r1);
+                    
+                    if (!r2.isEmpty()) {
+                        spaceCraft.setLife(-1);
+                        m.setVisible(false);
+                        if(spaceCraft.getLife() <= 0){
+                            spaceCraft.setDying(true);
+                            ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionspaceCrafts.png");
+                            spaceCraft.setImage(i3.getImage());
+                        }   
+                    }
+                    
+
+
+                }
+            }
+        }
+
+
+
+
+        List<Missile> ms = spaceCraft.getMissiles();
         synchronized(ms){
             for (Missile m : ms) {
                 Area r1 = m.getShape();
@@ -338,16 +396,20 @@ public class Board extends JPanel implements Runnable {
                     Area r2 = alien.getShape();
                     r2.intersect(r1);
                     
-                    if (!r2.isEmpty()) {                   
+                    if (!r2.isEmpty()) {
+                        alien.setLife(m.getDamage());
                         m.setVisible(false);
-                        alien.setDying(true);
-                        ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
-                        alien.setImage(i3.getImage());
+                        if(alien.getLife() <= 0){
+                            alien.setDying(true);
+                            ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
+                            alien.setImage(i3.getImage());
+                        }   
                     }
                 }
             }
         }
-        
+
+       
     }
 
 
@@ -356,7 +418,7 @@ public class Board extends JPanel implements Runnable {
         @Override
         public void keyReleased(KeyEvent e) {
             try {
-                spaceship.keyReleased(e);
+                spaceCraft.keyReleased(e);
             } catch (InterruptedException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -365,7 +427,7 @@ public class Board extends JPanel implements Runnable {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            spaceship.keyPressed(e);
+            spaceCraft.keyPressed(e);
         }
     }
 }
