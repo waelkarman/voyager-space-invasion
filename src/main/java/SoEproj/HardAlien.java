@@ -13,13 +13,15 @@ import  java.lang.Math;
 public class HardAlien extends Alien implements Runnable{
 
     private final int amplitude; // dimensione dell'oscillazione
+    private final int meanY;
 
     public HardAlien(int x, int y) {
         super(x, y, 2);
+        meanY = y;
         SPACE = 3/2;
         amplitude = 50;
 
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png");
         getImageDimensions();
 
         Thread AlienMissileAnimator = new Thread(this);
@@ -36,7 +38,7 @@ public class HardAlien extends Alien implements Runnable{
         }
         
         // oscillation
-        y = (int) (amplitude * Math.cos(2*3.14*x/360));     // degree to radiants
+        y = (int) (meanY + amplitude * Math.cos(2*3.14*x/360));     // degree to radiants
 
     }
 

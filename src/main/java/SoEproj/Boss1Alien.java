@@ -12,11 +12,12 @@ import java.util.List;
 public class Boss1Alien extends Alien implements Runnable{
 
     private int life;
+    private boolean goDown = true;  // to set boss go at first down and then up
 
     public Boss1Alien(int x, int y) {
         super(x, y, 50);
         SPACE = 3/2;
-
+        // TODO Cambiare immagine boss1
         loadImage(".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png");
         getImageDimensions();
 
@@ -32,7 +33,7 @@ public class Boss1Alien extends Alien implements Runnable{
         if (x >= INITIAL_X-30) {
             x -= SPACE;
         }
-        /*else {
+        else {
             
 
             if (goDown) {
@@ -46,7 +47,7 @@ public class Boss1Alien extends Alien implements Runnable{
                     goDown = true;
                 }
             }
-        }*/
+        }
     }
 
     public void fire() {

@@ -102,7 +102,7 @@ public class Board extends JPanel implements Runnable {
         }
 
         aliens = new ArrayList<>();
-
+        
         for (int[] p : pos) {
             aliens.add(new HardAlien(p[0], p[1]));
         }
