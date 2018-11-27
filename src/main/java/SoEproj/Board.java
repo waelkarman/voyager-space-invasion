@@ -26,8 +26,6 @@ import java.util.Random;
 
 public class Board extends JPanel implements Runnable {
 
-    //TODO rallentare velocità sfondo perchè uguale agli alieni
-
     private final int ICRAFT_X = 40;
     private final int ICRAFT_Y = 60;
     private final int B_WIDTH = 600;
@@ -103,9 +101,10 @@ public class Board extends JPanel implements Runnable {
 
         aliens = new ArrayList<>();
         
-        for (int[] p : pos) {
+        aliens.add(new Boss1Alien(background.getWidth(null), background.getHeight(null)/2));
+        /*for (int[] p : pos) {
             aliens.add(new HardAlien(p[0], p[1]));
-        }
+        }*/
     }
 
 
@@ -330,14 +329,12 @@ public class Board extends JPanel implements Runnable {
         }
     }
 
-
-
-
+    
     public void checkCollisions() {
 
         Area r3 = spaceCraft.getShape();
 
-        for (Alien alien : aliens) {
+        for (Alien alien : aliens) {                // Collision between aliens and spaceship
             Area r2 = alien.getShape();
             r2.intersect(r3);
             if (!r2.isEmpty()) {             
@@ -351,45 +348,35 @@ public class Board extends JPanel implements Runnable {
             }
         }
 
-
-
-        for (int i = 0; i < aliens.size(); i++) {
+        for (int i = 0; i < aliens.size(); i++) {   // Collision between alien missiles and spaceship
             Alien a = aliens.get(i);
             
-
-                
             List<Missile> as = a.getMissiles();
             synchronized(as){
             
                 for (Missile m : as) {
                     Area r1 = m.getShape();
-                    
-                    
                     Area r2 = spaceCraft.getShape();
+
                     r2.intersect(r1);
                     
                     if (!r2.isEmpty()) {
                         spaceCraft.setLife(-1);
                         m.setVisible(false);
+
                         if(spaceCraft.getLife() <= 0){
                             spaceCraft.setDying(true);
                             ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionspaceCrafts.png");
                             spaceCraft.setImage(i3.getImage());
                         }   
-                    }
-                    
-
-
+                    }    
                 }
             }
         }
 
-
-
-
         List<Missile> ms = spaceCraft.getMissiles();
         synchronized(ms){
-            for (Missile m : ms) {
+            for (Missile m : ms) {          // Collision between spaceship missiles and aliens
                 Area r1 = m.getShape();
                 
                 for (Alien alien : aliens) {
