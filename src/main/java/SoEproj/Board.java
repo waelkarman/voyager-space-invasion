@@ -33,7 +33,7 @@ public class Board extends JPanel implements Runnable {
     private final int B_WIDTH = 600;
     private final int B_HEIGHT = 450;
     private final int DELAY = 15;
-    private final float BG_SHIFT = 1/2; // background
+    private final int BG_SHIFT = 1; // background
 
     private SpaceShip spaceCraft;
     private List<Alien> aliens;
