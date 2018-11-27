@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SpaceShip extends Sprite implements Runnable{
 
-    private final int type;       // indicates the spaceship type 1 normal, 2 fast 
+    private final int type;       // indicates the spaceship color
     private float dx;
     private float dy;
     private List<Missile> missiles;
