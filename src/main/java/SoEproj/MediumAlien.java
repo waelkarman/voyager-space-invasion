@@ -11,13 +11,9 @@ import java.util.List;
 
 public abstract class MediumAlien extends Alien implements Runnable{
 
-    private List<Missile> missiles;
-
     public MediumAlien(int x, int y) {
         super(x, y, 2);
         SPACE = 2;
-
-        missiles = new ArrayList<>();
 
         loadImage(".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png");
         getImageDimensions();

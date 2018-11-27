@@ -11,13 +11,11 @@ import java.util.List;
 
 public class Boss1Alien extends Alien implements Runnable{
 
-    private List<Missile> missiles;
     private int life;
 
     public Boss1Alien(int x, int y) {
         super(x, y, 50);
         SPACE = 3/2;
-        missiles = new ArrayList<>();
 
         loadImage(".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png");
         getImageDimensions();
