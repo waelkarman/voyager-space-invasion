@@ -16,12 +16,14 @@ public class Alien extends Sprite implements Runnable{
     private final int INITIAL_X = 600;
     private final int type;       // indicates the alien type 1 easy, 2 medium, 3 hard 
     private List<Missile> missiles;
+    private int TOT_LIFE;
+    private boolean goDown = false;
     private int life;
 
     public Alien(int x, int y, int type, int life) {
         super(x, y);
         missiles = new ArrayList<>();
-        this.life = life;
+        this.life = TOT_LIFE;
         this.type = type;
         setLevel(type);
         Thread AlienMissileAnimator = new Thread(this);
@@ -40,18 +42,20 @@ public class Alien extends Sprite implements Runnable{
     private void setLevel(int level) {
         String pathImage = "";
         switch(level){
-            case 1:{
+            case 1:
                 SPACE = 1;
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png";
-            } 
-            case 2:{
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png";
+                break;
+             
+            case 2:
                 SPACE = 3/2;
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png";
-            } 
-            case 3:{
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png";
+                break;
+
+            case 3:
                 SPACE = 2;
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png";
-            }
+                break;
         }
         loadImage(pathImage);
         getImageDimensions();
@@ -61,14 +65,27 @@ public class Alien extends Sprite implements Runnable{
         return missiles;
     }
 
-// Aliens return to the screen on the right side after they have disappeared on the left
+// Boss enters in scene and then moves up and down
     public void move() {
-        
-        if (x < 0) {
-            x = INITIAL_X;
-        }
 
-        x -= SPACE;
+        if (x >= INITIAL_X-30) {
+            x -= SPACE;
+        }
+        /*else {
+            
+
+            if (goDown) {
+                y += SPACE;
+                if (y > 400) {
+                    goDown = false;
+                }
+            } else {
+                y -= SPACE;
+                if (y < 0) {
+                    goDown = true;
+                }
+            }
+        }*/
     }
 
     @Override
@@ -78,17 +95,23 @@ public class Alien extends Sprite implements Runnable{
     }
 
     public void fire() {
-        missiles.add(new Missile(x , y + height / 2, type,1,false));
+        missiles.add(new Missile(x , y, type, 1, false));
+        missiles.add(new Missile(x , y + height / 2, type, 1, false));
+        missiles.add(new Missile(x , y + height, type, 1, false));
     }
 
     @Override
     public void run() {
         while(true){
+            int sleep = 7000;
+
+            if (life < TOT_LIFE * 50/100) {
+                
+            }
             synchronized(missiles){
                 fire();
             }  
             
-            int sleep = 7000;
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {

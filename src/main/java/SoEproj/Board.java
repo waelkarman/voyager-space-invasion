@@ -40,7 +40,7 @@ public class Board extends JPanel implements Runnable {
     private int gameState = 0;
     private Thread animator;
     private Image background;
-    private int bg_x_shift = 0;
+    private int bg_x_shift;
 
     JLabel start = new JLabel(" START ");
     JLabel setting = new JLabel(" SETTING ");
@@ -102,10 +102,10 @@ public class Board extends JPanel implements Runnable {
         }
 
         aliens = new ArrayList<>();
-
-        for (int[] p : pos) {
+        aliens.add(new Alien(background.getWidth(null), background.getHeight(null)/2, 2, 10));
+        /*for (int[] p : pos) {
             aliens.add(new Alien(p[0], p[1], 2, 8));
-        }
+        }*/
     }
 
 
