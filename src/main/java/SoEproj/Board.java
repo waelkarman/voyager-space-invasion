@@ -33,7 +33,7 @@ public class Board extends JPanel implements Runnable {
     private final int B_WIDTH = 600;
     private final int B_HEIGHT = 450;
     private final int DELAY = 15;
-    private final int BG_SHIFT = 1; // background
+    private final float BG_SHIFT = 1/2; // background
 
     private SpaceShip spaceCraft;
     private List<Alien> aliens;
@@ -95,7 +95,7 @@ public class Board extends JPanel implements Runnable {
         int cc = ((bb-aa) + 1);
         int c = ((b-a) + 1);
         int l;
-      
+      //TODO : cambiare numero alieni del for
         for(l=0;l<18;l++){
             pos[l][0]=random.nextInt(c)+a;
             pos[l][1]=random.nextInt(cc)+aa;
@@ -104,7 +104,7 @@ public class Board extends JPanel implements Runnable {
         aliens = new ArrayList<>();
 
         for (int[] p : pos) {
-            aliens.add(new Alien(p[0], p[1], 2, 8));
+            aliens.add(new HardAlien(p[0], p[1]));
         }
     }
 

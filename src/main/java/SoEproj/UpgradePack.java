@@ -8,35 +8,31 @@ package SoEproj;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 
-public class Missile extends Sprite {
+public class UpgradePack extends Sprite {
 
     private final int BOARD_WIDTH = 585;
-    private int damage;
-    private boolean leftToRight;   // direction  
-    private String shape;  // tipo di arma (numero e tipo di colpi ad esempio colpo triplo)
+    private int upPower;
+    
 
-    public Missile(int x, int y, int type, int shape, boolean leftToRight) {  // the type è il danno, immagine e velocità
+    public UpgradePack(int x, int y, int type) {
         super(x, y);
+        SPACE = 2;
         setType(type);
-        this.leftToRight = leftToRight;
     }
-
+    
     private void setType(int type) {
         String pathImage = "";
         switch(type){
             case 1:{
-                damage = -1;
-                SPACE = 2;
+                upPower = 1;
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
             } 
             case 2:{
-                damage = -2;
-                SPACE = 3/2;
+                upPower = 2;
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
             } 
             case 3:{
-                damage = -3;
-                SPACE = 2;
+                upPower = 3;
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
             }
         }
@@ -45,24 +41,17 @@ public class Missile extends Sprite {
         getImageDimensions();
     }
 
-    public int getDamage() {
-        return this.damage;
-    }
 
-    // Missiles move in one direction only. They disappear after 
-    // they reach the right window border
+
     public void move() {   
-        if (leftToRight){
-            x += SPACE;
-            if (x > BOARD_WIDTH)
-                visible = false;
-        }
-        else{
-            x -= SPACE + 2;     // the alien is faster
-            if (x < 0)
-                visible = false;
-        }
+        
+        x -= SPACE + 2;
+        if (x < 0)
+            visible = false;
+    
     }
+    
+    
 
     @Override
     public Area getShape(){
