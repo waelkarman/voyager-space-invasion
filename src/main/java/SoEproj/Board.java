@@ -33,14 +33,14 @@ public class Board extends JPanel implements Runnable {
     private final int B_WIDTH = 600;
     private final int B_HEIGHT = 450;
     private final int DELAY = 15;
-    private final int BG_SHIFT = 1; // background
+    private final double BG_SHIFT = 0.5; // background
 
     private SpaceShip spaceCraft;
     private List<Alien> aliens;
     private int gameState = 0;
     private Thread animator;
     private Image background;
-    private int bg_x_shift;
+    private double bg_x_shift;
 
     JLabel start = new JLabel(" START ");
     JLabel setting = new JLabel(" SETTING ");
@@ -146,8 +146,8 @@ public class Board extends JPanel implements Runnable {
 
         }
 
-        g.drawImage(background, -bg_x_shift, 0, null);
-        g.drawImage(background, background.getWidth(null) - bg_x_shift, 0, null);
+        g.drawImage(background, (int) -bg_x_shift, 0, null);
+        g.drawImage(background, background.getWidth(null) - (int) bg_x_shift, 0, null);
     }
 
 
