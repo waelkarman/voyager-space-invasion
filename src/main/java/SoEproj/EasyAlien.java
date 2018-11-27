@@ -27,10 +27,4 @@ public class EasyAlien extends Alien {
 
         x -= SPACE;
     }
-
-    @Override
-    public List<Missile> getMissiles() {
-        return null;
-    }
-
 }

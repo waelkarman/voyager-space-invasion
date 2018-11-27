@@ -9,44 +9,66 @@ import java.util.List;
  * and open the template in the editor.
  */
 
-public abstract class MediumAlien extends Alien implements Runnable{
+public class Boss1Alien extends Alien implements Runnable{
 
     private List<Missile> missiles;
+    private int life;
 
-    public MediumAlien(int x, int y) {
-        super(x, y, 2);
-        SPACE = 2;
-
+    public Boss1Alien(int x, int y) {
+        super(x, y, 50);
+        SPACE = 3/2;
         missiles = new ArrayList<>();
 
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png");
+        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png");
         getImageDimensions();
 
         Thread AlienMissileAnimator = new Thread(this);
         AlienMissileAnimator.start();
     }
-
+    
+    
+    // Boss enters in scene and then moves up and down
+    @Override
     public void move() {
-        
-        if (x < 0) {
-            setDying(true);
-        }
 
-        x -= SPACE;
+        if (x >= INITIAL_X-30) {
+            x -= SPACE;
+        }
+        /*else {
+            
+
+            if (goDown) {
+                y += SPACE;
+                if (y > 400) {
+                    goDown = false;
+                }
+            } else {
+                y -= SPACE;
+                if (y < 0) {
+                    goDown = true;
+                }
+            }
+        }*/
     }
 
     public void fire() {
+        missiles.add(new Missile(x , y, 1, 1, false));
         missiles.add(new Missile(x , y + height / 2, 1, 1, false));
+        missiles.add(new Missile(x , y + height, 1, 1, false));
     }
 
     @Override
     public void run() {
         while(true){
+            int sleep = 7000;
+
+            if (life < 50 * 50/100) {
+                
+            }
             synchronized(missiles){
                 fire();
             }  
             
-            int sleep = 8000;
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {

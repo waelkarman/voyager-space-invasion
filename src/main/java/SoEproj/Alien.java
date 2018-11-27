@@ -13,12 +13,14 @@ import java.util.List;
 
 public abstract class Alien extends Sprite {
 
+    protected List<Missile> missiles;
     protected final int INITIAL_X = 600;
     protected int life;
 
     public Alien(int x, int y, int life) {
         super(x, y);
         this.life = life;
+        missiles = new ArrayList<>();
     }
 
     
@@ -43,5 +45,7 @@ public abstract class Alien extends Sprite {
     }
 
   
-    public abstract List<Missile> getMissiles();
+    public List<Missile> getMissiles() {
+        return missiles;
+    }
 }

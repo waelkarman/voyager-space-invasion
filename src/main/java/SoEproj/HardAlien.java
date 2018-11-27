@@ -12,25 +12,20 @@ import  java.lang.Math;
 
 public class HardAlien extends Alien implements Runnable{
 
-    private List<Missile> missiles;
+    //private List<Missile> missiles;
     private final int amplitude; // dimensione dell'oscillazione
 
     public HardAlien(int x, int y) {
         super(x, y, 2);
         SPACE = 3/2;
         amplitude = 50;
-        missiles = new ArrayList<>();
+        //missiles = new ArrayList<>();
 
         loadImage(".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png");
         getImageDimensions();
 
         Thread AlienMissileAnimator = new Thread(this);
         AlienMissileAnimator.start();
-    }
-
-
-    public List<Missile> getMissiles() {
-        return missiles;
     }
 
     public void move() {
