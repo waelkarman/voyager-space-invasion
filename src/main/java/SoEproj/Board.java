@@ -74,7 +74,7 @@ public class Board extends JPanel implements Runnable {
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceCraft = new SpaceShip(ICRAFT_X, ICRAFT_Y, 1);
+        spaceCraft = new SpaceShip(ICRAFT_X, ICRAFT_Y, 2);
 
         initAliens();
         
@@ -100,10 +100,10 @@ public class Board extends JPanel implements Runnable {
 
         aliens = new ArrayList<>();
         
-        aliens.add(new Boss1Alien(background.getWidth(null),background.getHeight(null)/2, aliens));
-        /*for (int[] p : pos) {
+        //aliens.add(new Boss1Alien(background.getWidth(null),background.getHeight(null)/2, aliens));
+        for (int[] p : pos) {
             aliens.add(new HardAlien(p[0], p[1]));
-        }*/
+        }
     }
 
 
