@@ -36,8 +36,8 @@ public class Missile extends Sprite {
             } 
             case "fireBall":{
                 damage = -2;
-                SPACE = 3/2;
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
+                SPACE = 4;
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\fireBall.png";
                 break;
             } 
             case "Laser":{
