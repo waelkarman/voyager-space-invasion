@@ -8,11 +8,13 @@ package SoEproj;
 
 public abstract class MediumAlien extends Alien implements Runnable{
 
+    private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png";
+
     public MediumAlien(int x, int y) {
         super(x, y, 2);
         SPACE = 2;
 
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png");
+        loadImage(imagePath);
         getImageDimensions();
 
         Thread AlienMissileAnimator = new Thread(this);
@@ -44,6 +46,7 @@ public abstract class MediumAlien extends Alien implements Runnable{
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 String msg = String.format("Thread fire interrupted: %s", e.getMessage());
+                System.out.println(msg);
             }
         }
     }

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SpaceShip extends Sprite implements Runnable{
 
-    private final int type;       // indicates the spaceship color
+    private final int type;       // spaceship color: 1-Green, 2-Orange, 3-Red
     private float dx;
     private float dy;
     private List<Missile> missiles;
@@ -36,7 +36,7 @@ public class SpaceShip extends Sprite implements Runnable{
         String pathImage = "";
         switch(color){
             case 1:{
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png";
                 break;
             } 
             case 2:{
@@ -44,7 +44,7 @@ public class SpaceShip extends Sprite implements Runnable{
                 break;
             } 
             case 3:{
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png";
                 break;
             }
         }

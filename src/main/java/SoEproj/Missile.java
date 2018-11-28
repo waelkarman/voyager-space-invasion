@@ -14,7 +14,7 @@ public class Missile extends Sprite {
     private int damage;
     private String direction;   // direction
     private double countX =0; 
-    private int CoeffAng = 3; 
+    private final int CoeffAng = 3; 
     
     public Missile(int x, int y, String type, String direction) {  // the type è il danno, immagine e velocità
         super(x, y);
@@ -85,10 +85,32 @@ public class Missile extends Sprite {
             case "leftToBottom":{
                 countX += 1;
                 if (countX > CoeffAng){ 
-                    y += -1;
+                    y -= 1;
                     countX = 0;
                 }
                 x += SPACE;
+                if (x > BOARD_WIDTH)
+                    visible = false;
+                break;
+            }
+            case "rightToTop":{
+                countX += 1;
+                if (countX > CoeffAng){ 
+                    y += 1;
+                    countX = 0;
+                }
+                x -= SPACE + 2;
+                if (x > BOARD_WIDTH)
+                    visible = false;
+                break;
+            }
+            case "rightToBottom":{
+                countX += 1;
+                if (countX > CoeffAng){ 
+                    y -= 1;
+                    countX = 0;
+                }
+                x -= SPACE + 2;
                 if (x > BOARD_WIDTH)
                     visible = false;
                 break;

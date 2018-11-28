@@ -1,5 +1,7 @@
 package SoEproj;
 
+import java.util.List;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -9,14 +11,18 @@ package SoEproj;
 
 public class Boss1Alien extends Alien implements Runnable{
 
+    // TODO Cambiare immagine boss1
+    private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png";
     private boolean goDown = true;  // to set boss go at first down and then up
     private final int TOT_LIFE = life;
+    private List<Alien> aliens;
 
-    public Boss1Alien(int x, int y) {
+    public Boss1Alien(int x, int y, List<Alien> aliens) {
         super(x, y, 10);
+        this.aliens = aliens;
         SPACE = 3/2;
-        // TODO Cambiare immagine boss1
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png");
+        
+        loadImage(imagePath);
         getImageDimensions();
 
         Thread AlienMissileAnimator = new Thread(this);
@@ -31,27 +37,25 @@ public class Boss1Alien extends Alien implements Runnable{
         if (x >= INITIAL_X-30) {
             x -= SPACE;
         }
-        //else {
-        //    
-//
-        //    if (goDown) {
-        //        y += SPACE;
-        //        if (y > 400) {
-        //            goDown = false;
-        //        }
-        //    } else {
-        //        y -= SPACE;
-        //        if (y < 0) {
-        //            goDown = true;
-        //        }
-        //    }
-        //}
+        else {
+            if (goDown) {
+                y += SPACE;
+                if (y > 400) {
+                    goDown = false;
+                }
+            } else {
+                y -= SPACE;
+                if (y < 0) {
+                    goDown = true;
+                }
+            }
+        }
     }
 
     public void fire() {
-        //missiles.add(new Missile(x , y, 1, 1, false));
-        missiles.add(new Missile(x , y + height / 2, "Laser", "rightToLeft"));
-        //missiles.add(new Missile(x , y + height, 1, 1, false));
+        missiles.add(new Missile(x , y + height/2, "Laser", "rightToTop"));
+        missiles.add(new Missile(x , y + height/2, "Laser", "rightToLeft"));
+        missiles.add(new Missile(x , y + height/2, "Laser", "rightToBottom"));
     }
 
     @Override
@@ -59,9 +63,13 @@ public class Boss1Alien extends Alien implements Runnable{
         while(true){
             int sleep = 7000;
 
-            //if (life < 10 * 50/100) {
-            //    
-            //}
+            // TODO i BossHelper devono uscire solo se gli altri sono già morti prima
+            if (life < TOT_LIFE * 0.5) {
+                aliens.add(new EasyAlien(x, y - 30, "BossHelper", goDown));
+                aliens.add(new EasyAlien(x, y, "BossHelper", goDown));
+                aliens.add(new EasyAlien(x, y + 30, "BossHelper", goDown));
+            }
+
             synchronized(missiles){
                 fire();
             }  

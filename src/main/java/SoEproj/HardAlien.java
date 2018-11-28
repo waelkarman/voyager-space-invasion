@@ -10,8 +10,9 @@ import  java.lang.Math;
 
 public class HardAlien extends Alien implements Runnable{
 
-    private final int amplitude; // dimensione dell'oscillazione
-    private final int meanY;
+    private final int amplitude;    // oscillation dimension
+    private final int meanY;        // alien swings around this mean value
+    private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png";
 
     public HardAlien(int x, int y) {
         super(x, y, 2);
@@ -19,7 +20,7 @@ public class HardAlien extends Alien implements Runnable{
         SPACE = 3/2;
         amplitude = 50;
 
-        loadImage(".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png");
+        loadImage(imagePath);
         getImageDimensions();
 
         Thread AlienMissileAnimator = new Thread(this);

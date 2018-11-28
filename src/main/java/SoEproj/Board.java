@@ -100,10 +100,10 @@ public class Board extends JPanel implements Runnable {
 
         aliens = new ArrayList<>();
         
-        //aliens.add(new Boss1Alien(backgroung.getWidth(null),backgroung.getHeight(null)/2))
-        for (int[] p : pos) {
+        aliens.add(new Boss1Alien(background.getWidth(null),background.getHeight(null)/2, aliens));
+        /*for (int[] p : pos) {
             aliens.add(new HardAlien(p[0], p[1]));
-        }
+        }*/
     }
 
 
@@ -303,33 +303,33 @@ public class Board extends JPanel implements Runnable {
         }
 
         for (int i = 0; i < aliens.size(); i++) {
-            Alien spaceCraft = aliens.get(i);
+            Alien alien = aliens.get(i);
             
-            if (spaceCraft.isVisible()) {
+            if (alien.isVisible()) {
                 
-                List<Missile> as = spaceCraft.getMissiles();
-                synchronized(as){
-                    for (int k = 0; k < as.size(); k++) {
-                        Missile p = as.get(k);
+                List<Missile> alienMissiles = alien.getMissiles();
+                synchronized(alienMissiles){
+                    for (int k = 0; k < alienMissiles.size(); k++) {
+                        Missile m = alienMissiles.get(k);
                         
-                        if (p.isVisible()) {
-                            p.move();
+                        if (m.isVisible()) {
+                            m.move();
                         } 
                         else {
-                            as.remove(k);
+                            alienMissiles.remove(k);
                         }
                     }
                 }
-                spaceCraft.move();
+                alien.move();
             } 
             else {
+                if (alien instanceof Boss1Alien)  // if boss is dead
+                    aliens.clear();               // destroys all aliens to end the game
+
                 aliens.remove(i);
             }
         }
     }
-
-
-
 
     public void checkCollisions() {
 
