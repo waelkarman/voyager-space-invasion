@@ -98,6 +98,7 @@ public class Board extends JPanel implements Runnable {
 
         aliens = new ArrayList<>();
         
+        //aliens.add(new Boss1Alien(backgroung.getWidth(null),backgroung.getHeight(null)/2))
         for (int[] p : pos) {
             aliens.add(new HardAlien(p[0], p[1]));
         }
