@@ -19,15 +19,13 @@ public class SpaceShip extends Sprite implements Runnable{
     private List<Missile> missiles;
     private Boolean firing = false;
     private int life;
-    private int missiletype; //imposta danno, velocita, image
-    private int upgrade;
-
+    private String missiletype; //imposta danno, velocita, image
     
 
     public SpaceShip(int x, int y, int color) {
         super(x, y);
         missiles = new ArrayList<>();
-        this.missiletype = 1;
+        this.missiletype = "3Missiles";
         this.life = 1;
         this.type = color;
         this.SPACE = 1; //velocita
@@ -61,6 +59,10 @@ public class SpaceShip extends Sprite implements Runnable{
 
     public void setLife(int life) {
         this.life = life;
+    }
+
+    public void setMissiletype(String missiletype) {
+        this.missiletype = missiletype;
     }
 
     public void move() {       
@@ -114,7 +116,15 @@ public class SpaceShip extends Sprite implements Runnable{
     }
 
     public void fire() {
-        missiles.add(new Missile(x + width, y + height / 2, missiletype,1,true));
+        if( missiletype != "3Missiles"){
+            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
+        }
+        else{
+            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
+            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToTop" ));
+            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToBottom" ));
+        }
+        
     }
 
     public void keyReleased(KeyEvent e) throws InterruptedException {

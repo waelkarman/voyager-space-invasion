@@ -41,7 +41,7 @@ public class HardAlien extends Alien implements Runnable{
     }
 
     public void fire() {
-        missiles.add(new Missile(x , y + height / 2, 1, 1, false));
+        missiles.add(new Missile(x , y + height / 2, "Laser", "rightToLeft"));
     }
 
     @Override
