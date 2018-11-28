@@ -27,7 +27,7 @@ public class VoyagerGame extends JFrame {
         loadWindowsIcon(); 
         setIconImage(iconWindows);
 
-        setLocationRelativeTo(null); // centra
+        setLocationRelativeTo(null); // frame centration
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
  
