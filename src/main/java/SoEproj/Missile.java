@@ -13,9 +13,8 @@ public class Missile extends Sprite {
     private final int BOARD_WIDTH = 585;
     private int damage;
     private String direction;   // direction
-    double accumulatore1 =0; 
-    double accumulatore2 =0; 
-    int CoeffAng = 5; 
+    private double countX =0; 
+    private int CoeffAng = 3; 
     
     public Missile(int x, int y, String type, String direction) {  // the type è il danno, immagine e velocità
         super(x, y);
@@ -73,10 +72,10 @@ public class Missile extends Sprite {
                 break;
             }
             case "leftToTop":{
-                accumulatore1 += 1;
-                if (accumulatore1 > CoeffAng){ 
+                countX += 1;
+                if (countX > CoeffAng){ 
                     y += 1;
-                    accumulatore1 = 0;
+                    countX = 0;
                 }
                 x += SPACE;
                 if (x > BOARD_WIDTH)
@@ -84,10 +83,10 @@ public class Missile extends Sprite {
                 break;
             }
             case "leftToBottom":{
-                accumulatore2 += 1;
-                if (accumulatore2 > CoeffAng){ 
+                countX += 1;
+                if (countX > CoeffAng){ 
                     y += -1;
-                    accumulatore2 = 0;
+                    countX = 0;
                 }
                 x += SPACE;
                 if (x > BOARD_WIDTH)
