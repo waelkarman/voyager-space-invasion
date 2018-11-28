@@ -7,11 +7,8 @@ package SoEproj;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -25,8 +22,6 @@ import javax.swing.JPanel;
 import java.util.Random;
 
 public class Board extends JPanel implements Runnable {
-
-    //TODO rallentare velocità sfondo perchè uguale agli alieni
 
     private final int ICRAFT_X = 40;
     private final int ICRAFT_Y = 60;
@@ -95,7 +90,7 @@ public class Board extends JPanel implements Runnable {
         int cc = ((bb-aa) + 1);
         int c = ((b-a) + 1);
         int l;
-      //TODO : cambiare numero alieni del for
+
         for(l=0;l<18;l++){
             pos[l][0]=random.nextInt(c)+a;
             pos[l][1]=random.nextInt(cc)+aa;
@@ -420,7 +415,7 @@ public class Board extends JPanel implements Runnable {
             try {
                 spaceCraft.keyReleased(e);
             } catch (InterruptedException e1) {
-                // TODO Auto-generated catch block
+            
                 e1.printStackTrace();
             }
         }

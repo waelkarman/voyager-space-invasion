@@ -1,7 +1,5 @@
 package SoEproj;
 
-import java.util.ArrayList;
-import java.util.List;
 import  java.lang.Math;
 
 /*
@@ -58,6 +56,7 @@ public class HardAlien extends Alien implements Runnable{
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 String msg = String.format("Thread fire interrupted: %s", e.getMessage());
+                System.out.println(msg);
             }
         }
     }

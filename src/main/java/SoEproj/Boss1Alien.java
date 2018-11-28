@@ -1,7 +1,5 @@
 package SoEproj;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -72,6 +70,7 @@ public class Boss1Alien extends Alien implements Runnable{
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 String msg = String.format("Thread fire interrupted: %s", e.getMessage());
+                System.out.println(msg);
             }
         }
     }

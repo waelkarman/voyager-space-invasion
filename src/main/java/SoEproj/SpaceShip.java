@@ -39,12 +39,15 @@ public class SpaceShip extends Sprite implements Runnable{
         switch(color){
             case 1:{
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+                break;
             } 
             case 2:{
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+                break;
             } 
             case 3:{
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+                break;
             }
         }
 
@@ -153,6 +156,7 @@ public class SpaceShip extends Sprite implements Runnable{
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 String msg = String.format("Thread fire interrupted: %s", e.getMessage());
+                System.out.println(msg);
             }
         }
     }

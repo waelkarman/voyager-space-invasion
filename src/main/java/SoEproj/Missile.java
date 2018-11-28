@@ -28,16 +28,19 @@ public class Missile extends Sprite {
                 damage = -1;
                 SPACE = 2;
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
+                break;
             } 
             case 2:{
                 damage = -2;
                 SPACE = 3/2;
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
+                break;
             } 
             case 3:{
                 damage = -3;
                 SPACE = 2;
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
+                break;
             }
         }
 
