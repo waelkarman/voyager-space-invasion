@@ -20,7 +20,7 @@ public class Missile extends Sprite {
         setType(type);
         this.leftToRight = leftToRight;
     }
-
+ 
     private void setType(int type) {
         String pathImage = "";
         switch(type){
