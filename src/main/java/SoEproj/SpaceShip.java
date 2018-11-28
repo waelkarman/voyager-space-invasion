@@ -25,7 +25,7 @@ public class SpaceShip extends Sprite implements Runnable{
     public SpaceShip(int x, int y, int color) {
         super(x, y);
         missiles = new ArrayList<>();
-        this.missiletype = "fireBall";
+        this.missiletype = "3Missiles";
         this.life = 1;
         this.type = color;
         this.SPACE = 1; //velocita

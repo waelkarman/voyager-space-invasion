@@ -41,12 +41,14 @@ public class Board extends JPanel implements Runnable {
     JLabel setting = new JLabel(" SETTING ");
     
     public Board() {
-        initMenu();
+        initGame();
         animator = new Thread(this);
+        gameLaunch();
+        
     }
 
 
-    public void initMenu() {
+    /*public void initMenu() {
         
         gameState = 0;
         setFocusable(true);
@@ -63,7 +65,7 @@ public class Board extends JPanel implements Runnable {
     public void destroyMenu() {
         start.setVisible(false);
         setting.setVisible(false);
-    }
+    }*/
 
 
     public void initGame() {
