@@ -28,56 +28,35 @@ public class Board extends JPanel implements Runnable {
     private final int B_WIDTH = 600;
     private final int B_HEIGHT = 450;
     private final int DELAY = 15;
-    private final double BG_SHIFT = 0.5; // background
+    private final double BG_SPEED = 0.5; // background speed
 
     private SpaceShip spaceCraft;
     private List<Alien> aliens;
-    private int gameState = 0;
+    private int gameState;
     private Thread animator;
+
+    private ImageIcon bgImgIcon;
     private Image background;
     private double bg_x_shift;
 
-    JLabel start = new JLabel(" START ");
-    JLabel setting = new JLabel(" SETTING ");
-    
     public Board() {
+        bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
+        background = bgImgIcon.getImage();
+
         initGame();
         animator = new Thread(this);
-        gameLaunch();
-        
+        animator.start();
     }
-
-
-    /*public void initMenu() {
-        
-        gameState = 0;
-        setFocusable(true);
-        setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
-        setBackground(Color.BLACK);
-
-        this.add(start);
-        MenuInteract clkStart = new MenuInteract(this, start);
-        start.addMouseListener(clkStart);
-        
-        this.add(setting);  // to implement
-    }
-    
-    public void destroyMenu() {
-        start.setVisible(false);
-        setting.setVisible(false);
-    }*/
 
 
     public void initGame() {
         gameState = 1;
         addKeyListener(new TAdapter());
-        setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
         spaceCraft = new SpaceShip(ICRAFT_X, ICRAFT_Y, 2);
 
         initAliens();
-        
     }
 
 
@@ -100,10 +79,11 @@ public class Board extends JPanel implements Runnable {
 
         aliens = new ArrayList<>();
         
-        //aliens.add(new Boss1Alien(background.getWidth(null),background.getHeight(null)/2, aliens));
+        
         for (int[] p : pos) {
             aliens.add(new HardAlien(p[0], p[1]));
         }
+        //aliens.add(new Boss1Alien(B_WIDTH, B_HEIGHT/2, aliens));
     }
 
 
@@ -113,10 +93,7 @@ public class Board extends JPanel implements Runnable {
         super.paintComponent(g);
 
         // draw game sprites or write the game over message
-        if(gameState == 0){
-            drawBackground(g);
-        }
-        else if(gameState == 1) {
+        if(gameState == 1) {
             drawBackground(g);
             drawGame(g);
         } 
@@ -128,19 +105,12 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    private void loadBackground() {
-        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
-        background = ii.getImage();
-    }
-
-
     private void drawBackground(Graphics g) {
-        loadBackground();
-
+        
         if (bg_x_shift > background.getWidth(null)) {
             bg_x_shift = 0;
         } else {
-            bg_x_shift += BG_SHIFT;
+            bg_x_shift += BG_SPEED;
 
         }
 
@@ -192,27 +162,32 @@ public class Board extends JPanel implements Runnable {
 
             if (alien.isDying()) {
                 alien.die();
+                if (alien instanceof Boss1Alien)
+                    gameState = 2;
             }
         }
 
         // In the top-left corner of the window, we draw how many aliens are left.
+        // TODO Correggere scritte sopra allo sfondo
         g.setColor(Color.WHITE);
         g.drawString("Aliens left: " + aliens.size(), 5, 15);
     }
 
-    //  draws a game over message in the middle of the window. The message is 
-    // displayed at the end of the game, either when we destroy all alien 
-    // ships or when we collide with one of them.
+    /*
+    draws a game over message in the middle of the window. The message is 
+    displayed at the end of the game, either when we destroy all alien 
+    ships or when we collide with one of them.
+    */
     private void drawGameOver(Graphics g) {
-// g is a graphics context that, in some sense, represents the on-screen pixels
+        // g is a graphics context that, in some sense, represents the on-screen pixels
         /*String msg = "Game Over";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics fm = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (B_WIDTH - fm.stringWidth(msg)) / 2,
-                B_HEIGHT / 2);*/
+        g.drawString(msg, (B_WIDTH - fm.stringWidth(msg)) / 2, B_HEIGHT / 2);*/
+
         Image gamover;
         ImageIcon gamo = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GameOver.gif");
         gamover = gamo.getImage();
@@ -222,7 +197,6 @@ public class Board extends JPanel implements Runnable {
 
     @Override
     public void run() {
-
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
@@ -262,12 +236,7 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    public void gameLaunch() {
-        if(gameState == 1){
-            animator.start();
-        }
-
-    }
+    
 
 
     private void updateShip() {
@@ -322,12 +291,8 @@ public class Board extends JPanel implements Runnable {
                 }
                 alien.move();
             } 
-            else {
-                if (alien instanceof Boss1Alien)  // if boss is dead
-                    aliens.clear();               // destroys all aliens to end the game
-
+            else
                 aliens.remove(i);
-            }
         }
     }
 
@@ -338,7 +303,7 @@ public class Board extends JPanel implements Runnable {
         for (Alien alien : aliens) {
             Area r2 = alien.getShape();
             r2.intersect(r3);
-            if (!r2.isEmpty()) {             
+            if (!r2.isEmpty()) {
                 alien.setDying(true);
                 ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
                 alien.setImage(i1.getImage());
@@ -352,18 +317,15 @@ public class Board extends JPanel implements Runnable {
 
 
         for (int i = 0; i < aliens.size(); i++) {
-            Alien a = aliens.get(i);
+            Alien alien = aliens.get(i);
+  
+            List<Missile> missiles = alien.getMissiles();
+            synchronized(missiles){
             
-
-                
-            List<Missile> as = a.getMissiles();
-            synchronized(as){
-            
-                for (Missile m : as) {
+                for (Missile m : missiles) {
                     Area r1 = m.getShape();
-                    
-                    
                     Area r2 = spaceCraft.getShape();
+
                     r2.intersect(r1);
                     
                     if (!r2.isEmpty()) {
@@ -371,23 +333,17 @@ public class Board extends JPanel implements Runnable {
                         m.setVisible(false);
                         if(spaceCraft.getLife() <= 0){
                             spaceCraft.setDying(true);
-                            ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionspaceCrafts.png");
+                            ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
                             spaceCraft.setImage(i3.getImage());
                         }   
                     }
-                    
-
-
                 }
             }
         }
 
-
-
-
-        List<Missile> ms = spaceCraft.getMissiles();
-        synchronized(ms){
-            for (Missile m : ms) {
+        List<Missile> missiles = spaceCraft.getMissiles();
+        synchronized(missiles){
+            for (Missile m : missiles) {
                 Area r1 = m.getShape();
                 
                 for (Alien alien : aliens) {
@@ -406,9 +362,8 @@ public class Board extends JPanel implements Runnable {
                 }
             }
         }
-
-       
     }
+
 
 
     private class TAdapter extends KeyAdapter {
@@ -418,7 +373,6 @@ public class Board extends JPanel implements Runnable {
             try {
                 spaceCraft.keyReleased(e);
             } catch (InterruptedException e1) {
-            
                 e1.printStackTrace();
             }
         }

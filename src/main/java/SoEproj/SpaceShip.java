@@ -96,7 +96,7 @@ public class SpaceShip extends Sprite{
         return missiles;
     }
 
-
+    // TODO risolvere certe combinazioni di tasti che non funzionano (es. space+down+right)
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
