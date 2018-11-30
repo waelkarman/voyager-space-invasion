@@ -13,6 +13,10 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -20,6 +24,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.util.Random;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 public class Board extends JPanel implements Runnable {
 
@@ -36,15 +44,18 @@ public class Board extends JPanel implements Runnable {
     private Thread animator;
     private Image background;
     private double bg_x_shift;
+    private JPanel menuPanel;
 
     JLabel start = new JLabel(" START ");
     JLabel setting = new JLabel(" SETTING ");
+    boolean music;
     
-    public Board() {
-        initGame();
+    public Board(int shipType, JPanel p, boolean m) {
+        menuPanel=p;
+        music=m;
+        initGame(shipType);
         animator = new Thread(this);
         gameLaunch();
-        
     }
 
 
@@ -68,13 +79,13 @@ public class Board extends JPanel implements Runnable {
     }*/
 
 
-    public void initGame() {
+    public void initGame(int shipType) {
         gameState = 1;
         addKeyListener(new TAdapter());
         setBackground(Color.BLACK);
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceCraft = new SpaceShip(ICRAFT_X, ICRAFT_Y, 2);
+        spaceCraft = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, music);
 
         initAliens();
         
@@ -265,6 +276,15 @@ public class Board extends JPanel implements Runnable {
     public void gameLaunch() {
         if(gameState == 1){
             animator.start();
+            if(music==true){
+                InputStream in;
+                try {
+                    in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/ThemeLevelSound1.wav"));
+                    AudioStream audios = new AudioStream(in);
+                    AudioPlayer.player.start(audios);
+                }catch (IOException ex) {
+                }
+            }
         }
 
     }
@@ -338,7 +358,7 @@ public class Board extends JPanel implements Runnable {
         for (Alien alien : aliens) {
             Area r2 = alien.getShape();
             r2.intersect(r3);
-            if (!r2.isEmpty()) {             
+            if (!r2.isEmpty()) {   
                 alien.setDying(true);
                 ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
                 alien.setImage(i1.getImage());
@@ -346,6 +366,16 @@ public class Board extends JPanel implements Runnable {
                 spaceCraft.setDying(true);
                 ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
                 spaceCraft.setImage(i2.getImage());
+                if(music==true){
+                    InputStream in;
+                    try {
+                        in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav"));
+                        AudioStream audios = new AudioStream(in);
+                        AudioPlayer.player.start(audios);   
+                    } catch (IOException ex) {
+                    }
+                }
+                
             }
         }
 
@@ -370,9 +400,19 @@ public class Board extends JPanel implements Runnable {
                         spaceCraft.setLife(-1);
                         m.setVisible(false);
                         if(spaceCraft.getLife() <= 0){
+                            
                             spaceCraft.setDying(true);
-                            ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionspaceCrafts.png");
+                            ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
                             spaceCraft.setImage(i3.getImage());
+                            if(music==true){
+                                InputStream in;
+                                try {
+                                    in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav"));
+                                    AudioStream audios = new AudioStream(in);
+                                    AudioPlayer.player.start(audios);   
+                                } catch (IOException ex) {
+                                }
+                            }
                         }   
                     }
                     
@@ -398,9 +438,19 @@ public class Board extends JPanel implements Runnable {
                         alien.setLife(m.getDamage());
                         m.setVisible(false);
                         if(alien.getLife() <= 0){
+                            
                             alien.setDying(true);
                             ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
                             alien.setImage(i3.getImage());
+                            if(music==true){
+                                InputStream in;
+                                try {
+                                    in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/CollisionSound.wav"));
+                                    AudioStream audios = new AudioStream(in);
+                                    AudioPlayer.player.start(audios);   
+                                } catch (IOException ex) {
+                                }
+                            }
                         }   
                     }
                 }
@@ -408,6 +458,16 @@ public class Board extends JPanel implements Runnable {
         }
 
        
+    }
+    
+    
+    public void EndGameFunction(int outcome){
+        JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
+        old.getContentPane().remove(this);
+        GameEndPanel gep = new GameEndPanel(outcome, menuPanel);
+        old.add(gep).requestFocusInWindow();
+        old.validate();
+        old.repaint();
     }
 
 

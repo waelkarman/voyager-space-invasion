@@ -8,8 +8,14 @@ package SoEproj;
 import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 public class SpaceShip extends Sprite implements Runnable{
 
@@ -20,15 +26,17 @@ public class SpaceShip extends Sprite implements Runnable{
     private Boolean firing = false;
     private int life;
     private String missiletype; //imposta danno, velocita, image
+    private boolean music;
     
 
-    public SpaceShip(int x, int y, int color) {
+    public SpaceShip(int x, int y, int color,boolean m) {
         super(x, y);
         missiles = new ArrayList<>();
-        this.missiletype = "Laser";
+        this.missiletype = "3Missiles";
         this.life = 1;
         this.type = color;
         this.SPACE = 1; //velocita
+        music = m;
         setColor(color);
     }
 
@@ -118,11 +126,31 @@ public class SpaceShip extends Sprite implements Runnable{
     public void fire() {
         if( missiletype != "3Missiles"){
             missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
+            if(music==true){
+                InputStream in;
+                try {
+                    in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
+                    AudioStream audios;
+                    audios = new AudioStream(in);
+                    AudioPlayer.player.start(audios);
+                } catch (IOException ex) {
+                }
+            }
         }
         else{
             missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
             missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToTop" ));
             missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToBottom" ));
+            if(music==true){
+                InputStream in;
+                try {
+                    in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
+                    AudioStream audios;
+                    audios = new AudioStream(in);
+                    AudioPlayer.player.start(audios);
+                } catch (IOException ex) {
+                }
+            }
         }
         
     }

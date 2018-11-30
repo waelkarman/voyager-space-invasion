@@ -6,16 +6,28 @@
 
 package SoEproj;
 
+import java.awt.CardLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author aless
  */
 public class GameOptionPanel extends javax.swing.JPanel {
+    
+    private int ship;
+    private JPanel menuPanel;
+    private boolean music;
+    
     /** Creates new form GameOptionPanel */
-    public GameOptionPanel() {
+    public GameOptionPanel(JPanel p, boolean m) {
         initComponents();
+        ship = 2;
+        menuPanel = p;
+        music = m;
     }
 
     /** This method is called from within the constructor to
@@ -92,7 +104,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png")); // NOI18N
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jRadioButton4.setBackground(new java.awt.Color(0, 0, 102));
@@ -122,16 +134,21 @@ public class GameOptionPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setText("START GAME");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png")); // NOI18N
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png")); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1_Logo.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround1_Logo.png")); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround2_Logo.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround2_Logo.png")); // NOI18N
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround3_Logo.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround3_Logo.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -229,18 +246,30 @@ public class GameOptionPanel extends javax.swing.JPanel {
 
     private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked
         jTextArea1.setText(null);
-        jTextArea1.setText("Selezione navicella arancione");        
+        jTextArea1.setText("Selezione navicella arancione");
+        ship=2;
     }//GEN-LAST:event_jRadioButton1MouseClicked
 
     private void jRadioButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton2MouseClicked
         jTextArea1.setText(null);
         jTextArea1.setText("Selezione navicella rossa");
+        ship=3;
     }//GEN-LAST:event_jRadioButton2MouseClicked
 
     private void jRadioButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton3MouseClicked
        jTextArea1.setText(null);
        jTextArea1.setText("Selezione navicella verde");
+       ship=1;
     }//GEN-LAST:event_jRadioButton3MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
+        old.getContentPane().remove(this);
+        Board b = new Board(ship, menuPanel,music);
+        old.add(b).requestFocusInWindow();
+        old.validate();
+        old.repaint();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

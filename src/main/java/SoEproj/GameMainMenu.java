@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -21,13 +22,17 @@ public class GameMainMenu extends javax.swing.JFrame {
      */
     
     private Image iconWindows;
-    private Image background; 
+    private Image background;
+    private int ship;
+    private boolean music;
     
     public GameMainMenu() {
         initComponents();
         initUI();
         loadWindowsIcon();
         loadBackground();
+        ship=2;
+        music=true;
     }
     private void initUI() {
         
@@ -150,8 +155,9 @@ public class GameMainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JPanel principalPanel = this.jPanel1;
         this.getContentPane().remove(jPanel1);
-        Board b = new Board();
+        Board b = new Board(ship, principalPanel,music);
         this.add(b).requestFocusInWindow();
         this.validate();
         this.repaint();
@@ -159,16 +165,23 @@ public class GameMainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JPanel principalPanel = this.jPanel1;
         this.getContentPane().remove(jPanel1);
-        GameOptionPanel gop = new GameOptionPanel();
+        GameOptionPanel gop = new GameOptionPanel(principalPanel,music);
         this.add(gop).requestFocusInWindow();
         this.validate();
         this.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    
+    public void setMusic(boolean m){
+        music = m;
+    }
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       this.getContentPane().remove(jPanel1);
-        SettingPanel sp = new SettingPanel();
+        JPanel principalPanel = this.jPanel1;
+        this.getContentPane().remove(jPanel1);
+        SettingPanel sp = new SettingPanel(principalPanel);
         this.add(sp).requestFocusInWindow();
         this.validate();
         this.repaint();
