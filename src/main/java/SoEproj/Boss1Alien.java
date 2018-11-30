@@ -19,7 +19,9 @@ public class Boss1Alien extends Alien implements Runnable{
 
     public Boss1Alien(int x, int y, List<Alien> aliens) {
         super(x, y, 10);
+        System.out.println("Prima dell'inizializzazione della lista");
         this.aliens = aliens;
+        System.out.println("Dopo l'inizializzazione della lista");
         SPACE = 3/2;
         
         loadImage(imagePath);

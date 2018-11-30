@@ -17,7 +17,7 @@ import java.util.List;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
-public class SpaceShip extends Sprite implements Runnable{
+public class SpaceShip extends Sprite{
 
     private final int type;       // spaceship color: 1-Green, 2-Orange, 3-Red
     private float dx;
@@ -27,6 +27,8 @@ public class SpaceShip extends Sprite implements Runnable{
     private int life;
     private String missiletype; //imposta danno, velocita, image
     private boolean music;
+    private Thread SpaceshipMissileAnimator;
+                 
     
 
     public SpaceShip(int x, int y, int color,boolean m) {
@@ -38,6 +40,9 @@ public class SpaceShip extends Sprite implements Runnable{
         this.SPACE = 1; //velocita
         music = m;
         setColor(color);
+
+        SpaceshipMissileAnimator = new Thread(new FireThread(this));
+        SpaceshipMissileAnimator.start();
     }
 
     private void setColor(int color) {
@@ -61,15 +66,23 @@ public class SpaceShip extends Sprite implements Runnable{
         getImageDimensions();
     }
 
-    public int getLife() {
+    public synchronized int getLife() {
         return this.life;
     }
 
-    public void setLife(int life) {
+    public synchronized void setLife(int life) {
         this.life = life;
     }
+    
+    public synchronized Boolean getFiring() {
+        return this.firing;
+    }
 
-    public void setMissiletype(String missiletype) {
+    public synchronized void setFiring(Boolean firing) {
+        this.firing = firing;
+    }
+
+    public synchronized void setMissiletype(String missiletype) {
         this.missiletype = missiletype;
     }
 
@@ -87,23 +100,20 @@ public class SpaceShip extends Sprite implements Runnable{
     }
 
 
-    public List<Missile> getMissiles() {
+    public synchronized  List<Missile> getMissiles() {
         return missiles;
     }
 
-
+    // TODO risolvere certe combinazioni di tasti che non funzionano (es. space+down+right)
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE) {
-
-            if(firing == false){    
-                firing = true;
-                Thread SpaceshipMissileAnimator = new Thread(this);
-                SpaceshipMissileAnimator.start();
-            }    
-            
+            setFiring(true);
+            synchronized(missiles){
+                missiles.notifyAll();
+            }   
         }
 
         if (key == KeyEvent.VK_LEFT) {
@@ -160,8 +170,7 @@ public class SpaceShip extends Sprite implements Runnable{
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_SPACE) {
-            firing = false;
-            //MissileAnimator.wait();
+            setFiring(false);
         }
 
         if (key == KeyEvent.VK_LEFT) {
@@ -178,24 +187,6 @@ public class SpaceShip extends Sprite implements Runnable{
 
         if (key == KeyEvent.VK_DOWN) {
             dy = 0;
-        }
-    }
-
-    // TODO risolvere spari a raffica
-    @Override
-    public void run() {
-        while(firing){ 
-            synchronized(missiles){
-                fire();
-            }  
-            
-            int sleep = 500;
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                String msg = String.format("Thread fire interrupted: %s", e.getMessage());
-                System.out.println(msg);
-            }
         }
     }
 
