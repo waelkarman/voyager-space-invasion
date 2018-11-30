@@ -34,7 +34,7 @@ public class SpaceShip extends Sprite{
     public SpaceShip(int x, int y, int color,boolean m) {
         super(x, y);
         missiles = new ArrayList<>();
-        this.missiletype = "3Missiles";
+        this.missiletype = "Laser";
         this.life = 1;
         this.type = color;
         this.SPACE = 1; //velocita
