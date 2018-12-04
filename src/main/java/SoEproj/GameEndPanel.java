@@ -64,7 +64,7 @@ public class GameEndPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Your Name:");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(".src\\main\\java\\SoEproj\\Resource\\GameOverEnd.gif")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GameOverEnd.gif")); // NOI18N
 
         jButton3.setText("SAVE");
 

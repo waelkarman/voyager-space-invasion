@@ -106,8 +106,8 @@ public class Board extends JPanel implements Runnable {
             drawBackground(g);
             drawGame(g);
         } 
-        else if(gameState == 2) {
-            drawGameOver(g);
+        else if(gameState == 2) {// sono morto allora ho perso
+            EndGameFunction(0); //passo 0 per indicare al pannelllo di disegnare il gameover 
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -184,26 +184,6 @@ public class Board extends JPanel implements Runnable {
         // TODO Correggere scritte sopra allo sfondo
         g.setColor(Color.WHITE);
         g.drawString("Aliens left: " + aliens.size(), 5, 15);
-    }
-
-    /*
-    draws a game over message in the middle of the window. The message is 
-    displayed at the end of the game, either when we destroy all alien 
-    ships or when we collide with one of them.
-    */
-    private void drawGameOver(Graphics g) {
-        // g is a graphics context that, in some sense, represents the on-screen pixels
-        /*String msg = "Game Over";
-        Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics fm = getFontMetrics(small);
-
-        g.setColor(Color.white);
-        g.setFont(small);
-        g.drawString(msg, (B_WIDTH - fm.stringWidth(msg)) / 2, B_HEIGHT / 2);*/
-
-        ImageIcon gamo = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GameOver.gif");
-        Image gamover = gamo.getImage();
-        g.drawImage(gamover, 0, 0, null);
     }
 
 
@@ -398,7 +378,7 @@ public class Board extends JPanel implements Runnable {
         }
     }
 
-
+    //Outcome viene passato al pannello per disegnare la foto giusta in caso i vittoria o di sconfitta 
     public void EndGameFunction(int outcome){
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
