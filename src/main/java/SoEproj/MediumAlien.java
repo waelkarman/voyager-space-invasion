@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MediumAlien extends Alien implements Runnable{
 
-    private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png";
+    private String imagePath = "./src/main/java/SoEproj/Resource/MediumAlien.png";
 
     public MediumAlien(int x, int y) {
         super(x, y, 2);

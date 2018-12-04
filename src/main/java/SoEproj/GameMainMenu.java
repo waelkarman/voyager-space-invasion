@@ -44,12 +44,12 @@ public class GameMainMenu extends javax.swing.JFrame {
     }
  
     private void loadWindowsIcon() {
-        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ico.png");
+        ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/ico.png");
         iconWindows = ii.getImage();         
     }
     
     private void loadBackground(){
-        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\MenuBackground.jpg");
+        ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/MenuBackground.jpg");
         background = ii.getImage();
     }
     
@@ -104,9 +104,9 @@ public class GameMainMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\Voyager_Title_1.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/Voyager_Title_1.png")); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\Vojager_Logo_Menu.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/Vojager_Logo_Menu.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

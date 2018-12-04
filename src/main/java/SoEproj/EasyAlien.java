@@ -3,7 +3,7 @@ package SoEproj;
 
 public class EasyAlien extends Alien {
 
-    private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\WeakAlien.png";
+    private String imagePath = "./src/main/java/SoEproj/Resource/WeakAlien.png";
     private String moveType = "";   // initialization needed to avoid null pointer exception
     private boolean goDown;         // to set boss helpers go up and down as thier boss
     
