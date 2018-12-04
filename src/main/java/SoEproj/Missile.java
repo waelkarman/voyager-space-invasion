@@ -12,8 +12,8 @@ public class Missile extends Sprite {
 
     private final int BOARD_WIDTH = 585;
     private int damage;
-    private String direction;   // direction
-    private double countX =0; 
+    private String direction;               // direction
+    private double countX = 0; 
     private final int CoeffAng = 3; 
     
     public Missile(int x, int y, String type, String direction) {  // the type è il danno, immagine e velocità

@@ -27,22 +27,22 @@ public class SpaceShip extends Sprite{
     private int life;
     private String missiletype; //imposta danno, velocita, image
     private boolean music;
-    private Thread SpaceshipMissileAnimator;
+    private Thread shipMissileFire;
                  
     
 
-    public SpaceShip(int x, int y, int color,boolean m) {
+    public SpaceShip(int x, int y, int color, boolean m) {
         super(x, y);
         missiles = new ArrayList<>();
         this.missiletype = "Laser";
         this.life = 1;
         this.type = color;
-        this.SPACE = 1; //velocita
+        this.SPACE = 1;     // velocità
         music = m;
         setColor(color);
 
-        SpaceshipMissileAnimator = new Thread(new FireThread(this));
-        SpaceshipMissileAnimator.start();
+        shipMissileFire = new Thread(new FireThread(this));
+        shipMissileFire.start();
     }
 
     private void setColor(int color) {
@@ -66,25 +66,70 @@ public class SpaceShip extends Sprite{
         getImageDimensions();
     }
 
+
     public synchronized int getLife() {
         return this.life;
     }
+
 
     public synchronized void setLife(int life) {
         this.life = life;
     }
     
+
     public synchronized Boolean getFiring() {
         return this.firing;
     }
+
 
     public synchronized void setFiring(Boolean firing) {
         this.firing = firing;
     }
 
+
     public synchronized void setMissiletype(String missiletype) {
         this.missiletype = missiletype;
     }
+
+
+    public synchronized  List<Missile> getMissiles() {
+        return missiles;
+    }
+
+
+    public synchronized void fire() {
+        if( missiletype != "3Missiles"){
+            
+            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
+            
+            
+            if(music) {
+                try {
+                    InputStream in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
+                    AudioStream audios = new AudioStream(in);
+                    AudioPlayer.player.start(audios);
+                } catch (IOException e) {
+                    System.out.println("Spaceship Music: " + e);
+                }
+            }
+        }
+        else{
+            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
+            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToTop" ));
+            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToBottom" ));
+            
+            if(music){
+                try {
+                    InputStream in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
+                    AudioStream audios = new AudioStream(in);
+                    AudioPlayer.player.start(audios);
+                } catch (IOException e) {
+                    System.out.println("Spaceship Music: " + e);
+                }
+            }
+        }  
+    }
+
 
     public void move() {       
         x += dx;
@@ -99,10 +144,6 @@ public class SpaceShip extends Sprite{
         }
     }
 
-
-    public synchronized  List<Missile> getMissiles() {
-        return missiles;
-    }
 
     // TODO risolvere certe combinazioni di tasti che non funzionano (es. space+down+right)
     public void keyPressed(KeyEvent e) {
@@ -133,38 +174,6 @@ public class SpaceShip extends Sprite{
         }
     }
 
-    public void fire() {
-        if( missiletype != "3Missiles"){
-            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
-            if(music==true){
-                InputStream in;
-                try {
-                    in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
-                    AudioStream audios;
-                    audios = new AudioStream(in);
-                    AudioPlayer.player.start(audios);
-                } catch (IOException ex) {
-                }
-            }
-        }
-        else{
-            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
-            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToTop" ));
-            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToBottom" ));
-            if(music==true){
-                InputStream in;
-                try {
-                    in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
-                    AudioStream audios;
-                    audios = new AudioStream(in);
-                    AudioPlayer.player.start(audios);
-                } catch (IOException ex) {
-                }
-            }
-        }
-        
-    }
-
     public void keyReleased(KeyEvent e) throws InterruptedException {
 
         int key = e.getKeyCode();
@@ -189,6 +198,7 @@ public class SpaceShip extends Sprite{
             dy = 0;
         }
     }
+
 
     @Override
     public Area getShape(){

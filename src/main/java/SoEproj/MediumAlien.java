@@ -1,5 +1,7 @@
 package SoEproj;
 
+import java.util.List;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,6 +16,7 @@ public class MediumAlien extends Alien implements Runnable{
         super(x, y, 2);
         SPACE = 2;
         super.points = 75;
+        
         loadImage(imagePath);
         getImageDimensions();
 
@@ -21,8 +24,8 @@ public class MediumAlien extends Alien implements Runnable{
         AlienMissileAnimator.start();
     }
 
-    public void move() {
-        
+
+    public void move() {        
         if (x < 0) {
             setDying(true);
         }
@@ -30,25 +33,26 @@ public class MediumAlien extends Alien implements Runnable{
         x -= SPACE;
     }
 
+
     public void fire() {
-        missiles.add(new Missile(x , y + height / 2, "Laser", "rightToLeft"));
+        synchronized(missiles){
+            missiles.add(new Missile(x , y + height / 2, "Laser", "rightToLeft"));
+        }
     }
+
 
     @Override
     public void run() {
         while(true){
-            synchronized(missiles){
-                fire();
-            }  
-            
-            int sleep = 8000;
+
             try {
-                Thread.sleep(sleep);
+                fire();
+                Thread.sleep(8000);
             } catch (InterruptedException e) {
-                String msg = String.format("Thread fire interrupted: %s", e.getMessage());
-                System.out.println(msg);
+                System.out.println("Thread Medium Alien: " + e.getMessage());
             }
         }
     }
+
 
 }

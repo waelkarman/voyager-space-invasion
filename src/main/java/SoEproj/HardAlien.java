@@ -1,6 +1,7 @@
 package SoEproj;
 
 import  java.lang.Math;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -41,23 +42,22 @@ public class HardAlien extends Alien implements Runnable{
 
     }
 
+
     public void fire() {
-        missiles.add(new Missile(x , y + height / 2, "Laser", "rightToLeft"));
+        synchronized(missiles){
+            missiles.add(new Missile(x , y + height / 2, "Laser", "rightToLeft"));
+        }
     }
 
     @Override
     public void run() {
         while(true){
-            synchronized(missiles){
-                fire();
-            }  
-            
-            int sleep = 5000;
+
             try {
-                Thread.sleep(sleep);
+                fire();
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
-                String msg = String.format("Thread fire interrupted: %s", e.getMessage());
-                System.out.println(msg);
+                System.out.println("Thread Hard Alien: " + e.getMessage());
             }
         }
     }

@@ -1,7 +1,6 @@
 package SoEproj;
 
 import java.util.List;
-import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,11 +18,10 @@ public class Boss1Alien extends Alien implements Runnable{
 
     public Boss1Alien(int x, int y, List<Alien> aliens) {
         super(x, y, 10);
-        System.out.println("Prima dell'inizializzazione della lista");
         this.aliens = aliens;
-        System.out.println("Dopo l'inizializzazione della lista");
         SPACE = 3/2;
         super.points = 800;
+
         loadImage(imagePath);
         getImageDimensions();
 
@@ -54,34 +52,41 @@ public class Boss1Alien extends Alien implements Runnable{
         }
     }
 
+
+    public synchronized List<Missile> getMissiles() {
+        return missiles;
+    }
+
+
     public void fire() {
-        missiles.add(new Missile(x , y + height/2, "Laser", "rightToTop"));
-        missiles.add(new Missile(x , y + height/2, "Laser", "rightToLeft"));
-        missiles.add(new Missile(x , y + height/2, "Laser", "rightToBottom"));
+        synchronized(missiles){
+            missiles.add(new Missile(x , y + height/2, "Laser", "rightToTop"));
+            missiles.add(new Missile(x , y + height/2, "Laser", "rightToLeft"));
+            missiles.add(new Missile(x , y + height/2, "Laser", "rightToBottom"));
+        }
     }
 
     @Override
     public void run() {
         while(true){
-            int sleep = 7000;
 
             // TODO i BossHelper devono uscire solo se gli altri sono già morti prima
             if (life < TOT_LIFE * 0.5) {
-                aliens.add(new EasyAlien(x, y - 30, "BossHelper", goDown));
-                aliens.add(new EasyAlien(x, y, "BossHelper", goDown));
-                aliens.add(new EasyAlien(x, y + 30, "BossHelper", goDown));
+                synchronized(aliens){
+                    aliens.add(new EasyAlien(x, y - 30, "BossHelper", goDown));
+                    aliens.add(new EasyAlien(x, y, "BossHelper", goDown));
+                    aliens.add(new EasyAlien(x, y + 30, "BossHelper", goDown));
+                }
             }
 
-            synchronized(missiles){
-                fire();
-            }  
             
             try {
-                Thread.sleep(sleep);
+                Thread.sleep(5000);
+                fire();
             } catch (InterruptedException e) {
-                String msg = String.format("Thread fire interrupted: %s", e.getMessage());
-                System.out.println(msg);
+                System.out.println("Thread Boss1: " + e.getMessage());
             }
+
         }
     }
 

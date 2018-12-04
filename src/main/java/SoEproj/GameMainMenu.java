@@ -17,9 +17,6 @@ import javax.swing.JPanel;
  */
 public class GameMainMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GameMainMenu
-     */
     
     private Image iconWindows;
     private Image background;

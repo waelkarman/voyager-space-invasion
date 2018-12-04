@@ -19,28 +19,28 @@ public class FireThread implements Runnable{
 
     // TODO risolvere spari a raffica
     @Override
-    public void run() {
-        
-            while(true){    
-                if (!s.getFiring()) {
-                    synchronized(missiles){
-                        try { 
+    public void run() { 
+        while(true){    
+            if(!s.getFiring()) {
+                synchronized(missiles){
+                    try { 
                         missiles.wait();
-                        } catch (InterruptedException e)  {
-                            System.out.println(e); 
-                        }
+                    } catch (InterruptedException e)  {
+                        System.out.println("FireThread wait: " + e); 
                     }
-                } 
+                }
+            }
 
-                s.fire();
-
+            s.fire();
+            
+            if(s.getFiring()){
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(300);                                                                                                            
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
             }
-        
+        } 
     }
-
+     
 }

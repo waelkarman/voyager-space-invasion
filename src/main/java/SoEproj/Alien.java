@@ -5,11 +5,6 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 public abstract class Alien extends Sprite {
 
@@ -25,6 +20,13 @@ public abstract class Alien extends Sprite {
         missiles = new ArrayList<>();
     }
 
+    public synchronized List<Missile> getMissiles() {
+        return this.missiles;
+    }
+
+    public int getPoints() {
+        return this.points;
+    }
     
     public int getINITIAL_X() {
         return this.INITIAL_X;
@@ -46,8 +48,4 @@ public abstract class Alien extends Sprite {
         return new Area(shape);
     }
 
-  
-    public List<Missile> getMissiles() {
-        return missiles;
-    }
 }

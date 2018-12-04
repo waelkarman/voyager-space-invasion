@@ -62,28 +62,23 @@ public abstract class Sprite {
         return y;
     }
 
-    public boolean getIsDying() {
+    public synchronized boolean isDying() {
         return dying;
     }
 
-    public boolean isVisible() {
+    public synchronized boolean isVisible() {
         return visible;
     }
 
-    public void setVisible(boolean visible) {
+    public synchronized void setVisible(boolean visible) {
         this.visible = visible;
     }
 
-    public void setDying(boolean dying) {
+    public synchronized void setDying(boolean dying) {
         this.dying = dying;
     }
 
-    // returns the bounding rectangle of the sprite image
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
-    }
-
-    public void die() {    
+    public synchronized void die() {    
         visible = false;
     }
 
@@ -91,8 +86,9 @@ public abstract class Sprite {
         this.image = image;
     }
 
-    public boolean isDying() {   
-        return this.dying;
+    // returns the bounding rectangle of the sprite image
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, width, height);
     }
 
     public abstract Area getShape();
