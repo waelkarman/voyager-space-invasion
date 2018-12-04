@@ -12,11 +12,12 @@ public class EasyAlien extends Alien {
     private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\WeakAlien.png";
     private String moveType = "";   // initialization needed to avoid null pointer exception
     private boolean goDown;         // to set boss helpers go up and down as thier boss
+    
 
     public EasyAlien(int x, int y) {
         super(x, y, 1);
         SPACE = 1;
-
+        super.points = 50;
         loadImage(imagePath);
         getImageDimensions();
     }
@@ -26,7 +27,7 @@ public class EasyAlien extends Alien {
         this.moveType = moveType;
         this.goDown = goDown;
         SPACE = 1;
-
+        this.points = 50;
         loadImage(imagePath);
         getImageDimensions();
     }

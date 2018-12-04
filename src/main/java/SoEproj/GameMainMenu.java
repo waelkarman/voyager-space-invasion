@@ -157,7 +157,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JPanel principalPanel = this.jPanel1;
         this.getContentPane().remove(jPanel1);
-        Board b = new Board(ship, principalPanel,music);
+        Board b = new Board(ship, principalPanel,music,1);
         this.add(b).requestFocusInWindow();
         this.validate();
         this.repaint();

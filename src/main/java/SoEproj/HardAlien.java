@@ -19,7 +19,7 @@ public class HardAlien extends Alien implements Runnable{
         meanY = y;
         SPACE = 3/2;
         amplitude = 50;
-
+        super.points = 100;
         loadImage(imagePath);
         getImageDimensions();
 

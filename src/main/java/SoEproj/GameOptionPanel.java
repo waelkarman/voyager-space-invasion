@@ -265,7 +265,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
-        Board b = new Board(ship, menuPanel,music);
+        Board b = new Board(ship, menuPanel,music,1);
         old.add(b).requestFocusInWindow();
         old.validate();
         old.repaint();

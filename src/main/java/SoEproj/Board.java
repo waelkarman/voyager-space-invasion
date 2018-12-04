@@ -38,10 +38,17 @@ public class Board extends JPanel implements Runnable {
     private final int DELAY = 15;
     private final double BG_SPEED = 0.5; // background speed
 
+    private int score = 0; // variabile punteggio che si aggiorna ad ogni alieno ucciso, dev'essere controllata nel ciclo di update per aggiornare 
+    //lo score dinamicamente
+
     private SpaceShip spaceCraft;
     private List<Alien> aliens;
     private int gameState;
     private Thread animator;
+    private int level;
+
+    private Thread thread_gen; //thread per generare gli alieni 
+    private AlienGenerator aliengen; // classe per la generazione
 
     private ImageIcon bgImgIcon;
     private Image background;
@@ -52,12 +59,21 @@ public class Board extends JPanel implements Runnable {
     JLabel setting = new JLabel(" SETTING ");
     boolean music;
     
-    public Board(int shipType, JPanel p, boolean m) {
-        bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
-        background = bgImgIcon.getImage();
+    //il parametro livello serve per cambiare aspetto, alieni e complessità in base alla situazione
+    public Board(int shipType, JPanel p, boolean m,int level) {
+        this.level = level;
+
+        //se sono nel livello 1 carico uno specifico background
+        if(this.level ==1){
+            bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
+            background = bgImgIcon.getImage();
+        }
+        
         menuPanel=p;
-        music=m;
-        initGame(shipType);
+        music=m; //eventualità di cambio musica ad ogni livello 
+        
+
+        initGame(shipType); // potrebbe cambiare in base al livello
         animator = new Thread(this);
         gameLaunch();
     }
@@ -71,7 +87,13 @@ public class Board extends JPanel implements Runnable {
 
         spaceCraft = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, music);
 
-        initAliens();
+        //cambia in base al livello 
+        aliens = new ArrayList<>();
+        aliengen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens,this.level);
+        System.out.print("Thread creato");
+        thread_gen = new Thread(aliengen);
+        thread_gen.start();
+        //initAliens();
     }
 
 
@@ -158,30 +180,46 @@ public class Board extends JPanel implements Runnable {
             }
         }
 
-
+        synchronized(aliens){
         // they are drawn only if they have not been previously destroyed.
-        for (Alien alien : aliens) {
-            if (alien.isVisible()) {    
-                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
-            }
+            for (Alien alien : aliens) {
+                if (alien.isVisible()) {    
+                    g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
+                }
 
-            List<Missile> as = alien.getMissiles();
-            synchronized(as){
-                for (Missile missile : as) {
-                    if (missile.isVisible()) {
-                        g.drawImage(missile.getImage(), missile.getX(), 
-                                missile.getY(), this);
+                List<Missile> as = alien.getMissiles();
+                synchronized(as){
+                    for (Missile missile : as) {
+                        if (missile.isVisible()) {
+                            g.drawImage(missile.getImage(), missile.getX(), 
+                                    missile.getY(), this);
+                        }
                     }
                 }
-            }
 
-            if (alien.isDying()) {
-                alien.die();
-                if (alien instanceof Boss1Alien)
-                    gameState = 2;
-            }
+                if (alien.isDying()) {
+                    alien.die();
+                    if (alien instanceof Boss1Alien){
+                        //aliens.clear();
+                        if(this.level <3){
+                            this.level +=1;
+
+                            aliengen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens,this.level);
+                            System.out.print("Thread creato");
+                            System.out.print(this.level);
+                            thread_gen = new Thread(aliengen);
+                            thread_gen.start();
+                        } else {
+                            gameState = 2;
+                        }
+                        
+                    
+                    
+
+                        //gameState = 2;
+                }
+         }}
         }
-
         // In the top-left corner of the window, we draw how many aliens are left.
         // TODO Correggere scritte sopra allo sfondo
         g.setColor(Color.WHITE);
@@ -294,136 +332,144 @@ public class Board extends JPanel implements Runnable {
 
 
     private void updateAliens() {
-
+        /*
         if (aliens.isEmpty()) {
             gameState = 2;
             return;
         }
-
-        for (int i = 0; i < aliens.size(); i++) {
-            Alien alien = aliens.get(i);
-            
-            if (alien.isVisible()) {
+        */
+        synchronized(aliens){
+            for (int i = 0; i < aliens.size(); i++) {
+                Alien alien = aliens.get(i);
                 
-                List<Missile> alienMissiles = alien.getMissiles();
-                synchronized(alienMissiles){
-                    for (int k = 0; k < alienMissiles.size(); k++) {
-                        Missile m = alienMissiles.get(k);
-                        
-                        if (m.isVisible()) {
-                            m.move();
-                        } 
-                        else {
-                            alienMissiles.remove(k);
+                if (alien.isVisible()) {
+                    
+                    List<Missile> alienMissiles = alien.getMissiles();
+                    synchronized(alienMissiles){
+                        for (int k = 0; k < alienMissiles.size(); k++) {
+                            Missile m = alienMissiles.get(k);
+                            
+                            if (m.isVisible()) {
+                                m.move();
+                            } 
+                            else {
+                                alienMissiles.remove(k);
+                            }
                         }
                     }
-                }
-                alien.move();
-            } 
-            else
-                aliens.remove(i);
+                    alien.move();
+                } 
+                else{
+                    score += aliens.remove(i).points; // chiedere ad emilio come mai mi fa ritornare il punteggio senza un getter
+                    System.out.print(score); 
+                    
+            }
         }
     }
+}
+
+
 
     public void checkCollisions() {
 
         Area r3 = spaceCraft.getShape();
 
-        for (Alien alien : aliens) {
-            Area r2 = alien.getShape();
-            r2.intersect(r3);
-            
-            if (!r2.isEmpty()) {   
-                alien.setDying(true);
-                ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
-                alien.setImage(i1.getImage());
+        synchronized(aliens){
+            for (Alien alien : aliens) {
+                Area r2 = alien.getShape();
+                r2.intersect(r3);
+                
+                if (!r2.isEmpty()) {   
+                    alien.setDying(true);
+                    ImageIcon i1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
+                    alien.setImage(i1.getImage());
 
-                spaceCraft.setDying(true);
-                ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
-                spaceCraft.setImage(i2.getImage());
-                if(music==true){
-                    InputStream in;
-                    try {
-                        in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav"));
-                        AudioStream audios = new AudioStream(in);
-                        AudioPlayer.player.start(audios);   
-                    } catch (IOException ex) {
+                    spaceCraft.setDying(true);
+                    ImageIcon i2 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
+                    spaceCraft.setImage(i2.getImage());
+                    if(music==true){
+                        InputStream in;
+                        try {
+                            in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav"));
+                            AudioStream audios = new AudioStream(in);
+                            AudioPlayer.player.start(audios);   
+                        } catch (IOException ex) {
+                        }
+                    }
+                    
+                }
+            }
+
+
+
+            for (int i = 0; i < aliens.size(); i++) {
+                Alien alien = aliens.get(i);
+    
+                List<Missile> missiles = alien.getMissiles();
+                synchronized(missiles){
+                
+                    for (Missile m : missiles) {
+                        Area r1 = m.getShape();
+                        Area r2 = spaceCraft.getShape();
+
+                        r2.intersect(r1);
+                        
+                        if (!r2.isEmpty()) {
+                            spaceCraft.setLife(-1);
+                            m.setVisible(false);
+                            if(spaceCraft.getLife() <= 0){
+                                
+                                spaceCraft.setDying(true);
+                                ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
+                                spaceCraft.setImage(i3.getImage());
+                                if(music==true){
+                                    InputStream in;
+                                    try {
+                                        in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav"));
+                                        AudioStream audios = new AudioStream(in);
+                                        AudioPlayer.player.start(audios);   
+                                    } catch (IOException ex) {
+                                    }
+                                }
+                            }   
+                        }
                     }
                 }
-                
             }
-        }
-
-
-
-        for (int i = 0; i < aliens.size(); i++) {
-            Alien alien = aliens.get(i);
-  
-            List<Missile> missiles = alien.getMissiles();
-            synchronized(missiles){
             
+            List<Missile> missiles = spaceCraft.getMissiles();
+            synchronized(missiles){
                 for (Missile m : missiles) {
                     Area r1 = m.getShape();
-                    Area r2 = spaceCraft.getShape();
-
-                    r2.intersect(r1);
                     
-                    if (!r2.isEmpty()) {
-                        spaceCraft.setLife(-1);
-                        m.setVisible(false);
-                        if(spaceCraft.getLife() <= 0){
-                            
-                            spaceCraft.setDying(true);
-                            ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
-                            spaceCraft.setImage(i3.getImage());
-                            if(music==true){
-                                InputStream in;
-                                try {
-                                    in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav"));
-                                    AudioStream audios = new AudioStream(in);
-                                    AudioPlayer.player.start(audios);   
-                                } catch (IOException ex) {
+                    for (Alien alien : aliens) {
+                        Area r2 = alien.getShape();
+                        r2.intersect(r1);
+                        
+                        if (!r2.isEmpty()) {
+                            alien.setLife(m.getDamage());
+                            m.setVisible(false);
+                            if(alien.getLife() <= 0){
+                                
+                                alien.setDying(true);
+                                ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
+                                alien.setImage(i3.getImage());
+                                if(music==true){
+                                    InputStream in;
+                                    try {
+                                        in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/CollisionSound.wav"));
+                                        AudioStream audios = new AudioStream(in);
+                                        AudioPlayer.player.start(audios);   
+                                    } catch (IOException ex) {
+                                    }
                                 }
-                            }
-                        }   
-                    }
-                }
-            }
-        }
-
-        List<Missile> missiles = spaceCraft.getMissiles();
-        synchronized(missiles){
-            for (Missile m : missiles) {
-                Area r1 = m.getShape();
-                
-                for (Alien alien : aliens) {
-                    Area r2 = alien.getShape();
-                    r2.intersect(r1);
-                    
-                    if (!r2.isEmpty()) {
-                        alien.setLife(m.getDamage());
-                        m.setVisible(false);
-                        if(alien.getLife() <= 0){
-                            
-                            alien.setDying(true);
-                            ImageIcon i3 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
-                            alien.setImage(i3.getImage());
-                            if(music==true){
-                                InputStream in;
-                                try {
-                                    in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/CollisionSound.wav"));
-                                    AudioStream audios = new AudioStream(in);
-                                    AudioPlayer.player.start(audios);   
-                                } catch (IOException ex) {
-                                }
-                            }
-                        }   
+                            }   
+                        }
                     }
                 }
             }
         }
     }
-    
     
     public void EndGameFunction(int outcome){
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);

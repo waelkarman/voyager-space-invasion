@@ -6,14 +6,14 @@ package SoEproj;
  * and open the template in the editor.
  */
 
-public abstract class MediumAlien extends Alien implements Runnable{
+public class MediumAlien extends Alien implements Runnable{
 
     private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png";
 
     public MediumAlien(int x, int y) {
         super(x, y, 2);
         SPACE = 2;
-
+        super.points = 75;
         loadImage(imagePath);
         getImageDimensions();
 

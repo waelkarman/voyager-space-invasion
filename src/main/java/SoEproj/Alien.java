@@ -16,6 +16,8 @@ public abstract class Alien extends Sprite {
     protected List<Missile> missiles;
     protected final int INITIAL_X = 600;
     protected int life;
+    protected int points;
+
 
     public Alien(int x, int y, int life) {
         super(x, y);

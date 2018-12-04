@@ -23,7 +23,7 @@ public class Boss1Alien extends Alien implements Runnable{
         this.aliens = aliens;
         System.out.println("Dopo l'inizializzazione della lista");
         SPACE = 3/2;
-        
+        super.points = 800;
         loadImage(imagePath);
         getImageDimensions();
 
