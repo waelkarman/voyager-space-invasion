@@ -63,7 +63,7 @@ public class packGenerator implements Runnable {
         
 
             //TODO settare opportunamente il tempo 
-            sleep = 5000;
+            sleep = 10000;
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
