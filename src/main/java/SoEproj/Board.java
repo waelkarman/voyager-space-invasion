@@ -39,9 +39,10 @@ public class Board extends JPanel implements Runnable {
     // TODO Lo score deve essere controllato nel ciclo di update per aggiornarsi dinamicamente
     private int score = 0;      // every kill updates the score
 
+    private final File boardSound;
     private final ImageIcon alienExpl;
-    private final File alienExplSound;
     private final ImageIcon shipExpl;
+    private final File alienExplSound;
     private final File shipExplSound;
 
     private SpaceShip spaceShip;
@@ -50,7 +51,7 @@ public class Board extends JPanel implements Runnable {
     private Thread animator;
     private int level;
 
-    private Thread threadGen;          // alien generator thread 
+    private Thread threadGen;           // alien generator thread 
     private AlienGenerator alienGen;    // alien generator class
 
     private ImageIcon bgImgIcon;
@@ -65,7 +66,8 @@ public class Board extends JPanel implements Runnable {
 
     public Board(int shipType, JPanel p, boolean m, int level, int km) {
         this.level = level;
-        // Images initialization
+        // Images and soundtracks initialization
+        boardSound = new File("./src/main/java/SoEproj/Resource/ThemeLevelSound1.wav");
         alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
         shipExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionShip.png");
         alienExplSound = new File("./src/main/java/SoEproj/Resource/CollisionSound.wav");
@@ -78,10 +80,10 @@ public class Board extends JPanel implements Runnable {
         }
         
         menuPanel = p;
-        isMusicOn = m;    // eventualità di cambio musica ad ogni livello 
-        keyModality = km; // selettore di modalità comandi di gioco
+        isMusicOn = m;          // eventualità di cambio musica ad ogni livello 
+        keyModality = km;       // game commands switcher
         
-        initGame(shipType);     // potrebbe cambiare in base al livello
+        initGame(shipType);     // shipType may change with level
         gameLaunch();
     }
 
@@ -94,7 +96,7 @@ public class Board extends JPanel implements Runnable {
 
         spaceShip = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn, keyModality);
 
-        //cambia in base al livello 
+        // changes with level
         aliens = new ArrayList<>();
         alienGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens,this.level);
         
@@ -109,12 +111,13 @@ public class Board extends JPanel implements Runnable {
         super.paintComponent(g);
 
         // draw game sprites or write the game over message
-        if(gameState == 1) {
+        // TODO Rendere gameState un enum
+        if(gameState == 1) {        // draw background and game elements
             drawBackground(g);
             drawGame(g);
         } 
-        else if(gameState == 2) {// sono morto allora ho perso
-            EndGameFunction(0); //passo 0 per indicare al pannelllo di disegnare il gameover 
+        else if(gameState == 2) {   // draw game over background gif after the lose condition
+            EndGameFunction(0);     // passing 0 to draw game over background 
         }
 
         Toolkit.getDefaultToolkit().sync();
@@ -236,7 +239,7 @@ public class Board extends JPanel implements Runnable {
 
             if(isMusicOn) {
                 try {
-                    InputStream in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/ThemeLevelSound1.wav"));
+                    InputStream in = new FileInputStream(boardSound);
                     AudioStream audios = new AudioStream(in);
                     AudioPlayer.player.start(audios);
                 }catch (IOException e) {

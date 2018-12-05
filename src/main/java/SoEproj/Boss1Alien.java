@@ -68,8 +68,8 @@ public class Boss1Alien extends Alien implements Runnable{
 
     @Override
     public void run() {
-        while(true){
-
+        while(isVisible()){
+            System.out.println("Bossss ");
             // TODO i BossHelper devono uscire solo se gli altri sono già morti prima
             if (life < TOT_LIFE * 0.5) {
                 synchronized(aliens){

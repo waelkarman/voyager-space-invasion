@@ -21,8 +21,9 @@ public class GameEndPanel extends javax.swing.JPanel {
      */
     JPanel menuPanel;
     public GameEndPanel(int outcome, JPanel p) {
-         menuPanel=p;
+        menuPanel=p;
         initComponents();
+        
         if(outcome == 1)
             loadWinImage();
     }
