@@ -188,7 +188,7 @@ public class Board extends JPanel implements Runnable {
         // In the top-left corner of the window, we draw how many aliens are left.
         // TODO Correggere scritte sopra allo sfondo
         g.setColor(Color.WHITE);
-        g.drawString("Aliens left: " + aliens.size(), 5, 15);
+        g.drawString("Score : " + score, 5, 15);
     }
 
     /*
@@ -294,7 +294,7 @@ public class Board extends JPanel implements Runnable {
                         alien.move();
                     }  
                     else {
-                        score += alien.getPoints();
+                        //score += alien.getPoints();
                         aliens.remove(alien);
                     }
                 } 
@@ -377,6 +377,7 @@ public class Board extends JPanel implements Runnable {
 
                             if(alien.getLife() <= 0){
                                 alien.setDying(true);
+                                score += alien.getPoints();
                                 alien.setImage(alienExpl.getImage());
 
                                 if(isMusicOn) {
