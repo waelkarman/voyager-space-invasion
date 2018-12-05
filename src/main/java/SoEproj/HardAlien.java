@@ -13,7 +13,7 @@ public class HardAlien extends Alien implements Runnable{
 
     private final int amplitude;    // oscillation dimension
     private final int meanY;        // alien swings around this mean value
-    private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png";
+    private String imagePath = "./src/main/java/SoEproj/Resource/HeavyAlien.png";
 
     public HardAlien(int x, int y) {
         super(x, y, 2);

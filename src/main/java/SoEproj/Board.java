@@ -35,7 +35,10 @@ public class Board extends JPanel implements Runnable {
     private final int B_HEIGHT = 450;
     private final int DELAY = 15;
     private final double BG_SPEED = 0.5;    // background speed
-    private int score = 0;  // punteggio che si aggiorna ad ogni alieno ucciso, dev'essere controllata nel ciclo di update per aggiornare lo score dinamicamente
+    
+    // TODO Lo score deve essere controllato nel ciclo di update per aggiornarsi dinamicamente
+    private int score = 0;      // every kill updates the score
+
     private final ImageIcon alienExpl;
     private final File alienExplSound;
     private final ImageIcon shipExpl;
@@ -47,31 +50,34 @@ public class Board extends JPanel implements Runnable {
     private Thread animator;
     private int level;
 
-    private Thread thread_gen; //thread per generare gli alieni 
-    private AlienGenerator aliengen; // classe per la generazione
+    private Thread threadGen;          // alien generator thread 
+    private AlienGenerator alienGen;    // alien generator class
 
     private ImageIcon bgImgIcon;
     private Image background;
-    private double bg_x_shift;
+    private double bgShiftX;
+
     private JPanel menuPanel;
-    private boolean music;
+
+    private boolean isMusicOn;
     
-    //il parametro livello serve per cambiare aspetto, alieni e complessità in base alla situazione
+
     public Board(int shipType, JPanel p, boolean m, int level) {
         this.level = level;
-        alienExpl = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
-        shipExpl = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
+        // Images initialization
+        alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
+        shipExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionShip.png");
         alienExplSound = new File("./src/main/java/SoEproj/Resource/CollisionSound.wav");
         shipExplSound = new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav");
 
-        //se sono nel livello 1 carico uno specifico background
-        if(this.level ==1){
-            bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
+        // level 1 background image
+        if(this.level == 1){
+            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround1.png");
             background = bgImgIcon.getImage();
         }
         
         menuPanel = p;
-        music = m;    // eventualità di cambio musica ad ogni livello 
+        isMusicOn = m;    // eventualità di cambio musica ad ogni livello 
         
         initGame(shipType);     // potrebbe cambiare in base al livello
         gameLaunch();
@@ -84,20 +90,19 @@ public class Board extends JPanel implements Runnable {
         addKeyListener(new TAdapter());
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceShip = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, music);
+        spaceShip = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn);
 
         //cambia in base al livello 
         aliens = new ArrayList<>();
-        aliengen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens,this.level);
+        alienGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens,this.level);
         
-        thread_gen = new Thread(aliengen);
-        thread_gen.start();
-        //initAliens();
+        threadGen = new Thread(alienGen);
+        threadGen.start();
     }
 
 
     @Override
-   // This method will be executed by the painting subsystem whenever you component needs to be rendered
+    // This method will be executed by the painting subsystem whenever you component needs to be rendered
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -116,14 +121,14 @@ public class Board extends JPanel implements Runnable {
 
     private void drawBackground(Graphics g) {
         
-        if (bg_x_shift > background.getWidth(null)) {
-            bg_x_shift = 0;
+        if (bgShiftX > background.getWidth(null)) {
+            bgShiftX = 0;
         } else {
-            bg_x_shift += BG_SPEED;
+            bgShiftX += BG_SPEED;
         }
 
-        g.drawImage(background, (int) -bg_x_shift, 0, null);
-        g.drawImage(background, background.getWidth(null) - (int) bg_x_shift, 0, null);
+        g.drawImage(background, (int) -bgShiftX, 0, null);
+        g.drawImage(background, background.getWidth(null) - (int) bgShiftX, 0, null);
     }
 
 
@@ -168,9 +173,9 @@ public class Board extends JPanel implements Runnable {
                         if(this.level < 3){
                             this.level += 1;
 
-                            aliengen = new AlienGenerator(background.getWidth(null), background.getHeight(null), aliens, this.level);
-                            thread_gen = new Thread(aliengen);
-                            thread_gen.start();
+                            alienGen = new AlienGenerator(background.getWidth(null), background.getHeight(null), aliens, this.level);
+                            threadGen = new Thread(alienGen);
+                            threadGen.start();
                         } 
                         else {
                             gameState = 2;
@@ -223,7 +228,7 @@ public class Board extends JPanel implements Runnable {
             animator = new Thread(this);
             animator.start();
 
-            if(music) {
+            if(isMusicOn) {
                 try {
                     InputStream in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/ThemeLevelSound1.wav"));
                     AudioStream audios = new AudioStream(in);
@@ -302,7 +307,7 @@ public class Board extends JPanel implements Runnable {
                     spaceShip.setDying(true);
                     spaceShip.setImage(shipExpl.getImage());
                     
-                    if(music){
+                    if(isMusicOn){
                         try {
                             InputStream in = new FileInputStream(shipExplSound);
                             AudioStream audios = new AudioStream(in);
@@ -330,7 +335,7 @@ public class Board extends JPanel implements Runnable {
                                 spaceShip.setDying(true);
                                 spaceShip.setImage(shipExpl.getImage());
 
-                                if(music){
+                                if(isMusicOn){
                                     try {
                                         InputStream in = new FileInputStream(shipExplSound);
                                         AudioStream audios = new AudioStream(in);
@@ -361,7 +366,7 @@ public class Board extends JPanel implements Runnable {
                                 alien.setDying(true);
                                 alien.setImage(alienExpl.getImage());
 
-                                if(music) {
+                                if(isMusicOn) {
                                     try {
                                         InputStream in = new FileInputStream(alienExplSound);
                                         AudioStream audios = new AudioStream(in);

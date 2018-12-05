@@ -104,7 +104,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OrangeCraft.png")); // NOI18N
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jRadioButton4.setBackground(new java.awt.Color(0, 0, 102));
@@ -140,15 +140,15 @@ public class GameOptionPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/RedCraft.png")); // NOI18N
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GreenCraft.png")); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1_Logo.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround1_Logo.png")); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround2_Logo.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround2_Logo.png")); // NOI18N
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround3_Logo.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround3_Logo.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
