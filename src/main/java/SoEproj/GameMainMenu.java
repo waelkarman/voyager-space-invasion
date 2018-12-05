@@ -22,6 +22,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     private Image background;
     private int ship;
     private boolean music;
+    private int keyModality;
     
     public GameMainMenu() {
         initComponents();
@@ -154,7 +155,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JPanel principalPanel = this.jPanel1;
         this.getContentPane().remove(jPanel1);
-        Board b = new Board(ship, principalPanel,music,1);
+        Board b = new Board(ship, principalPanel,music,1,keyModality);
         this.add(b).requestFocusInWindow();
         this.validate();
         this.repaint();
@@ -164,7 +165,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         JPanel principalPanel = this.jPanel1;
         this.getContentPane().remove(jPanel1);
-        GameOptionPanel gop = new GameOptionPanel(principalPanel,music);
+        GameOptionPanel gop = new GameOptionPanel(principalPanel,music,keyModality);
         this.add(gop).requestFocusInWindow();
         this.validate();
         this.repaint();
@@ -173,6 +174,10 @@ public class GameMainMenu extends javax.swing.JFrame {
     
     public void setMusic(boolean m){
         music = m;
+    }
+    
+    public void setKeyMode(int mod){
+        keyModality = mod;
     }
     
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

@@ -22,13 +22,15 @@ public class GameOptionPanel extends javax.swing.JPanel {
     private JPanel menuPanel;
     private boolean music;
     private int level;
+    private int keyModality;
     
     /** Creates new form GameOptionPanel */
-    public GameOptionPanel(JPanel p, boolean m) {
+    public GameOptionPanel(JPanel p, boolean m, int km) {
         initComponents();
         ship = 2;
         menuPanel = p;
         music = m;
+        keyModality = km;
     }
 
     /** This method is called from within the constructor to
@@ -105,30 +107,41 @@ public class GameOptionPanel extends javax.swing.JPanel {
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OrangeCraft.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png")); // NOI18N
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        // radio button for selecting level 1
         jRadioButton4.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton4);
         jRadioButton4.setFont(new java.awt.Font("Rockwell", 1, 11)); // NOI18N
         jRadioButton4.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton4.setText("World 1");
+        jRadioButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButton4MouseClicked(evt);
+            }
+        });
 
-        // radio button for selecting level 2
         jRadioButton5.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton5);
         jRadioButton5.setFont(new java.awt.Font("Rockwell", 1, 11)); // NOI18N
         jRadioButton5.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton5.setText("World 2");
+        jRadioButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButton5MouseClicked(evt);
+            }
+        });
 
-        // radio button for selecting level 3
         jRadioButton6.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton6);
         jRadioButton6.setFont(new java.awt.Font("Rockwell", 0, 11)); // NOI18N
         jRadioButton6.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton6.setText("World 3");
-
+        jRadioButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioButton6MouseClicked(evt);
+            }
+        });
 
         jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(0, 0, 102));
@@ -145,15 +158,15 @@ public class GameOptionPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/RedCraft.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png")); // NOI18N
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GreenCraft.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png")); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround1_Logo.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround1_Logo.png")); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround2_Logo.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround2_Logo.png")); // NOI18N
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround3_Logo.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround3_Logo.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -270,11 +283,29 @@ public class GameOptionPanel extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
-        Board b = new Board(ship, menuPanel,music,level);
+        Board b = new Board(ship, menuPanel,music,level,keyModality);
         old.add(b).requestFocusInWindow();
         old.validate();
         old.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jRadioButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton4MouseClicked
+       jTextArea1.setText(null);
+       jTextArea1.setText("Parti da Mondo 1");
+       level=1;
+    }//GEN-LAST:event_jRadioButton4MouseClicked
+
+    private void jRadioButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton5MouseClicked
+       jTextArea1.setText(null);
+       jTextArea1.setText("Parti da Mondo 2");
+       level=2;
+    }//GEN-LAST:event_jRadioButton5MouseClicked
+
+    private void jRadioButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton6MouseClicked
+       jTextArea1.setText(null);
+       jTextArea1.setText("Parti da Mondo 3");
+       level=3;
+    }//GEN-LAST:event_jRadioButton6MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

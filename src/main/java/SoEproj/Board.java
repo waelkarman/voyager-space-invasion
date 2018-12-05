@@ -60,9 +60,10 @@ public class Board extends JPanel implements Runnable {
     private JPanel menuPanel;
 
     private boolean isMusicOn;
+    private int keyModality;
     
 
-    public Board(int shipType, JPanel p, boolean m, int level) {
+    public Board(int shipType, JPanel p, boolean m, int level, int km) {
         this.level = level;
         // Images initialization
         alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
@@ -78,6 +79,7 @@ public class Board extends JPanel implements Runnable {
         
         menuPanel = p;
         isMusicOn = m;    // eventualità di cambio musica ad ogni livello 
+        keyModality = km; // selettore di modalità comandi di gioco
         
         initGame(shipType);     // potrebbe cambiare in base al livello
         gameLaunch();
@@ -90,7 +92,7 @@ public class Board extends JPanel implements Runnable {
         addKeyListener(new TAdapter());
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceShip = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn);
+        spaceShip = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn, keyModality);
 
         //cambia in base al livello 
         aliens = new ArrayList<>();

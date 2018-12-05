@@ -28,10 +28,11 @@ public class SpaceShip extends Sprite{
     private String missiletype; //imposta danno, velocita, image
     private boolean music;
     private Thread shipMissileFire;
+    private int keyModality;
                  
     
 
-    public SpaceShip(int x, int y, int color, boolean m) {
+    public SpaceShip(int x, int y, int color, boolean m, int km) {
         super(x, y);
         missiles = new ArrayList<>();
         this.missiletype = "Laser";
@@ -39,6 +40,7 @@ public class SpaceShip extends Sprite{
         this.type = color;
         this.SPACE = 1;     // velocità
         music = m;
+        keyModality = km;
         setColor(color);
 
         shipMissileFire = new Thread(new FireThread(this));
@@ -149,53 +151,102 @@ public class SpaceShip extends Sprite{
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
+        
+        if(keyModality == 2){
+            if (key == KeyEvent.VK_SPACE) {
+                setFiring(true);
+                synchronized(missiles){
+                    missiles.notifyAll();
+                }   
+            }
 
-        if (key == KeyEvent.VK_SPACE) {
-            setFiring(true);
-            synchronized(missiles){
-                missiles.notifyAll();
-            }   
-        }
+            if (key == KeyEvent.VK_A) {
+                dx = -SPACE;
+            }
 
-        if (key == KeyEvent.VK_LEFT) {
-            dx = -SPACE;
-        }
+            if (key == KeyEvent.VK_D) {
+                dx = SPACE;
+            }
 
-        if (key == KeyEvent.VK_RIGHT) {
-            dx = SPACE;
-        }
+            if (key == KeyEvent.VK_W) {
+                dy = -SPACE;
+            }
 
-        if (key == KeyEvent.VK_UP) {
-            dy = -SPACE;
-        }
+            if (key == KeyEvent.VK_S) {
+                dy = SPACE;
+            }
+        }else{
 
-        if (key == KeyEvent.VK_DOWN) {
-            dy = SPACE;
+            if (key == KeyEvent.VK_SPACE) {
+                setFiring(true);
+                synchronized(missiles){
+                    missiles.notifyAll();
+                }   
+            }
+
+            if (key == KeyEvent.VK_LEFT) {
+                dx = -SPACE;
+            }
+
+            if (key == KeyEvent.VK_RIGHT) {
+                dx = SPACE;
+            }
+
+            if (key == KeyEvent.VK_UP) {
+                dy = -SPACE;
+            }
+
+            if (key == KeyEvent.VK_DOWN) {
+                dy = SPACE;
+            }
         }
     }
 
     public void keyReleased(KeyEvent e) throws InterruptedException {
 
         int key = e.getKeyCode();
+        
+        if(keyModality == 2){
+            if (key == KeyEvent.VK_SPACE) {
+                setFiring(false);
+            }
 
-        if (key == KeyEvent.VK_SPACE) {
-            setFiring(false);
-        }
+            if (key == KeyEvent.VK_A) {
+                dx = 0;
+            }
 
-        if (key == KeyEvent.VK_LEFT) {
-            dx = 0;
-        }
+            if (key == KeyEvent.VK_D) {
+                dx = 0;
+            }
 
-        if (key == KeyEvent.VK_RIGHT) {
-            dx = 0;
-        }
+            if (key == KeyEvent.VK_W) {
+                dy = 0;
+            }
 
-        if (key == KeyEvent.VK_UP) {
-            dy = 0;
-        }
+            if (key == KeyEvent.VK_S) {
+                dy = 0;
+            }
+        }else{
 
-        if (key == KeyEvent.VK_DOWN) {
-            dy = 0;
+            if (key == KeyEvent.VK_SPACE) {
+                setFiring(false);
+            }
+
+            if (key == KeyEvent.VK_LEFT) {
+                dx = 0;
+            }
+
+            if (key == KeyEvent.VK_RIGHT) {
+                dx = 0;
+            }
+
+            if (key == KeyEvent.VK_UP) {
+                dy = 0;
+            }
+
+            if (key == KeyEvent.VK_DOWN) {
+                dy = 0;
+            }
         }
     }
 
