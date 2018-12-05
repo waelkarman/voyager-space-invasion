@@ -44,7 +44,7 @@ public class packGenerator implements Runnable {
                 int x = random.nextInt(580);
                 int y = random.nextInt(430);
                 Random r = new Random();
-                int randomUpgrade = r.nextInt(5);
+                int randomUpgrade = r.nextInt(9);
                 upack.add(new UpgradePack(x,y,randomUpgrade));
                 
             }

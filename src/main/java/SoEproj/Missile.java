@@ -45,6 +45,30 @@ public class Missile extends Sprite {
                 pathImage = "./src/main/java/SoEproj/Resource/Laser.png";
                 break;
             }
+            case "Vecchia":{
+                damage = -3;
+                SPACE = 1;
+                pathImage = "./src/main/java/SoEproj/Resource/vecchia.png";
+                break;
+            }
+            case "Banana":{
+                damage = -1;
+                SPACE = 2;
+                pathImage = "./src/main/java/SoEproj/Resource/banana.png";
+                break;
+            }
+            case "memas":{
+                damage = -2;
+                SPACE = 2;
+                pathImage = "./src/main/java/SoEproj/Resource/memas.png";
+                break;
+            }
+            case "pollo":{
+                damage = 0;
+                SPACE = 2;
+                pathImage = "./src/main/java/SoEproj/Resource/pollo.png";
+                break;
+            }
         }
 
         loadImage(pathImage);

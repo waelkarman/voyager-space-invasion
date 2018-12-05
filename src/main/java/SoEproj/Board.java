@@ -68,6 +68,8 @@ public class Board extends JPanel implements Runnable {
     private boolean isMusicOn;
     private int keyModality;
     
+    private int slife;
+    private int alife;
 
     public Board(int shipType, JPanel p, boolean m, int level, int km) {
         this.level = level;
@@ -83,6 +85,15 @@ public class Board extends JPanel implements Runnable {
             bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround1.png");
             background = bgImgIcon.getImage();
         }
+        if(this.level == 2){
+            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
+            background = bgImgIcon.getImage();
+        }
+        if(this.level == 3){
+            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround3.png");
+            background = bgImgIcon.getImage();
+        }
+
         
         menuPanel = p;
         isMusicOn = m;          // eventualità di cambio musica ad ogni livello 
@@ -204,10 +215,17 @@ public class Board extends JPanel implements Runnable {
                     if (alien instanceof Boss1Alien){ // i'm starting level 2
                         if(this.level < 3){
                             this.level += 1;
-
-                            //background updating
-                            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
-                            background = bgImgIcon.getImage();
+                            if(this.level == 2){
+                                //background updating
+                                bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
+                                background = bgImgIcon.getImage();
+                            }
+                            if(this.level == 3){
+                                //background updating
+                                bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround3.png");
+                                background = bgImgIcon.getImage();
+                            }
+                            
 
                             alienGen = new AlienGenerator(background.getWidth(null), background.getHeight(null), aliens, this.level);
                             threadGen = new Thread(alienGen);
@@ -226,8 +244,8 @@ public class Board extends JPanel implements Runnable {
         g.setColor(Color.WHITE);
         g.drawString("Score : " + score, 5, 15);
         synchronized(spaceShip){
-            g.drawString("Life: " + spaceShip.getLife(),20,35);
-            g.drawString("Speed: " + spaceShip.getSPACE(),20,55);
+            g.drawString("Life: " + spaceShip.getLife(),5,35);
+            g.drawString("Speed: " + spaceShip.getSPACE(),5,55);
         }
         
     }
@@ -357,6 +375,7 @@ public class Board extends JPanel implements Runnable {
                 if (!packsHitbox.isEmpty()) {   
                     synchronized(spaceShip){
                         packs.get(i).updateSpaceShip(spaceShip,packs.get(i).getType()); 
+                    
                     }
 
                     packs.get(i).setDying(true);
@@ -378,11 +397,17 @@ public class Board extends JPanel implements Runnable {
                 if (!alienHitbox.isEmpty()) {   
                     alien.setDying(true);
                     alien.setImage(alienExpl.getImage());
-                    spaceShip.setupLife(-1);
-                    if(spaceShip.getLife() <= 0){
-                        spaceShip.setDying(true);
-                        spaceShip.setImage(shipExpl.getImage());
                     
+
+                    synchronized(spaceShip){
+                        spaceShip.setupLife(-1);
+                        slife = spaceShip.getLife();
+                    }
+                    if(slife <= 0){
+                        synchronized(spaceShip){
+                            spaceShip.setDying(true);
+                            spaceShip.setImage(shipExpl.getImage());
+                        }
                         if(isMusicOn){
                             try {
                                 InputStream in = new FileInputStream(shipExplSound);
@@ -404,13 +429,17 @@ public class Board extends JPanel implements Runnable {
                         missileHitbox.intersect(shipHitbox);
 
                         if (!missileHitbox.isEmpty()) {
-                            spaceShip.setupLife(-1);
+                            synchronized(spaceShip){
+                                spaceShip.setupLife(-1);
+                                slife = spaceShip.getLife();
+                            }
                             missile.setVisible(false);
 
-                            if(spaceShip.getLife() <= 0){
-                                spaceShip.setDying(true);
-                                spaceShip.setImage(shipExpl.getImage());
-
+                            if(slife <= 0){
+                                synchronized(spaceShip){
+                                    spaceShip.setDying(true);
+                                    spaceShip.setImage(shipExpl.getImage());
+                                }
                                 if(isMusicOn){
                                     try {
                                         InputStream in = new FileInputStream(shipExplSound);
@@ -435,14 +464,18 @@ public class Board extends JPanel implements Runnable {
                         missileHitbox.intersect(alienHitbox);
 
                         if (!missileHitbox.isEmpty()) {
-                            alien.setupLife(missile.getDamage());
+                            synchronized(alien){
+                                alien.setupLife(missile.getDamage());
+                                alife = alien.getLife();
+                            }
                             missile.setVisible(false);
 
-                            if(alien.getLife() <= 0){
-                                alien.setDying(true);
-                                score += alien.getPoints();
-                                alien.setImage(alienExpl.getImage());
-
+                            if(alife <= 0){
+                                synchronized(alien){
+                                    alien.setDying(true);
+                                    score += alien.getPoints();
+                                    alien.setImage(alienExpl.getImage());
+                                }
                                 if(isMusicOn) {
                                     try {
                                         InputStream in = new FileInputStream(alienExplSound);

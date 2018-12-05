@@ -55,6 +55,26 @@ public class UpgradePack extends Sprite{
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
                 break;
             }
+            case 5:{
+                type = 5;//"Vecchia";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                break;
+            }
+            case 6:{
+                type = 6;//"Banana";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                break;
+            }
+            case 7:{
+                type = 7;//"memas";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                break;
+            }
+            case 8:{
+                type = 8;//"pollo";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                break;
+            }
         }
 
         loadImage(pathImage);
@@ -85,6 +105,22 @@ public class UpgradePack extends Sprite{
             }
             case 4:{
                 s.setupSPACE(1);
+                break;
+            }
+            case 5:{
+                s.setMissiletype("Vecchia");
+                break;
+            }
+            case 6:{
+                s.setMissiletype("Banana");
+                break;
+            }
+            case 7:{
+                s.setMissiletype("memas");
+                break;
+            }
+            case 8:{
+                s.setMissiletype("pollo");
                 break;
             }
         }
