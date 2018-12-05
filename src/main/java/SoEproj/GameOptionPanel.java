@@ -21,6 +21,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
     private int ship;
     private JPanel menuPanel;
     private boolean music;
+    private int level;
     
     /** Creates new form GameOptionPanel */
     public GameOptionPanel(JPanel p, boolean m) {
@@ -107,23 +108,27 @@ public class GameOptionPanel extends javax.swing.JPanel {
         jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OrangeCraft.png")); // NOI18N
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        // radio button for selecting level 1
         jRadioButton4.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton4);
         jRadioButton4.setFont(new java.awt.Font("Rockwell", 1, 11)); // NOI18N
         jRadioButton4.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton4.setText("World 1");
 
+        // radio button for selecting level 2
         jRadioButton5.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton5);
         jRadioButton5.setFont(new java.awt.Font("Rockwell", 1, 11)); // NOI18N
         jRadioButton5.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton5.setText("World 2");
 
+        // radio button for selecting level 3
         jRadioButton6.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton6);
         jRadioButton6.setFont(new java.awt.Font("Rockwell", 0, 11)); // NOI18N
         jRadioButton6.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton6.setText("World 3");
+
 
         jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(0, 0, 102));
@@ -265,7 +270,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
-        Board b = new Board(ship, menuPanel,music,1);
+        Board b = new Board(ship, menuPanel,music,level);
         old.add(b).requestFocusInWindow();
         old.validate();
         old.repaint();
