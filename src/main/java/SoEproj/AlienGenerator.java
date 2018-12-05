@@ -10,7 +10,7 @@ public class AlienGenerator implements Runnable {
     private int ref_heigth;
     private Alien current_alien;
     private List<Alien> aliens;
-    private int dim = 240;
+    private int dim = 24;
     private boolean flag = true;
     private int level;
     private int ref;
@@ -59,7 +59,7 @@ public class AlienGenerator implements Runnable {
                     
                 }
                 else {
-                    current_alien = new HardAlien(ref_width + 40, h); 
+                    current_alien = new HardAlien(ref_width + 20, h); 
                     
                 }
                 aliens.add(current_alien);

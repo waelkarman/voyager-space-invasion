@@ -95,15 +95,6 @@ public class Board extends JPanel implements Runnable {
         }
 
         
-        if(this.level == 2){
-            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
-            background = bgImgIcon.getImage();
-        }
-
-        if(this.level == 3){
-            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround3.png");
-            background = bgImgIcon.getImage();
-        }
         
         menuPanel = p;
         isMusicOn = m;          // eventualità di cambio musica ad ogni livello 
@@ -223,6 +214,7 @@ public class Board extends JPanel implements Runnable {
                     alien.die();
 
                     if (alien instanceof Boss1Alien){ // i'm starting level 2
+                       
                         aliens.clear();
                     if(this.level < 3){
 
@@ -237,6 +229,9 @@ public class Board extends JPanel implements Runnable {
                                 bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround3.png");
                                 background = bgImgIcon.getImage();
                             }
+
+                            alienGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens,this.level);
+                            threadGen = new Thread(alienGen);
                             threadGen.start();
                         } 
                         else {
