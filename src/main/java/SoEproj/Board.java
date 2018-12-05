@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -18,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -47,12 +49,15 @@ public class Board extends JPanel implements Runnable {
 
     private SpaceShip spaceShip;
     private List<Alien> aliens;
+    private LinkedList<UpgradePack> packs;
     private int gameState;
     private Thread animator;
     private int level;
 
-    private Thread threadGen;           // alien generator thread 
+    private Thread threadGen;  
+    private Thread threadpackGen;         // alien generator thread 
     private AlienGenerator alienGen;    // alien generator class
+    private packGenerator packsGen;
 
     private ImageIcon bgImgIcon;
     private Image background;
@@ -97,11 +102,17 @@ public class Board extends JPanel implements Runnable {
         spaceShip = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn, keyModality);
 
         // changes with level
+        
+        packs = new LinkedList<>();
+        packsGen = new packGenerator(background.getWidth(null),background.getHeight(null), packs,this.level);
+        threadpackGen = new Thread(packsGen);
+        
         aliens = new ArrayList<>();
         alienGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens,this.level);
-        
         threadGen = new Thread(alienGen);
+
         threadGen.start();
+        threadpackGen.start();
     }
 
 
@@ -122,6 +133,11 @@ public class Board extends JPanel implements Runnable {
 
         Toolkit.getDefaultToolkit().sync();
     }
+
+
+
+
+
 
 
     private void drawBackground(Graphics g) {
@@ -155,6 +171,17 @@ public class Board extends JPanel implements Runnable {
                 }
             }
         }
+
+
+        synchronized(packs){
+            for(UpgradePack pack : packs){
+                if (pack.isVisible()) {
+                    g.drawImage(pack.getImage(), pack.getX(), pack.getY(), this);
+                }
+            }
+
+        }
+        
 
         synchronized(aliens) {   // they are drawn only if they have not been previously destroyed.
             for (Alien alien : aliens) {
@@ -198,7 +225,20 @@ public class Board extends JPanel implements Runnable {
         // TODO Correggere scritte sopra allo sfondo
         g.setColor(Color.WHITE);
         g.drawString("Score : " + score, 5, 15);
+        synchronized(spaceShip){
+            g.drawString("Life: " + spaceShip.getLife(),20,35);
+            g.drawString("Speed: " + spaceShip.getSPACE(),20,55);
+        }
+        
     }
+
+
+
+
+
+
+
+
 
 
     @Override
@@ -209,6 +249,7 @@ public class Board extends JPanel implements Runnable {
 
         while (true) {
 
+            
             updateShip();
             updateAliens();
             checkCollisions();
@@ -270,6 +311,8 @@ public class Board extends JPanel implements Runnable {
     }
 
 
+
+
     private void updateAliens() {
         synchronized(aliens){
             for (int i=0; i < aliens.size(); i++) {
@@ -302,6 +345,29 @@ public class Board extends JPanel implements Runnable {
     public void checkCollisions() {
         Area shipHitbox = spaceShip.getShape();
         Area alienHitbox;
+        Area packsHitbox;
+
+        synchronized (packs) { 
+            int i=0;
+            for(i=0;i < packs.size();i++){// (UpgradePack pack : packs) {
+                  // checking collisions between aliens and spaceship
+                packsHitbox = packs.get(i).getShape();
+                // intersection is empty if shapes aren't collided
+                packsHitbox.intersect(shipHitbox);
+                if (!packsHitbox.isEmpty()) {   
+                    synchronized(spaceShip){
+                        packs.get(i).updateSpaceShip(spaceShip,packs.get(i).getType()); 
+                    }
+
+                    packs.get(i).setDying(true);
+                    packs.poll();
+                    
+                }
+            
+            }
+
+        }
+
 
         synchronized (aliens) {                 // checking collisions between aliens and spaceship
             for (Alien alien : aliens) {
@@ -312,20 +378,21 @@ public class Board extends JPanel implements Runnable {
                 if (!alienHitbox.isEmpty()) {   
                     alien.setDying(true);
                     alien.setImage(alienExpl.getImage());
-
-                    spaceShip.setDying(true);
-                    spaceShip.setImage(shipExpl.getImage());
+                    spaceShip.setupLife(-1);
+                    if(spaceShip.getLife() <= 0){
+                        spaceShip.setDying(true);
+                        spaceShip.setImage(shipExpl.getImage());
                     
-                    if(isMusicOn){
-                        try {
-                            InputStream in = new FileInputStream(shipExplSound);
-                            AudioStream audios = new AudioStream(in);
-                            AudioPlayer.player.start(audios);   
-                        } catch (IOException e) {
-                            System.out.println(e.getMessage());
+                        if(isMusicOn){
+                            try {
+                                InputStream in = new FileInputStream(shipExplSound);
+                                AudioStream audios = new AudioStream(in);
+                                AudioPlayer.player.start(audios);   
+                            } catch (IOException e) {
+                                System.out.println(e.getMessage());
+                            }
                         }
                     }
-                    
                 }
 
 
@@ -337,7 +404,7 @@ public class Board extends JPanel implements Runnable {
                         missileHitbox.intersect(shipHitbox);
 
                         if (!missileHitbox.isEmpty()) {
-                            spaceShip.setLife(-1);
+                            spaceShip.setupLife(-1);
                             missile.setVisible(false);
 
                             if(spaceShip.getLife() <= 0){
@@ -368,7 +435,7 @@ public class Board extends JPanel implements Runnable {
                         missileHitbox.intersect(alienHitbox);
 
                         if (!missileHitbox.isEmpty()) {
-                            alien.setLife(missile.getDamage());
+                            alien.setupLife(missile.getDamage());
                             missile.setVisible(false);
 
                             if(alien.getLife() <= 0){

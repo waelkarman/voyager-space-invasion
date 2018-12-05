@@ -73,11 +73,21 @@ public class SpaceShip extends Sprite{
         return this.life;
     }
 
+    public void setupSPACE(float SPACE) {
+        if(this.SPACE<4){
+            this.SPACE += SPACE;
+        }
+    }
 
     public synchronized void setLife(int life) {
         this.life = life;
     }
     
+    public synchronized void setupLife(int life) {
+        if(this.life<3){
+            this.life += life;
+        }
+    }
 
     public synchronized Boolean getFiring() {
         return this.firing;
