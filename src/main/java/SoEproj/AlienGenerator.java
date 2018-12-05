@@ -10,7 +10,7 @@ public class AlienGenerator implements Runnable {
     private int ref_heigth;
     private Alien current_alien;
     private List<Alien> aliens;
-    private int dim = 10;
+    private int dim = 240;
     private boolean flag = true;
     private int level;
     private int ref;
@@ -43,7 +43,6 @@ public class AlienGenerator implements Runnable {
 
             case 2: // livello 2 alieni medi/easy rapporto 2:1
                 if (ref % 3 == 0){
-                    System.out.print("Livello 2 iniziato");
                     current_alien = new EasyAlien(ref_width + 40, h);
                     
                 }
@@ -92,7 +91,6 @@ public class AlienGenerator implements Runnable {
             while(i<dim || flag == false){
                 
                 synchronized(this.aliens){
-                    System.out.print("Thread");
                     generate(); //1 provvisorio
                 }
                 i=i+1;

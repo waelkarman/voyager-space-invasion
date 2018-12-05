@@ -7,52 +7,72 @@ package SoEproj;
 
 import java.awt.Rectangle;
 import java.awt.geom.Area;
+import java.util.List;
 import java.util.Random;
 
-public class UpgradePack extends Sprite {
+public class UpgradePack extends Sprite{
 
     private final int BOARD_WIDTH = 585;
     private String upPower;
-    private String type;
-    
+    private int type;
 
-    public UpgradePack(int x, int y) {
+
+  
+
+    public UpgradePack(int x, int y, int randomUpgrade) {
         super(x, y);
         SPACE = 1/2;
-
-        setPackIcon(type);
+        setPackIcon(randomUpgrade);
     }
     
-    private void setPackIcon(String type) {
+    private void setPackIcon(int randomUpgrade) {
         String pathImage = "";
-        Random r = new Random();
-        int randomUpgrade = r.nextInt(5);
-        
+       
         //TODO: immagini
         switch(randomUpgrade){ //different pack color based on the upgrade type
             case 0:{
-                type = "3Missiles";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\3Missiles.png";
+                type = 0;//"3Missiles";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
                 break;
             } 
             case 1:{
-                type = "fireBall";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\fireBall.png";
+                type = 1;//"fireBall";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
                 break;
             } 
             case 2:{
-                type = "Laser";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
+                type = 2;//"Laser";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
                 break;
             }
             case 3:{
-                type = "Life";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Life.png";
+                type = 3;//"Life";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
                 break;
             }
             case 4:{
-                type = "Speed";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Speed.png";
+                type = 4;//"Speed";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                break;
+            }
+            case 5:{
+                type = 5;//"Vecchia";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                break;
+            }
+            case 6:{
+                type = 6;//"Banana";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                break;
+            }
+            case 7:{
+                type = 7;//"memas";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                break;
+            }
+            case 8:{
+                type = 8;//"pollo";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
                 break;
             }
         }
@@ -63,31 +83,53 @@ public class UpgradePack extends Sprite {
     }
 
 
-    public void updateSpaceShip(SpaceShip s) {
-        switch(type){ //different pack color based on the upgrade type
-            case "3Missiles":{
+    public void updateSpaceShip(SpaceShip s,int skill) {
+        
+
+        switch(skill){ //different pack color based on the upgrade type
+            case 0:{
                 s.setMissiletype("3Missiles");
                 break;
             } 
-            case "fireBall":{
+            case 1:{
                 s.setMissiletype("fireBall");
                 break;
             } 
-            case "Laser":{
+            case 2:{
                 s.setMissiletype("Laser");  
                 break;
             }
-            case "Life":{
-                s.setMissiletype("Life");  
+            case 3:{
+                s.setupLife(1);  
                 break;
             }
-            case "Speed":{
-                s.setMissiletype("Speed");
+            case 4:{
+                s.setupSPACE(1);
+                break;
+            }
+            case 5:{
+                s.setMissiletype("Vecchia");
+                break;
+            }
+            case 6:{
+                s.setMissiletype("Banana");
+                break;
+            }
+            case 7:{
+                s.setMissiletype("memas");
+                break;
+            }
+            case 8:{
+                s.setMissiletype("pollo");
                 break;
             }
         }
     }
 
+
+    public int getType() {
+        return this.type;
+    }
 
     public void move() {   
         
@@ -104,6 +146,8 @@ public class UpgradePack extends Sprite {
         Rectangle shape = new Rectangle(x,y,width,height);
         return new Area(shape);
     }
+
+
 
 
 

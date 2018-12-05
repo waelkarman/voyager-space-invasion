@@ -36,7 +36,7 @@ public abstract class Alien extends Sprite {
         return this.life;
     }
 
-    public void setLife(int up){
+    public void setupLife(int up){
         this.life = this.life + up;
     }
     
