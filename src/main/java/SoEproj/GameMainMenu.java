@@ -175,7 +175,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     public void setMusic(boolean m){
         music = m;
     }
-    
+     
     public void setKeyMode(int mod){
         keyModality = mod;
     }
