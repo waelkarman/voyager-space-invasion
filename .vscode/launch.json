@@ -10,39 +10,6 @@
             "mainClass": "SoEproj.GameMainMenu",
             "args": "",
             "projectName": "SoEproj"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - VoyagerGame",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "SoEproj.VoyagerGame",
-            "args": "",
-            "projectName": "SoEproj"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - CollisionEx",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "SoEproj.CollisionEx",
-            "args": "",
-            "projectName": "SoEproj"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - App",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "stopOnEntry": false,
-            "mainClass": "SoEproj.App",
-            "args": "",
-            "projectName": "SoEproj"
         }
     ]
 }
