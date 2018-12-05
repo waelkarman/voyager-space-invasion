@@ -43,7 +43,7 @@ public class MediumAlien extends Alien implements Runnable{
 
     @Override
     public void run() {
-        while(true){
+        while(isVisible()){
 
             try {
                 fire();
