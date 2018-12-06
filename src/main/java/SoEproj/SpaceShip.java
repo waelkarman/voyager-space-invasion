@@ -100,7 +100,7 @@ public class SpaceShip extends Sprite{
 
     public synchronized void setMissiletypeUnconditionally(String missiletype) {
         this.missiletype = missiletype;
-
+    }
         
     public synchronized void setMissiletype(String missiletype) {
         resettingShip a = new resettingShip(20, this, this.missiletype);
