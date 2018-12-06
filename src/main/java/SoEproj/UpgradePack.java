@@ -32,47 +32,47 @@ public class UpgradePack extends Sprite{
         switch(randomUpgrade){ //different pack color based on the upgrade type
             case 0:{
                 type = 0;//"3Missiles";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             } 
             case 1:{
                 type = 1;//"fireBall";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             } 
             case 2:{
                 type = 2;//"Laser";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 3:{
                 type = 3;//"Life";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 4:{
                 type = 4;//"Speed";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 5:{
                 type = 5;//"Vecchia";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 6:{
                 type = 6;//"Banana";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 7:{
                 type = 7;//"memas";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 8:{
                 type = 8;//"pollo";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\box.png";
+                pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
         }

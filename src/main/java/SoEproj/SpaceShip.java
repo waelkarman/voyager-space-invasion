@@ -51,15 +51,15 @@ public class SpaceShip extends Sprite{
         String pathImage = "";
         switch(color){
             case 1:{
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/GreenCraft.png";
                 break;
             } 
             case 2:{
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/OrangeCraft.png";
                 break;
             } 
             case 3:{
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/RedCraft.png";
                 break;
             }
         }
