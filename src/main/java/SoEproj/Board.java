@@ -213,8 +213,9 @@ public class Board extends JPanel implements Runnable {
                 if (alien.isDying()) {
                     alien.die();
 
-                 //   if (alien instanceof Boss1Alien){ // i'm starting level 2
-               //         aliens.clear();
+                    if (alien instanceof Boss1Alien){ // i'm starting level 2
+                        //threadGen.interrupt(); //TODO commentati metodo clear e interrupt
+                        //aliens.clear();
                     if(this.level < 3){
 
                             this.level += 1;
