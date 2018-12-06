@@ -10,7 +10,7 @@ public class AlienGenerator implements Runnable {
     private int ref_heigth;
     private Alien current_alien;
     private List<Alien> aliens;
-    private int dim = 24;
+    private int dim = 60;
     private boolean flag = true;
     private int level;
     private int ref;
