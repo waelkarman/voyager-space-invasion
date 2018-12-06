@@ -129,7 +129,7 @@ public class SettingPanel extends javax.swing.JPanel {
         jLabel10.setText("I Satanassi Infernali");
 
         jLabel11.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel11.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\logo1-5.png")); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/logo1-5.png")); // NOI18N
 
         jRadioButton5.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton5);
@@ -177,14 +177,14 @@ public class SettingPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\canadian_notebook_!-3.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/canadian_notebook_!-3.png")); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\canadian_notebook_2-3.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/canadian_notebook_2-3.png")); // NOI18N
 
         jLabel16.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel16.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\ON-8.png")); // NOI18N
+        jLabel16.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/ON-8.png")); // NOI18N
 
-        jLabel17.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\OFF-4.png")); // NOI18N
+        jLabel17.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OFF-4.png")); // NOI18N
 
         jButton1.setText("M\nE\nN\nU\n");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
