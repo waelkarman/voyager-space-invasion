@@ -84,7 +84,8 @@ public class SpaceShip extends Sprite{
     }
     
     public synchronized void setupLife(int life) {
-        if(this.life<3){
+        
+        if(this.life<3 || life < 0){
             this.life += life;
         }
     }
