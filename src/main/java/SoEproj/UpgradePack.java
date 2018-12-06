@@ -83,7 +83,7 @@ public class UpgradePack extends Sprite{
     }
 
 
-    public void updateSpaceShip(SpaceShip s,int skill) {
+    public synchronized void updateSpaceShip(SpaceShip s,int skill) {
         
 
         switch(skill){ //different pack color based on the upgrade type
@@ -131,7 +131,7 @@ public class UpgradePack extends Sprite{
         return this.type;
     }
 
-    public void move() {   
+    public synchronized void move() {   
         
         x -= SPACE;
         if (x < 0)
