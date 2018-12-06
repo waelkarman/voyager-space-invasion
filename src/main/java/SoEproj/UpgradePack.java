@@ -21,7 +21,7 @@ public class UpgradePack extends Sprite{
 
     public UpgradePack(int x, int y, int randomUpgrade) {
         super(x, y);
-        SPACE = 1/2;
+        SPACE = 1;
         setPackIcon(randomUpgrade);
     }
     

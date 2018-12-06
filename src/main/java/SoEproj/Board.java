@@ -273,6 +273,7 @@ public class Board extends JPanel implements Runnable {
             
             updateShip();
             updateAliens();
+            updatePacks();
             checkCollisions();
             repaint();
 
@@ -330,6 +331,26 @@ public class Board extends JPanel implements Runnable {
             spaceShip.move();
         }
     }
+
+
+    private void updatePacks() {
+        synchronized(packs){
+            for (int i=0; i < packs.size(); i++) {
+                UpgradePack pack = packs.get(i);
+                synchronized(pack){
+                    if (pack.isVisible()) {                         
+                        pack.move();
+                    }  
+                    else {
+                        packs.poll();
+                    }
+                } 
+            }
+        }
+    }
+
+
+
 
 
 

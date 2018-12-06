@@ -41,29 +41,16 @@ public class packGenerator implements Runnable {
         while(true){
             
             synchronized(upack){
-                int x = random.nextInt(580);
                 int y = random.nextInt(430);
                 Random r = new Random();
                 int randomUpgrade = r.nextInt(9);
-                upack.add(new UpgradePack(x,y,randomUpgrade));
+                upack.add(new UpgradePack(600,y,randomUpgrade));
                 
             }
             
-            int sleep = 5000;
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                String msg = String.format("Pack generation interrupted %s", e.getMessage());
-                System.out.println(msg);
-            }
-
-            synchronized(upack){
-                upack.poll();
-            }
-        
 
             //TODO settare opportunamente il tempo 
-            sleep = 10000;
+            int sleep = 25000;
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
