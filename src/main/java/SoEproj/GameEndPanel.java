@@ -16,9 +16,6 @@ import javax.swing.SwingUtilities;
  */
 public class GameEndPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form GameEndPanel
-     */
     JPanel menuPanel;
     public GameEndPanel(int outcome, JPanel p) {
         menuPanel=p;
