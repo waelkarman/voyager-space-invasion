@@ -20,7 +20,7 @@ public class FireThread implements Runnable{
     // TODO risolvere spari a raffica
     @Override
     public void run() { 
-        while(true){    
+        while(s.isVisible()){    
             if(!s.getFiring()) {
                 synchronized(missiles){
                     try { 

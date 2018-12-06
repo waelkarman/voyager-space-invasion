@@ -175,43 +175,34 @@ public class SpaceShip extends Sprite{
                     missiles.notifyAll();
                 }   
             }
-
             if (key == KeyEvent.VK_A) {
                 dx = -SPACE;
             }
-
             if (key == KeyEvent.VK_D) {
                 dx = SPACE;
             }
-
             if (key == KeyEvent.VK_W) {
                 dy = -SPACE;
             }
-
             if (key == KeyEvent.VK_S) {
                 dy = SPACE;
             }
         }else{
-
             if (key == KeyEvent.VK_SPACE) {
                 synchronized(missiles){
                     setFiring(true);
                     missiles.notifyAll();
                 }   
             }
-
             if (key == KeyEvent.VK_LEFT) {
                 dx = -SPACE;
             }
-
             if (key == KeyEvent.VK_RIGHT) {
                 dx = SPACE;
             }
-
             if (key == KeyEvent.VK_UP) {
                 dy = -SPACE;
             }
-
             if (key == KeyEvent.VK_DOWN) {
                 dy = SPACE;
             }
@@ -226,40 +217,31 @@ public class SpaceShip extends Sprite{
             if (key == KeyEvent.VK_SPACE) {
                 setFiring(false);
             }
-
             if (key == KeyEvent.VK_A) {
                 dx = 0;
             }
-
             if (key == KeyEvent.VK_D) {
                 dx = 0;
             }
-
             if (key == KeyEvent.VK_W) {
                 dy = 0;
             }
-
             if (key == KeyEvent.VK_S) {
                 dy = 0;
             }
         }else{
-
             if (key == KeyEvent.VK_SPACE) {
                 setFiring(false);
             }
-
             if (key == KeyEvent.VK_LEFT) {
                 dx = 0;
             }
-
             if (key == KeyEvent.VK_RIGHT) {
                 dx = 0;
             }
-
             if (key == KeyEvent.VK_UP) {
                 dy = 0;
             }
-
             if (key == KeyEvent.VK_DOWN) {
                 dy = 0;
             }

@@ -58,12 +58,10 @@ public class Boss1Alien extends Alien implements Runnable{
     }
 
 
-    public void fire() {
-        synchronized(missiles){
+    public synchronized void fire() {
             missiles.add(new Missile(x , y + height/2, "Laser", "rightToTop"));
             missiles.add(new Missile(x , y + height/2, "Laser", "rightToLeft"));
             missiles.add(new Missile(x , y + height/2, "Laser", "rightToBottom"));
-        }
     }
 
     @Override

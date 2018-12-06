@@ -138,7 +138,6 @@ public class Board extends JPanel implements Runnable {
             drawGame(g);
         } 
         else if(gameState == 2) {   // draw game over background gif after the lose condition
-            isMusicOn = false;
             EndGameFunction(0);     // passing 0 to draw game over background 
         }
 
@@ -249,22 +248,13 @@ public class Board extends JPanel implements Runnable {
 
 
 
-
-
-
-
-
-
-
     @Override
     public void run() {
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
 
-        while (true) {
-
-            
+        while (gameState != 2) {
             updateShip();
             updateAliens();
             updatePacks();
@@ -286,6 +276,8 @@ public class Board extends JPanel implements Runnable {
 
             beforeTime = System.currentTimeMillis();
         }
+
+        repaint();
     }
 
 
