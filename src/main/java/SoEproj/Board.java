@@ -41,7 +41,6 @@ public class Board extends JPanel implements Runnable {
     // TODO Lo score deve essere controllato nel ciclo di update per aggiornarsi dinamicamente
     private int score = 0;      // every kill updates the score
 
-    private final File boardSound;
     private final ImageIcon alienExpl;
     private final ImageIcon shipExpl;
     private final File alienExplSound;
@@ -74,7 +73,6 @@ public class Board extends JPanel implements Runnable {
     public Board(int shipType, JPanel p, boolean m, int level, int km) {
         this.level = level;
         // Images and soundtracks initialization
-        boardSound = new File("./src/main/java/SoEproj/Resource/ThemeLevelSound1.wav");
         alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
         shipExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionShip.png");
         alienExplSound = new File("./src/main/java/SoEproj/Resource/CollisionSound.wav");
@@ -140,16 +138,12 @@ public class Board extends JPanel implements Runnable {
             drawGame(g);
         } 
         else if(gameState == 2) {   // draw game over background gif after the lose condition
+            isMusicOn = false;
             EndGameFunction(0);     // passing 0 to draw game over background 
         }
 
         Toolkit.getDefaultToolkit().sync();
     }
-
-
-
-
-
 
 
     private void drawBackground(Graphics g) {
@@ -299,16 +293,6 @@ public class Board extends JPanel implements Runnable {
         if(gameState == 1) {
             animator = new Thread(this);
             animator.start();
-
-            if(isMusicOn) {
-                try {
-                    InputStream in = new FileInputStream(boardSound);
-                    AudioStream audios = new AudioStream(in);
-                    AudioPlayer.player.start(audios);
-                }catch (IOException e) {
-                    System.out.println("Audio Board:" + e.getMessage());
-                }
-            }
         }
 
     }

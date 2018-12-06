@@ -170,8 +170,8 @@ public class SpaceShip extends Sprite{
         
         if(keyModality == 2){
             if (key == KeyEvent.VK_SPACE) {
-                setFiring(true);
                 synchronized(missiles){
+                    setFiring(true);
                     missiles.notifyAll();
                 }   
             }
@@ -194,8 +194,8 @@ public class SpaceShip extends Sprite{
         }else{
 
             if (key == KeyEvent.VK_SPACE) {
-                setFiring(true);
                 synchronized(missiles){
+                    setFiring(true);
                     missiles.notifyAll();
                 }   
             }

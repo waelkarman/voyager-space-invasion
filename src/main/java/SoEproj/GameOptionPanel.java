@@ -27,6 +27,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
     /** Creates new form GameOptionPanel */
     public GameOptionPanel(JPanel p, boolean m, int km) {
         initComponents();
+        level = 1;
         ship = 2;
         menuPanel = p;
         music = m;

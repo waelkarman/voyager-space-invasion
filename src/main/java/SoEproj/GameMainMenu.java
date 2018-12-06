@@ -10,7 +10,14 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 /**
  *
  * @author aless
@@ -23,12 +30,27 @@ public class GameMainMenu extends javax.swing.JFrame {
     private int ship;
     private boolean music;
     private int keyModality;
+    private InputStream in;
+    private AudioStream audios;
+    private final File boardSound;
+    
     
     public GameMainMenu() {
         initComponents();
         initUI();
         loadWindowsIcon();
         loadBackground();
+
+        boardSound = new File("./src/main/java/SoEproj/Resource/ThemeLevelSound1.wav");
+        
+        try {
+            in = new FileInputStream(boardSound);
+            audios = new AudioStream(in);
+            AudioPlayer.player.start(audios);
+        } catch (Exception e) {
+            e.printStackTrace();
+		}
+
         ship=2;
         music=true;
     }
@@ -183,7 +205,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         JPanel principalPanel = this.jPanel1;
         this.getContentPane().remove(jPanel1);
-        SettingPanel sp = new SettingPanel(principalPanel);
+        SettingPanel sp = new SettingPanel(principalPanel, audios);
         this.add(sp).requestFocusInWindow();
         this.validate();
         this.repaint();
