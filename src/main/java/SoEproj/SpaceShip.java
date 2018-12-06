@@ -98,9 +98,14 @@ public class SpaceShip extends Sprite{
         this.firing = firing;
     }
 
-
-    public synchronized void setMissiletype(String missiletype) {
+    public synchronized void setMissiletypeUnconditionally(String missiletype) {
         this.missiletype = missiletype;
+    }
+//TODO regolare il tempo 
+    public synchronized void setMissiletype(String missiletype) {
+        resettingShip a = new resettingShip(5, this, this.missiletype);
+        this.missiletype = missiletype;
+
     }
 
 
