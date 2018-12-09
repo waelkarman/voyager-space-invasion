@@ -48,7 +48,7 @@ public class Board extends JPanel implements Runnable {
     private final File alienExplSound;
     private final File shipExplSound;
 
-    private boolean MULTIPLAYER = true;
+    private boolean MULTIPLAYER;
     private SpaceShip spaceShip1;
     private SpaceShip spaceShip2;
     private List<Alien> aliens;
@@ -77,6 +77,7 @@ public class Board extends JPanel implements Runnable {
 
 
     public Board(int shipType, JPanel p, boolean m, int level, int km) {
+        this.MULTIPLAYER = true;
         this.level = level;
         // Images and soundtracks initialization
         boardSound = new File("./src/main/java/SoEproj/Resource/ThemeLevelSound1.wav");
