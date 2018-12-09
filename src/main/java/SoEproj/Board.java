@@ -111,7 +111,8 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-
+    //TODO assegnare due colori diversi alle navicelle in caso di multiplayer valutare se è il caso di far selezionare 
+    //all utente il colore di entrambe le navicelle
     public void initGame(int shipType) {
         gameState = 1;
         addKeyListener(new TAdapter());
@@ -171,13 +172,12 @@ public class Board extends JPanel implements Runnable {
 
 
     private void drawGame(Graphics g) {
-        //TODO MULTIPLAYER
+        
         if (spaceShip1.isVisible()) {
             g.drawImage(spaceShip1.getImage(), spaceShip1.getX(), spaceShip1.getY(), this);
             
             if (spaceShip1.isDying()) {
                 spaceShip1.die();
-                gameState = 2;
             }
         }
 
@@ -191,7 +191,7 @@ public class Board extends JPanel implements Runnable {
         }
 
 
-        //TODO MULTIPLAYER
+        
         if(MULTIPLAYER == true){
             if (spaceShip2.isVisible()) {
                 g.drawImage(spaceShip2.getImage(), spaceShip2.getX(), spaceShip2.getY(), this);
@@ -210,8 +210,19 @@ public class Board extends JPanel implements Runnable {
                 }
             }
         }
-        //
+        
 
+        //GAME OVER condition set
+        if(MULTIPLAYER == true){
+            if (spaceShip1.isDying() && spaceShip2.isDying()){
+                gameState = 2;
+            }
+        }
+        else{
+            if (spaceShip1.isDying()){
+                gameState = 2;
+            }
+        }
 
         synchronized(packs){
             for(UpgradePack pack : packs){
@@ -494,6 +505,7 @@ public class Board extends JPanel implements Runnable {
                         synchronized(spaceShip1){
                             spaceShip1.setDying(true);
                             spaceShip1.setImage(shipExpl.getImage());
+                            spaceShip1.getMissiles().clear();//TODO faccio sparire i missili del P2 perche non avanzano
                         }
                         if(isMusicOn){
                             try {
@@ -523,8 +535,8 @@ public class Board extends JPanel implements Runnable {
                         if(slife2 <= 0){
                             synchronized(spaceShip2){
                                 spaceShip2.setDying(true);
-                                spaceShip2.setImage(shipExpl.getImage());//TODO faccio sparire i missili del P2 perche non avanzano
-                                spaceShip2.getMissiles().clear();
+                                spaceShip2.setImage(shipExpl.getImage());
+                                spaceShip2.getMissiles().clear();//TODO faccio sparire i missili del P2 perche non avanzano
                             }
                             
                             if(isMusicOn){
@@ -556,7 +568,7 @@ public class Board extends JPanel implements Runnable {
                                 slife1 = spaceShip1.getLife();
                             }
 
-                            //TODO lasciare i missili volanti nel caso si uccide un alieno
+                            //TODO lasciare i missili degli alieni proseguire nel caso si uccide un alieno
                             missile.setVisible(false);
 
                             if(slife1 <= 0){
@@ -586,7 +598,7 @@ public class Board extends JPanel implements Runnable {
                                     slife2 = spaceShip2.getLife();
                                 }
     
-                                //TODO lasciare i missili volanti nel caso si uccide un alieno
+                                //TODO lasciare i missili degli alieni in campo nel caso si uccide un alieno
                                 missile.setVisible(false);
     
                                 if(slife2 <= 0){
@@ -676,7 +688,6 @@ public class Board extends JPanel implements Runnable {
                                         scoreS2 += alien.getPoints();
                                         alien.setImage(alienExpl.getImage());
                                     }
-                                    //TODO MULTIPLAYER verificare interferenza audio
                                     if(isMusicOn) {
                                         try {
                                             InputStream in = new FileInputStream(alienExplSound);
