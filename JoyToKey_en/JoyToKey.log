@@ -1,0 +1,24 @@
+2018/12/09 23:04:27.897 Info   C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
+2018/12/09 23:04:27.897 Info   Starting JoyToKey Ver6.1.1
+2018/12/09 23:04:27.897 Info   ExeFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
+2018/12/09 23:04:27.897 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\
+2018/12/09 23:04:27.897 Info   IniFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.ini
+2018/12/09 23:04:27.897 Info   Windows Version = 6.2
+2018/12/09 23:04:27.900 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#232)
+2018/12/09 23:04:27.900 Info   LicenseKey "" is not valid
+2018/12/09 23:04:28.141 Info   Loading XInput1_3.dll (Joystick.cpp#128)
+2018/12/09 23:04:28.144 Info   Initialized XInput (Joystick.cpp#146)
+2018/12/09 23:04:28.199 Info   Detected a DI joystick: {C6E3A090-FC06-11E8-8001-444553540000}, Microsoft® SideWinder® Plug & Play Game Pad, Microsoft® SideWinder® Plug & Play Game Pad
+2018/12/09 23:04:28.199 Info   Preferred index = -1
+2018/12/09 23:04:28.201 Info   numAxis = 2
+2018/12/09 23:04:28.201 Info   numPOVs = 0
+2018/12/09 23:04:28.201 Info   numButtons = 6
+2018/12/09 23:04:28.201 Info   EnumDeviceObject: Axis offset=0 type=102 name=Asse Y
+2018/12/09 23:04:28.201 Info   EnumDeviceObject: Axis offset=4 type=2 name=Asse X
+2018/12/09 23:04:28.201 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/12/09 23:04:28.208 Info   Joystick #1: Microsoft® SideWinder® Plug & Play Game Pad
+2018/12/09 23:04:28.208 Info   1 joysticks are detected (Joystick.cpp#168)
+2018/12/09 23:04:28.208 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
+2018/12/09 23:04:28.210 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
+2018/12/09 23:04:28.235 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
+2018/12/09 23:07:28.882 Info   Save config file "Voyager" (ConfigFileManager.cpp#407)
