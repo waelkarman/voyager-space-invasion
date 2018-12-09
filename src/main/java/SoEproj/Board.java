@@ -147,6 +147,7 @@ public class Board extends JPanel implements Runnable {
             drawGame(g);
         } 
         else if(gameState == 2) {   // draw game over background gif after the lose condition
+            isMusicOn = false;
             EndGameFunction(0);     // passing 0 to draw game over background 
         }
 
