@@ -39,7 +39,8 @@ public class Board extends JPanel implements Runnable {
     private final double BG_SPEED = 0.5;    // background speed
     
     // TODO Lo score deve essere controllato nel ciclo di update per aggiornarsi dinamicamente
-    private int score = 0;      // every kill updates the score
+    private int scoreS1 = 0;      // every kill updates the score
+    private int scoreS2 = 0;
 
     private final File boardSound;
     private final ImageIcon alienExpl;
@@ -47,7 +48,9 @@ public class Board extends JPanel implements Runnable {
     private final File alienExplSound;
     private final File shipExplSound;
 
-    private SpaceShip spaceShip;
+    private boolean MULTIPLAYER = true;
+    private SpaceShip spaceShip1;
+    private SpaceShip spaceShip2;
     private List<Alien> aliens;
     private LinkedList<UpgradePack> packs;
     private int gameState;
@@ -68,8 +71,10 @@ public class Board extends JPanel implements Runnable {
     private boolean isMusicOn;
     private int keyModality;
     
-    private int slife;
+    private int slife1;
+    private int slife2;
     private int alife;
+
 
     public Board(int shipType, JPanel p, boolean m, int level, int km) {
         this.level = level;
@@ -111,8 +116,10 @@ public class Board extends JPanel implements Runnable {
         addKeyListener(new TAdapter());
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceShip = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn, keyModality);
-
+        spaceShip1 = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn, keyModality);
+        if(MULTIPLAYER == true){
+            spaceShip2 = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn, 2);
+        }
         // changes with level
         
         packs = new LinkedList<>();
@@ -148,10 +155,6 @@ public class Board extends JPanel implements Runnable {
 
 
 
-
-
-
-
     private void drawBackground(Graphics g) {
         
         if (bgShiftX > background.getWidth(null)) {
@@ -166,23 +169,46 @@ public class Board extends JPanel implements Runnable {
 
 
     private void drawGame(Graphics g) {
-        if (spaceShip.isVisible()) {
-            g.drawImage(spaceShip.getImage(), spaceShip.getX(), spaceShip.getY(), this);
+        //TODO MULTIPLAYER
+        if (spaceShip1.isVisible()) {
+            g.drawImage(spaceShip1.getImage(), spaceShip1.getX(), spaceShip1.getY(), this);
             
-            if (spaceShip.isDying()) {
-                spaceShip.die();
+            if (spaceShip1.isDying()) {
+                spaceShip1.die();
                 gameState = 2;
             }
         }
 
-        synchronized(spaceShip){
-            List<Missile> ms = spaceShip.getMissiles();
-            for (Missile missile : ms) {
+        synchronized(spaceShip1){
+            List<Missile> ms1 = spaceShip1.getMissiles();
+            for (Missile missile : ms1) {
                 if (missile.isVisible()) {
                     g.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
                 }
             }
         }
+
+
+        //TODO MULTIPLAYER
+        if(MULTIPLAYER == true){
+            if (spaceShip2.isVisible()) {
+                g.drawImage(spaceShip2.getImage(), spaceShip2.getX(), spaceShip2.getY(), this);
+                
+                if (spaceShip2.isDying()) {
+                    spaceShip2.die();
+                }
+            }
+
+            synchronized(spaceShip2){
+                List<Missile> ms2 = spaceShip2.getMissiles();
+                for (Missile missile : ms2) {
+                    if (missile.isVisible()) {
+                        g.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
+                    }
+                }
+            }
+        }
+        //
 
 
         synchronized(packs){
@@ -244,21 +270,23 @@ public class Board extends JPanel implements Runnable {
 
         // In the top-left corner of the window, we draw how many aliens are left.
         // TODO Correggere scritte sopra allo sfondo
+        // TODO MULTIPLAYER da sistemare la posizione
         g.setColor(Color.WHITE);
-        g.drawString("Score : " + score, 5, 15);
-        synchronized(spaceShip){
-            g.drawString("Life: " + spaceShip.getLife(),5,35);
-            g.drawString("Speed: " + spaceShip.getSPACE(),5,55);
+        g.drawString("Score 1 : " + scoreS1, 5, 15);
+        synchronized(spaceShip1){
+            g.drawString("Life 1: " + spaceShip1.getLife(),5,35);
+            g.drawString("Speed 1: " + spaceShip1.getSPACE(),5,55);
         }
         
+        if(MULTIPLAYER == true){
+            g.drawString("Score 2 : " + scoreS2, 5, 75);
+            synchronized(spaceShip2){
+                g.drawString("Life 2: " + spaceShip2.getLife(),5,95);
+                g.drawString("Speed 2: " + spaceShip2.getSPACE(),5,115);
+            }
+        }
+
     }
-
-
-
-
-
-
-
 
 
 
@@ -315,9 +343,9 @@ public class Board extends JPanel implements Runnable {
 
 
     private void updateShip() {
-        if (spaceShip.isVisible()) {        
-            synchronized(spaceShip){
-                List<Missile> ms = spaceShip.getMissiles();
+        if (spaceShip1.isVisible()) {        
+            synchronized(spaceShip1){
+                List<Missile> ms = spaceShip1.getMissiles();
                 for (int i=0; i < ms.size(); i++) {
                     Missile m = ms.get(i);
                     if (m.isVisible()) {
@@ -327,9 +355,26 @@ public class Board extends JPanel implements Runnable {
                     }
                 }
             }
-
-            spaceShip.move();
+            spaceShip1.move();
         }
+
+        if(MULTIPLAYER == true){
+            if (spaceShip2.isVisible()) {        
+                synchronized(spaceShip2){
+                    List<Missile> ms = spaceShip2.getMissiles();
+                    for (int i=0; i < ms.size(); i++) {
+                        Missile m = ms.get(i);
+                        if (m.isVisible()) {
+                            m.move();
+                        } else {
+                            ms.remove(m);
+                        }
+                    }
+                }
+                spaceShip2.move();
+            }
+        }
+
     }
 
 
@@ -348,11 +393,6 @@ public class Board extends JPanel implements Runnable {
             }
         }
     }
-
-
-
-
-
 
 
     private void updateAliens() {
@@ -385,20 +425,21 @@ public class Board extends JPanel implements Runnable {
 
 
     public void checkCollisions() {
-        Area shipHitbox = spaceShip.getShape();
-        Area alienHitbox;
+        Area alienHitboxfor1;
+        Area alienHitboxfor2;
         Area packsHitbox;
-
+        Area ship2Hitbox = spaceShip1.getShape(); // è corretto settare a spaceship 1 ma bisogna rivisionare
+        Area ship1Hitbox = spaceShip1.getShape();
         synchronized (packs) { 
             int i=0;
             for(i=0;i < packs.size();i++){// (UpgradePack pack : packs) {
                   // checking collisions between aliens and spaceship
                 packsHitbox = packs.get(i).getShape();
                 // intersection is empty if shapes aren't collided
-                packsHitbox.intersect(shipHitbox);
+                packsHitbox.intersect(ship1Hitbox);
                 if (!packsHitbox.isEmpty()) {   
-                    synchronized(spaceShip){
-                        packs.get(i).updateSpaceShip(spaceShip,packs.get(i).getType()); 
+                    synchronized(spaceShip1){
+                        packs.get(i).updateSpaceShip(spaceShip1,packs.get(i).getType()); 
                     
                     }
 
@@ -406,31 +447,51 @@ public class Board extends JPanel implements Runnable {
                     packs.poll();
                     
                 }
-            
             }
-
         }
 
+        
+        if(MULTIPLAYER == true){
+            ship2Hitbox = spaceShip2.getShape();
+            synchronized (packs) { 
+                int i=0;
+                for(i=0;i < packs.size();i++){// (UpgradePack pack : packs) {
+                      // checking collisions between aliens and spaceship
+                    packsHitbox = packs.get(i).getShape();
+                    // intersection is empty if shapes aren't collided
+                    packsHitbox.intersect(ship2Hitbox);
+                    if (!packsHitbox.isEmpty()) {   
+                        synchronized(spaceShip2){
+                            packs.get(i).updateSpaceShip(spaceShip2,packs.get(i).getType()); 
+                        
+                        }
+    
+                        packs.get(i).setDying(true);
+                        packs.poll();
+                        
+                    }
+                }
+            }   
+        }
 
         synchronized (aliens) {                 // checking collisions between aliens and spaceship
             for (Alien alien : aliens) {
-                alienHitbox = alien.getShape();
+                alienHitboxfor1 = alien.getShape();
                 // intersection is empty if shapes aren't collided
-                alienHitbox.intersect(shipHitbox);
-
-                if (!alienHitbox.isEmpty()) {   
+                alienHitboxfor1.intersect(ship1Hitbox);
+                if (!alienHitboxfor1.isEmpty()) {   
                     alien.setDying(true);
                     alien.setImage(alienExpl.getImage());
                     
 
-                    synchronized(spaceShip){
-                        spaceShip.setupLife(-1);
-                        slife = spaceShip.getLife();
+                    synchronized(spaceShip1){
+                        spaceShip1.setupLife(-1);
+                        slife1 = spaceShip1.getLife();
                     }
-                    if(slife <= 0){
-                        synchronized(spaceShip){
-                            spaceShip.setDying(true);
-                            spaceShip.setImage(shipExpl.getImage());
+                    if(slife1 <= 0){
+                        synchronized(spaceShip1){
+                            spaceShip1.setDying(true);
+                            spaceShip1.setImage(shipExpl.getImage());
                         }
                         if(isMusicOn){
                             try {
@@ -442,27 +503,64 @@ public class Board extends JPanel implements Runnable {
                             }
                         }
                     }
+
+                }
+
+                if(MULTIPLAYER == true){
+                    alienHitboxfor2 = alien.getShape(); //A Shape variable cannot be assigned as a common variable
+                    alienHitboxfor2.intersect(ship2Hitbox);
+                    if (!alienHitboxfor2.isEmpty()) {   
+                        alien.setDying(true);
+                        alien.setImage(alienExpl.getImage());
+                        
+
+                        synchronized(spaceShip2){
+                            spaceShip2.setupLife(-1);
+                            slife2 = spaceShip2.getLife();
+                        }
+                        if(slife2 <= 0){
+                            synchronized(spaceShip2){
+                                spaceShip2.setDying(true);
+                                spaceShip2.setImage(shipExpl.getImage());//TODO faccio sparire i missili del P2 perche non avanzano
+                                spaceShip2.getMissiles().clear();
+                            }
+                            
+                            if(isMusicOn){
+                                try {
+                                    InputStream in = new FileInputStream(shipExplSound);
+                                    AudioStream audios = new AudioStream(in);
+                                    AudioPlayer.player.start(audios);   
+                                } catch (IOException e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            }
+                        }
+
+                    }
+
                 }
 
 
                 synchronized (alien) {  // checking collisions between alien missiles and spaceship
                     List<Missile> alienMissiles = alien.getMissiles();
                     for (Missile missile : alienMissiles) {
-                        Area missileHitbox = missile.getShape();
+                        Area missile1Hitbox = missile.getShape();
                         // intersection is empty if shapes aren't collided
-                        missileHitbox.intersect(shipHitbox);
+                        missile1Hitbox.intersect(ship1Hitbox);
 
-                        if (!missileHitbox.isEmpty()) {
-                            synchronized(spaceShip){
-                                spaceShip.setupLife(-1);
-                                slife = spaceShip.getLife();
+                        if (!missile1Hitbox.isEmpty()) {
+                            synchronized(spaceShip1){
+                                spaceShip1.setupLife(-1);
+                                slife1 = spaceShip1.getLife();
                             }
+
+                            //TODO lasciare i missili volanti nel caso si uccide un alieno
                             missile.setVisible(false);
 
-                            if(slife <= 0){
-                                synchronized(spaceShip){
-                                    spaceShip.setDying(true);
-                                    spaceShip.setImage(shipExpl.getImage());
+                            if(slife1 <= 0){
+                                synchronized(spaceShip1){
+                                    spaceShip1.setDying(true);
+                                    spaceShip1.setImage(shipExpl.getImage());
                                 }
                                 if(isMusicOn){
                                     try {
@@ -475,17 +573,58 @@ public class Board extends JPanel implements Runnable {
                                 }
                             }
                         }
+
+
+                        if(MULTIPLAYER == true){
+                            Area missile2Hitbox = missile.getShape();
+                            missile2Hitbox.intersect(ship2Hitbox);
+                            if (!missile2Hitbox.isEmpty()) {
+                                synchronized(spaceShip2){
+                                    spaceShip2.setupLife(-1);
+                                    slife2 = spaceShip2.getLife();
+                                }
+    
+                                //TODO lasciare i missili volanti nel caso si uccide un alieno
+                                missile.setVisible(false);
+    
+                                if(slife2 <= 0){
+                                    synchronized(spaceShip2){
+                                        spaceShip2.setDying(true);
+                                        spaceShip2.setImage(shipExpl.getImage());
+                                        spaceShip2.getMissiles().clear();
+                                    }
+                                    
+                                    if(isMusicOn){
+                                        try {
+                                            InputStream in = new FileInputStream(shipExplSound);
+                                            AudioStream audios = new AudioStream(in);
+                                            AudioPlayer.player.start(audios);   
+                                        } catch (IOException e) {
+                                            System.out.println(e.getMessage());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+
+
                     }
                 }
 
-                
-                alienHitbox = alien.getShape();
-                synchronized (spaceShip) {   // checking collisions between spaceship missiles and aliens
-                    List<Missile> shipMissiles = spaceShip.getMissiles();
-                    for (Missile missile : shipMissiles) {
+                alienHitboxfor1 = alien.getShape();
+                alienHitboxfor2 = alien.getShape();
+
+
+                //TODO MULTIPLAYER valutare di trasformare il seguente controllo in una funzione ridondo il codice per l impossibilità di 
+                //sincronizzare su più oggetti
+                synchronized (spaceShip1) {   // checking collisions between spaceship missiles and aliens
+                    List<Missile> ship1Missiles = spaceShip1.getMissiles();
+                    for (Missile missile : ship1Missiles) {
                         Area missileHitbox = missile.getShape();
                         // intersection is empty if shapes aren't collided
-                        missileHitbox.intersect(alienHitbox);
+                        missileHitbox.intersect(alienHitboxfor1);
 
                         if (!missileHitbox.isEmpty()) {
                             synchronized(alien){
@@ -497,7 +636,7 @@ public class Board extends JPanel implements Runnable {
                             if(alife <= 0){
                                 synchronized(alien){
                                     alien.setDying(true);
-                                    score += alien.getPoints();
+                                    scoreS1 += alien.getPoints();
                                     alien.setImage(alienExpl.getImage());
                                 }
                                 if(isMusicOn) {
@@ -507,6 +646,43 @@ public class Board extends JPanel implements Runnable {
                                         AudioPlayer.player.start(audios);   
                                     } catch (IOException e) {
                                         System.out.println(e.getMessage());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(MULTIPLAYER == true){
+                    synchronized (spaceShip2) {   // checking collisions between spaceship missiles and aliens
+                        List<Missile> ship2Missiles = spaceShip2.getMissiles();
+                        for (Missile missile : ship2Missiles) {
+                            Area missileHitbox = missile.getShape();
+                            // intersection is empty if shapes aren't collided
+                            missileHitbox.intersect(alienHitboxfor2);
+
+                            if (!missileHitbox.isEmpty()) {
+                                synchronized(alien){
+                                    alien.setupLife(missile.getDamage());
+                                    alife = alien.getLife();
+                                }
+                                missile.setVisible(false);
+
+                                if(alife <= 0){
+                                    synchronized(alien){
+                                        alien.setDying(true);
+                                        scoreS2 += alien.getPoints();
+                                        alien.setImage(alienExpl.getImage());
+                                    }
+                                    //TODO MULTIPLAYER verificare interferenza audio
+                                    if(isMusicOn) {
+                                        try {
+                                            InputStream in = new FileInputStream(alienExplSound);
+                                            AudioStream audios = new AudioStream(in);
+                                            AudioPlayer.player.start(audios);   
+                                        } catch (IOException e) {
+                                            System.out.println(e.getMessage());
+                                        }
                                     }
                                 }
                             }
@@ -533,7 +709,10 @@ public class Board extends JPanel implements Runnable {
         @Override
         public void keyReleased(KeyEvent e) {
             try {
-                spaceShip.keyReleased(e);
+                spaceShip1.keyReleased(e);
+                if(MULTIPLAYER == true){
+                    spaceShip2.keyReleased(e);
+                }
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             }
@@ -541,7 +720,10 @@ public class Board extends JPanel implements Runnable {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            spaceShip.keyPressed(e);
+            spaceShip1.keyPressed(e);
+            if(MULTIPLAYER == true){
+                spaceShip2.keyPressed(e);
+            }
         }
     }
 
