@@ -47,8 +47,17 @@ public class SpaceShip extends Sprite{
         shipMissileFire.start();
     }
 
+    //TODO private method cannt be tested with junit
+    //Don't test private methods.
+    //Give the methods package access.
+    //Use a nested test class.
+    //Use reflection.
     private void setColor(int color) {
         String pathImage = "";
+        if(color != 1 && color != 2 && color != 3){
+            setColor(1);
+        }
+
         switch(color){
             case 1:{
                 pathImage = "./src/main/java/SoEproj/Resource/GreenCraft.png";
@@ -162,7 +171,7 @@ public class SpaceShip extends Sprite{
         }
     }
 
-
+    //TODO JUNIT all next methods is not tested
     // TODO risolvere certe combinazioni di tasti che non funzionano (es. space+down+right)
     public void keyPressed(KeyEvent e) {
 

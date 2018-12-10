@@ -28,8 +28,7 @@ public class SaveLoadData {
     FileOutputStream out;
     FileInputStream in;
 
-    public SaveLoadData() {
-    }
+    public SaveLoadData(){}
     
     public void SaveData(ArrayList pd) throws IOException{
         out = new FileOutputStream(scoreData);
