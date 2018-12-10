@@ -24,7 +24,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     private boolean music;
     private int keyModality;
     
-    public GameMainMenu() {
+    public GameMainMenu() { 
         initComponents();
         initUI();
         loadWindowsIcon();

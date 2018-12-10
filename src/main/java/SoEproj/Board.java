@@ -19,8 +19,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -41,6 +45,7 @@ public class Board extends JPanel implements Runnable {
     // TODO Lo score deve essere controllato nel ciclo di update per aggiornarsi dinamicamente
     private int scoreS1 = 0;      // every kill updates the score
     private int scoreS2 = 0;
+    private ArrayList<scoreEntry> scoreBoard = new ArrayList<>();
 
     private final File boardSound;
     private final ImageIcon alienExpl;
@@ -77,7 +82,7 @@ public class Board extends JPanel implements Runnable {
 
 
     public Board(int shipType, JPanel p, boolean m, int level, int km) {
-        this.MULTIPLAYER = true;
+        this.MULTIPLAYER = false;
         this.level = level;
         // Images and soundtracks initialization
         boardSound = new File("./src/main/java/SoEproj/Resource/ThemeLevelSound1.wav");
@@ -111,6 +116,9 @@ public class Board extends JPanel implements Runnable {
     }
 
 
+
+
+
     //TODO assegnare due colori diversi alle navicelle in caso di multiplayer valutare se è il caso di far selezionare 
     //all utente il colore di entrambe le navicelle
     public void initGame(int shipType) {
@@ -137,6 +145,33 @@ public class Board extends JPanel implements Runnable {
     }
 
 
+
+    public String addToScoreBoard(String name) throws IOException, ClassNotFoundException {
+        SaveLoadData sld = new SaveLoadData();
+        
+
+        try {
+            scoreBoard = sld.LoadData();
+        } catch (ClassNotFoundException e) {
+            System.out.println("File non trovato, creato un nuovo file.");
+        } catch (IOException e) {
+            System.out.println("File non trovato, creato un nuovo file.");
+        }
+        
+
+        if(MULTIPLAYER == true){
+            scoreBoard.add(new scoreEntry(name,scoreS1+scoreS2));    
+        }
+        else{
+            scoreBoard.add(new scoreEntry(name,scoreS1));
+        }
+
+        sld.SaveData(scoreBoard);
+
+        return scoreBoard.toString();
+
+    }
+
     @Override
     // This method will be executed by the painting subsystem whenever you component needs to be rendered
     public void paintComponent(Graphics g) {
@@ -148,7 +183,19 @@ public class Board extends JPanel implements Runnable {
             drawBackground(g);
             drawGame(g);
         } 
-        else if(gameState == 2) {   // draw game over background gif after the lose condition
+        else if(gameState == 2) {   // draw game over background gif after the lose condition 
+            //TODO da togliere messo solo per dare dimostrazione del funzionamento-----------
+            try {
+                String a = addToScoreBoard("wael");
+                System.out.println("scoreboard : "+a);            
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            //--------------------------------------------------------------------------------
             isMusicOn = false;
             EndGameFunction(0);     // passing 0 to draw game over background 
         }
@@ -740,5 +787,6 @@ public class Board extends JPanel implements Runnable {
         }
     }
 
+   
 
 }
