@@ -169,7 +169,7 @@ public class SpaceShip extends Sprite{
         int key = e.getKeyCode();
         
         if(keyModality == 2){
-            if (key == KeyEvent.VK_SPACE) {
+            if (key == KeyEvent.VK_K) {
                 synchronized(missiles){
                     setFiring(true);
                     missiles.notifyAll();
@@ -214,7 +214,7 @@ public class SpaceShip extends Sprite{
         int key = e.getKeyCode();
         
         if(keyModality == 2){
-            if (key == KeyEvent.VK_SPACE) {
+            if (key == KeyEvent.VK_K) { // modificato SPACE con K in modo che in caso di multi player si possa avere dei comandi separati
                 setFiring(false);
             }
             if (key == KeyEvent.VK_A) {

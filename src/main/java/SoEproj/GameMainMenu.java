@@ -35,7 +35,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     private final File boardSound;
     
     
-    public GameMainMenu() {
+    public GameMainMenu() { 
         initComponents();
         initUI();
         loadWindowsIcon();
