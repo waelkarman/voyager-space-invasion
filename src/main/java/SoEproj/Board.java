@@ -149,7 +149,6 @@ public class Board extends JPanel implements Runnable {
     public String addToScoreBoard(String name) throws IOException, ClassNotFoundException {
         SaveLoadData sld = new SaveLoadData();
         
-
         try {
             scoreBoard = sld.LoadData();
         } catch (ClassNotFoundException e) {
@@ -158,7 +157,6 @@ public class Board extends JPanel implements Runnable {
             System.out.println("File non trovato, creato un nuovo file.");
         }
         
-
         if(MULTIPLAYER == true){
             scoreBoard.add(new scoreEntry(name,scoreS1+scoreS2));    
         }
@@ -167,9 +165,7 @@ public class Board extends JPanel implements Runnable {
         }
 
         sld.SaveData(scoreBoard);
-
         return scoreBoard.toString();
-
     }
 
     @Override
