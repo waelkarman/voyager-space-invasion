@@ -24,7 +24,7 @@ import java.util.TreeSet;
  */
 public class SaveLoadData {
     
-    File scoreData = new File("./scoreData");
+    File scoreData = new File("./src/main/java/SoEproj/scoreDataSaves");
     FileOutputStream out;
     FileInputStream in;
 
