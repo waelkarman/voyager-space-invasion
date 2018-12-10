@@ -26,11 +26,11 @@ public class scoreEntry implements Comparable<scoreEntry>,Serializable{
         this.punteggio = punteggio;
     }
     
-    public synchronized String getAutore() {
+    public String getNome() {
         return nome;
     }
 
-    public synchronized int getTitolo() {
+    public int getPunteggio() {
         return punteggio;
     }
 
