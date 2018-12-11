@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -25,7 +28,7 @@ public class SpaceShip extends Sprite {
     private float dy;
     private List<Missile> missiles;
     private Boolean firing = false;
-    private String missiletype; // set damage, speed and image
+    private String missileType; // set damage, speed and image
     private boolean music;
     private Thread shipMissileFire;
     private int keyModality;
@@ -35,7 +38,7 @@ public class SpaceShip extends Sprite {
         super(x, y);        
         this.life = 1;
         this.missiles = new ArrayList<>();
-        this.missiletype = "Laser";
+        this.missileType = "Laser";
         this.SPACE = 3/2;       // speed
         this.music = music;
         this.keyModality = km;
@@ -99,14 +102,15 @@ public class SpaceShip extends Sprite {
         this.firing = firing;
     }
 
-    public synchronized void setMissiletypeUnconditionally(String missiletype) {
-        this.missiletype = missiletype;
+    public synchronized void resetMissileType(String missiletype) {
+        this.missileType = missiletype;
     }
         
     public synchronized void setMissiletype(String missiletype) {
-        ResettingShip a = new ResettingShip(20, this, this.missiletype);
-        this.missiletype = missiletype;
-
+        //ResettingShip a = new ResettingShip(20, this, this.missiletype);
+        Timer t = new Timer();
+        t.schedule(new ResetUpgradeAmmo(this), 20 * 1000);
+        this.missileType = missiletype;
     }
 
     public synchronized  List<Missile> getMissiles() {
@@ -115,11 +119,11 @@ public class SpaceShip extends Sprite {
 
     public synchronized void fire() {
 
-        missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
+        missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToRight" ));
 
-        if(missiletype.equals("3Missiles")) {
-            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToTop" ));
-            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToBottom" ));
+        if(missileType.equals("3Missiles")) {
+            missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToTop" ));
+            missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToBottom" ));
         }  
 
         if(music){
@@ -243,6 +247,22 @@ public class SpaceShip extends Sprite {
         int[] ypos = { y, y + height/2, y + height };
         Polygon shape = new Polygon(xpos,ypos,3);
         return new Area(shape);
+    }
+
+
+    class ResetUpgradeAmmo extends TimerTask  {
+        SpaceShip s;
+        String ammo;
+   
+        public ResetUpgradeAmmo(SpaceShip s) {
+            this.s = s;
+            ammo = s.missileType;
+        }
+   
+        @Override
+        public void run() {
+            s.resetMissileType(ammo); 
+        }
     }
 
 }

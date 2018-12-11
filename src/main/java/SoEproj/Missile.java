@@ -15,16 +15,17 @@ public class Missile extends Sprite {
     private double countX = 0; 
     private final int CoeffAng = 3; 
     
-    public Missile(int x, int y, String type, String direction) {  // the type è il danno, immagine e velocità
+    public Missile(int x, int y, String type, String direction) {  
         super(x, y);
         this.direction = direction;
 
         setType(type);
     }
  
-    private void setType(String type) {    // tipo di arma (numero e tipo di colpi ad esempio colpo triplo)
+    private void setType(String type) {     // type is damage, speed and image
 
         String pathImage = "";
+        
         switch(type){
             case "3Missiles":{
                 damage = -1;

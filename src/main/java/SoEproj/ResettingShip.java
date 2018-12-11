@@ -19,7 +19,7 @@ public class ResettingShip {
  
     class RemindTask extends TimerTask {
         public void run() {
-            sp.setMissiletypeUnconditionally(ammo);
+            sp.resetMissileType(ammo);
         }
     }
 
