@@ -7,24 +7,22 @@ import java.util.Random;
 
 public class AlienGenerator implements Runnable {
 
-    private final int ALIEN_NUM = 3;   // total amount of generated aliens
-                                  // NOTE: the game duration in seconds is ALIEN_NUM / 2
+    
+    private final int ALIEN_NUM = 3;   // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                        
     private final int bgWidth;
-    private final int bgHeight;
     
     private List<Alien> aliens;
     private int level;
     private int ref;
 
-    private Random random = new Random();
-    private int maxY = 44;  // maximum (highest) pixel in which an alien can spawn
-    private int minY = 389; // minimum (lowest) pixel in which an alien can spawn
-    private int range = minY - maxY;    // range in which an alien can appear
+    private Random r = new Random();
+    private int minY = 44;  // max (highest) pixel in which an alien can spawn
+    private int maxY = 389; // min (lowest) pixel in which an alien can spawn
+    private int range = maxY - minY;    // range in which an alien can appear
     
 
-    public AlienGenerator(int bgWidth, int bgHeight, List<Alien> aliens, int level) {
+    public AlienGenerator(int bgWidth, List<Alien> aliens, int level) {
         this.bgWidth = bgWidth;
-        this.bgHeight = bgHeight;
         this.aliens = aliens;
         this.level = level;
         this.ref = 0;
@@ -32,8 +30,7 @@ public class AlienGenerator implements Runnable {
 
 
     public void generateAliens() {
-        
-        int h = random.nextInt(range) + maxY;
+        int h = r.nextInt(range) + minY;
         
         switch(this.level){
             case 1: // lev. 1 : Only EasyAliens
@@ -46,7 +43,6 @@ public class AlienGenerator implements Runnable {
                     ref = 0;
                 } else
                     aliens.add(new MediumAlien(bgWidth + 40, h));
-                
                 break;
 
             case 3: // lev. 3 : HardAliens and MediumAliens, ratio 2:1
@@ -62,34 +58,36 @@ public class AlienGenerator implements Runnable {
         ref++;
     }
 
+
     public void generateBoss() {
         synchronized(this.aliens){
-            this.aliens.add(new Boss1Alien(bgWidth, bgHeight/2, aliens));
+            this.aliens.add(new Boss1Alien(bgWidth, range/2, aliens));
         }
     }
 
+
     @Override
     public void run(){
-        int i=0;
+        int i = 0;
+        int elapsedTime = 0;
         
-        do {
-            if (i < ALIEN_NUM) {
-                synchronized(this.aliens) {
-                    generateAliens(); //1 provvisorio
+        while(true){
+            synchronized(aliens) {
+                if(i < ALIEN_NUM) {
+                    generateAliens();
+                    i++;
                 }
-
-                i++;
+                else if(aliens.isEmpty()) {
+                    break;
+                }
             }
 
-            int sleep = 500;
-
             try {
-                Thread.sleep(sleep);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 System.out.println("AlienGenerator sleep: " + e);
             }
-
-        } while(!aliens.isEmpty());
+        }
         
         generateBoss();
         

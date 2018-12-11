@@ -9,7 +9,6 @@ public class ScoreEntry implements Comparable<ScoreEntry>,Serializable{
     private final int punteggio;
 
     public ScoreEntry(String nome, int punteggio) {
-        System.out.println("Sono in ScoreEntry");
         this.nome = nome;
         this.punteggio = punteggio;
     }
@@ -30,19 +29,7 @@ public class ScoreEntry implements Comparable<ScoreEntry>,Serializable{
 
     @Override
     public int compareTo(ScoreEntry t) {
-        if(this.punteggio == t.punteggio){
-            return 0;
-        }
-        else if (this.punteggio < t.punteggio)
-            return -1;
-        else
-            return 1;
-        
-    
+        return this.punteggio - t.punteggio;
     }
-    
-    
-    
-    
     
 }

@@ -35,20 +35,17 @@ public class Board extends JPanel implements Runnable {
     // TODO Lo score deve essere controllato nel ciclo di update per aggiornarsi dinamicamente
     private int scoreS1 = 0;      // every kill updates the score
     private int scoreS2 = 0;
-    private ArrayList<ScoreEntry> scoreBoard = new ArrayList<>();
-
     private boolean MULTIPLAYER;
-    private SpaceShip spaceShip1;
-    private SpaceShip spaceShip2;
+    private SpaceShip spaceShip1, spaceShip2;
     private List<Alien> aliens;
     private LinkedList<UpgradePack> packs;
     private int gameState;
-    private Thread animator;
+    private Thread boardAnimator;
     private int level;
 
-    private Thread threadGen;  
-    private Thread threadpackGen;       // alien generator thread 
-    private AlienGenerator alienGen;    // alien generator class
+    private Thread threadAliensGen;     // alien generator thread      
+    private AlienGenerator aliensGen;    // alien generator class
+    private Thread threadPacksGen; 
     private PackGenerator packsGen;
 
     private ImageIcon bgImgIcon;
@@ -60,9 +57,9 @@ public class Board extends JPanel implements Runnable {
     private boolean isMusicOn;
     private int keyModality;
     
-    private int slife1;
-    private int slife2;
-    private int alife;
+    private int ship1Life;
+    private int ship2Life;
+    private int alienLife;
     
     private InputStream in;
     private AudioStream audios;
@@ -74,6 +71,9 @@ public class Board extends JPanel implements Runnable {
         this.level = level;
         // Images and soundtracks initialization
         this.isMusicOn = m;          // eventualità di cambio musica ad ogni livello 
+        this.menuPanel = p;
+        this.keyModality = km;       // game commands switcher
+
         if(isMusicOn){
             boardSound = new File("./src/main/java/SoEproj/Resource/MusicGame.wav");
             try {
@@ -84,116 +84,73 @@ public class Board extends JPanel implements Runnable {
                 e.printStackTrace();
             }
         }
+
         alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
         shipExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionShip.png");
         alienExplSound = new File("./src/main/java/SoEproj/Resource/CollisionSound.wav");
         shipExplSound = new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav");
 
-        // level 1 background image
-        if(this.level == 1){
-            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround1.png");
-            background = bgImgIcon.getImage();
-        }
-        if(this.level == 2){
-            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
-            background = bgImgIcon.getImage();
-        }
-        if(this.level == 3){
-            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround3.png");
-            background = bgImgIcon.getImage();
-        }
-
-        menuPanel = p;
-        keyModality = km;       // game commands switcher
-        
+        setBackground();
         initGame(shipType);     // shipType may change with level
         gameLaunch();
     }
 
 
+    private void setBackground() {
+        // level 1 background image
+        bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround1.png");
+        
+        if(level == 2)
+            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
+        if(level == 3)
+            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround3.png");
+
+        background = bgImgIcon.getImage();
+    }
 
 
-
-    //TODO assegnare due colori diversi alle navicelle in caso di multiplayer valutare se è il caso di far selezionare 
-    //all utente il colore di entrambe le navicelle
     public void initGame(int shipType) {
         gameState = 1;
         addKeyListener(new TAdapter());
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
         spaceShip1 = new SpaceShip(0, B_HEIGHT/2, shipType, isMusicOn, keyModality);
-        if(MULTIPLAYER == true){
-            spaceShip2 = new SpaceShip(0, B_HEIGHT/2 + spaceShip1.height, shipType, isMusicOn, 2);
-        }
-        // changes with level
+
+        if(MULTIPLAYER == true)
+            spaceShip2 = new SpaceShip(0, B_HEIGHT/2 + spaceShip1.height, shipType + 1 % 3 , isMusicOn, keyModality + 1 % 2); // +1 % 2 for set a different type
         
         packs = new LinkedList<>();
-        packsGen = new PackGenerator(background.getWidth(null),background.getHeight(null), packs,this.level);
-        threadpackGen = new Thread(packsGen);
+        packsGen = new PackGenerator(background.getWidth(null), packs, this.level);
+        threadPacksGen = new Thread(packsGen);
         
         aliens = new ArrayList<>();
-        alienGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens,this.level);
-        threadGen = new Thread(alienGen);
+        aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
+        threadAliensGen = new Thread(aliensGen);
 
-        threadGen.start();
-        threadpackGen.start();
+        threadAliensGen.start();
+        threadPacksGen.start();
     }
 
-
-
-    /*public String addToScoreBoard(String name) throws IOException, ClassNotFoundException {
-        SaveLoadData sld = new SaveLoadData();
-        
-        try {
-            scoreBoard = sld.LoadData();
-        } catch (FileNotFoundException e) {
-            System.out.println("Scoreboard not found. Creating new...");
-        } catch (Exception e) {
-            System.out.println("Generic Exception: " + e);
-        }
-        
-        if(MULTIPLAYER == true){
-            scoreBoard.add(new ScoreEntry(name,scoreS1+scoreS2));    
-        }
-        else{
-            System.out.println("Sono prima di ScoreEntry");
-            scoreBoard.add(new ScoreEntry(name,scoreS1));
-        }
-
-        sld.SaveData(scoreBoard);
-        return scoreBoard.toString();
-    }*/
-
-    @Override
     // This method will be executed by the painting subsystem whenever you component needs to be rendered
-    public void paintComponent(Graphics g) {
+    @Override
+    public void paintComponent(Graphics g) {    
         super.paintComponent(g);
 
-        // draw game sprites or write the game over message
         // TODO Rendere gameState un enum
         if(gameState == 1) {        // draw background and game elements
             drawBackground(g);
             drawGame(g);
         } 
         else if(gameState == 2) {   // draw game over background gif after the lose condition 
-            /*//TODO da togliere messo solo per dare dimostrazione del funzionamento-----------
-            try {
-                String a = addToScoreBoard("wael");
-                System.out.println("scoreboard : "+a);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            //--------------------------------------------------------------------------------*/
             EndGameFunction(0);     // passing 0 to draw game over background 
         }
+        // TODO fare la condizione di win
 
         Toolkit.getDefaultToolkit().sync();
     }
 
 
     private void drawBackground(Graphics g) {
-        
         if (bgShiftX > background.getWidth(null)) {
             bgShiftX = 0;
         } else {
@@ -206,7 +163,6 @@ public class Board extends JPanel implements Runnable {
 
 
     private void drawGame(Graphics g) {
-        
         if (spaceShip1.isVisible()) {
             g.drawImage(spaceShip1.getImage(), spaceShip1.getX(), spaceShip1.getY(), this);
             
@@ -224,8 +180,6 @@ public class Board extends JPanel implements Runnable {
             }
         }
 
-
-        
         if(MULTIPLAYER == true){
             if (spaceShip2.isVisible()) {
                 g.drawImage(spaceShip2.getImage(), spaceShip2.getX(), spaceShip2.getY(), this);
@@ -245,7 +199,6 @@ public class Board extends JPanel implements Runnable {
             }
         }
         
-
         //GAME OVER condition set
         if(MULTIPLAYER == true){
             if (spaceShip1.isDying() && spaceShip2.isDying()){
@@ -267,7 +220,6 @@ public class Board extends JPanel implements Runnable {
 
         }
         
-
         synchronized(aliens) {   // they are drawn only if they have not been previously destroyed.
             for (Alien alien : aliens) {
                 if (alien.isVisible()) {    
@@ -286,26 +238,14 @@ public class Board extends JPanel implements Runnable {
                 if (alien.isDying()) {
                     alien.die();
 
-                    if (alien instanceof Boss1Alien){ // i'm starting level 2
-                        //threadGen.interrupt(); //TODO commentati metodo clear e interrupt
-                        //aliens.clear();
+                    if (alien instanceof Boss1Alien){ // i'm starting a new level
                         if(this.level < 3){
-
                             this.level += 1;
-                            if(this.level == 2){
-                                //background updating
-                                bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
-                                background = bgImgIcon.getImage();
-                            }
-                            if(this.level == 3){
-                                //background updating
-                                bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround3.png");
-                                background = bgImgIcon.getImage();
-                            }
+                            setBackground();
 
-                            alienGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens,this.level);
-                            threadGen = new Thread(alienGen);
-                            threadGen.start();
+                            aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
+                            threadAliensGen = new Thread(aliensGen);
+                            threadAliensGen.start();
                         } 
                         else {
                             gameState = 2;
@@ -316,8 +256,6 @@ public class Board extends JPanel implements Runnable {
         }
 
         // In the top-left corner of the window, we draw how many aliens are left.
-        // TODO Correggere scritte sopra allo sfondo
-        // TODO MULTIPLAYER da sistemare la posizione
         g.setColor(Color.WHITE);
         g.drawString("Score 1 : " + scoreS1, 5, 15);
         synchronized(spaceShip1){
@@ -334,7 +272,6 @@ public class Board extends JPanel implements Runnable {
         }
 
     }
-
 
 
     @Override
@@ -372,8 +309,8 @@ public class Board extends JPanel implements Runnable {
 
     public void gameLaunch() {
         if(gameState == 1) {
-            animator = new Thread(this);
-            animator.start();
+            boardAnimator = new Thread(this);
+            boardAnimator.start();
         }
 
     }
@@ -532,9 +469,9 @@ public class Board extends JPanel implements Runnable {
 
                     synchronized(spaceShip1){
                         spaceShip1.setupLife(-1);
-                        slife1 = spaceShip1.getLife();
+                        ship1Life = spaceShip1.getLife();
                     }
-                    if(slife1 <= 0){
+                    if(ship1Life <= 0){
                         synchronized(spaceShip1){
                             spaceShip1.setDying(true);
                             spaceShip1.setImage(shipExpl.getImage());
@@ -563,9 +500,9 @@ public class Board extends JPanel implements Runnable {
 
                         synchronized(spaceShip2){
                             spaceShip2.setupLife(-1);
-                            slife2 = spaceShip2.getLife();
+                            ship2Life = spaceShip2.getLife();
                         }
-                        if(slife2 <= 0){
+                        if(ship2Life <= 0){
                             synchronized(spaceShip2){
                                 spaceShip2.setDying(true);
                                 spaceShip2.setImage(shipExpl.getImage());
@@ -598,13 +535,13 @@ public class Board extends JPanel implements Runnable {
                         if (!missile1Hitbox.isEmpty()) {
                             synchronized(spaceShip1){
                                 spaceShip1.setupLife(-1);
-                                slife1 = spaceShip1.getLife();
+                                ship1Life = spaceShip1.getLife();
                             }
 
                             //TODO lasciare i missili degli alieni proseguire nel caso si uccide un alieno
                             missile.setVisible(false);
 
-                            if(slife1 <= 0){
+                            if(ship1Life <= 0){
                                 synchronized(spaceShip1){
                                     spaceShip1.setDying(true);
                                     spaceShip1.setImage(shipExpl.getImage());
@@ -628,13 +565,13 @@ public class Board extends JPanel implements Runnable {
                             if (!missile2Hitbox.isEmpty()) {
                                 synchronized(spaceShip2){
                                     spaceShip2.setupLife(-1);
-                                    slife2 = spaceShip2.getLife();
+                                    ship2Life = spaceShip2.getLife();
                                 }
     
                                 //TODO lasciare i missili degli alieni in campo nel caso si uccide un alieno
                                 missile.setVisible(false);
     
-                                if(slife2 <= 0){
+                                if(ship2Life <= 0){
                                     synchronized(spaceShip2){
                                         spaceShip2.setDying(true);
                                         spaceShip2.setImage(shipExpl.getImage());
@@ -676,9 +613,9 @@ public class Board extends JPanel implements Runnable {
                         if (!missileHitbox.isEmpty()) {
                             synchronized(alien){
                                 alien.setupLife(missile.getDamage());
-                                alife = alien.getLife();
+                                alienLife = alien.getLife();
                             }
-                            if(alife>0){
+                            if(alienLife>0){
                                 if(isMusicOn){
                                     try {
                                         InputStream in = new FileInputStream("./src/main/java/SoEproj/Resource/ShoothedBoss.wav");
@@ -691,7 +628,7 @@ public class Board extends JPanel implements Runnable {
                             }
                             missile.setVisible(false);
 
-                            if(alife <= 0){
+                            if(alienLife <= 0){
                                 synchronized(alien){
                                     alien.setDying(true);
                                     scoreS1 += alien.getPoints();
@@ -722,11 +659,11 @@ public class Board extends JPanel implements Runnable {
                             if (!missileHitbox.isEmpty()) {
                                 synchronized(alien){
                                     alien.setupLife(missile.getDamage());
-                                    alife = alien.getLife();
+                                    alienLife = alien.getLife();
                                 }
                                 missile.setVisible(false);
 
-                                if(alife <= 0){
+                                if(alienLife <= 0){
                                     synchronized(alien){
                                         alien.setDying(true);
                                         scoreS2 += alien.getPoints();

@@ -7,59 +7,44 @@ import java.util.Random;
 
 public class PackGenerator implements Runnable {
 
-    protected LinkedList<UpgradePack> upack;
-    private int ref_width;
-    private int ref_heigth;
+    protected LinkedList<UpgradePack> pack;
+    private int bgWidth;
     private int level;
-   
-    private Random random = new Random();
-    private int maxY = 44;  // maximum (highest) pixel in which a pack can spawn
-    private int minY = 389; // minimum (lowest) pixel in which a pack can spawn
-    private int range = minY - maxY;    // range in which a pack can appear
+    private Random random;
+    private int minX = 44;  // maximum (highest) pixel in which a pack can spawn
+    private int maxY = 389; // minimum (lowest) pixel in which a pack can spawn
+    private int range = maxY - minX;    // range in which a pack can appear
 
 
-    public PackGenerator(int bgwidth, int bgheight, LinkedList<UpgradePack> upack,int level) {
-        this.ref_width=bgwidth;
-        this.ref_heigth=bgheight;
-        this.upack = upack;
+    public PackGenerator(int bgwidth, LinkedList<UpgradePack> pack, int level) {
+        this.bgWidth = bgwidth;
+        this.pack = pack;
         this.level = level;
+        random = new Random();
 	}
 
 
-    public LinkedList<UpgradePack> getUpack() {
-        return this.upack;
+    public LinkedList<UpgradePack> getPack() {
+        return this.pack;
     }
-
-
 
 
     @Override
     public void run() {
         while(true){
-            
-            synchronized(upack){
-                int h = random.nextInt(range) + maxY;
+            synchronized(pack){
+                int h = random.nextInt(range) + minX;
                 int randomUpgrade = random.nextInt(9);
 
-                upack.add(new UpgradePack(600,h,randomUpgrade));
+                pack.add(new UpgradePack(bgWidth + 40 , h, randomUpgrade));
             }
-            
 
-            //TODO settare opportunamente il tempo 
-            int sleep = 25000;
             try {
-                Thread.sleep(sleep);
+                Thread.sleep(15000);
             } catch (InterruptedException e) {
-                String msg = String.format("Pack generation interrupted %s", e.getMessage());
-                System.out.println(msg);
+                System.out.println("Pack generation interrupted %s" + e.getMessage());
             }
         }
-
-
-
-
     }
-
-
 
 }
