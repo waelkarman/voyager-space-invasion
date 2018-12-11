@@ -59,13 +59,7 @@ public class GameEndPanel extends javax.swing.JPanel {
     
     public String addToScoreBoard(String name) throws IOException, ClassNotFoundException {
         SaveLoadData sld = new SaveLoadData();
-        try {
-            scoreBoard = sld.LoadData();
-        } catch (ClassNotFoundException e) {
-            System.out.println("File non trovato, creato un nuovo file.");
-        } catch (IOException e) {
-            System.out.println("File non trovato, creato un nuovo file.");
-        }
+        scoreBoard = sld.LoadData();
         scoreBoard.add(new ScoreEntry(name, punteggio));
         sld.SaveData(scoreBoard);
         return scoreBoard.toString();

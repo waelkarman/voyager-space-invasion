@@ -37,13 +37,8 @@ public class ScoreboardPanel extends javax.swing.JPanel {
     
     public void showScoreboard(){
         ArrayList<ScoreEntry> ScBoard = new ArrayList();
-        try {
-            ScBoard = sld.LoadData();
-        } catch (IOException ex) {
-            Logger.getLogger(ScoreboardPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ScoreboardPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ScBoard = sld.LoadData();
+        
         for (ScoreEntry x : ScBoard){
             jTextArea1.append(x.toString()+"\n");
         }

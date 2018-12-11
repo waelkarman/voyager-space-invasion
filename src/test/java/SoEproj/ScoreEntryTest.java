@@ -23,19 +23,19 @@ public class ScoreEntryTest
     }
 
     @Test
-    public void getPunteggioTest()
+    public void getScoreTest()
     {
         ScoreEntry one = new ScoreEntry("player",500);
         ScoreEntry two = new ScoreEntry("player",500);
-        assertEquals(one.getPunteggio(), two.getPunteggio());
+        assertEquals(one.getScore(), two.getScore());
     }
    
     @Test
-    public void getNomeTest()
+    public void getNameTest()
     {
         ScoreEntry one = new ScoreEntry("player",500);
         ScoreEntry two = new ScoreEntry("player",500);
-        assertEquals(one.getNome(), two.getNome());
+        assertEquals(one.getName(), two.getName());
     }
 
 
