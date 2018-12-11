@@ -63,12 +63,27 @@ public class Board extends JPanel implements Runnable {
     private int slife1;
     private int slife2;
     private int alife;
+    
+    private InputStream in;
+    private AudioStream audios;
+    private File boardSound;
 
 
-    public Board(int shipType, JPanel p, boolean m, int level, int km) {
-        this.MULTIPLAYER = false;
+    public Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
+        this.MULTIPLAYER = mp;
         this.level = level;
         // Images and soundtracks initialization
+        this.isMusicOn = m;          // eventualità di cambio musica ad ogni livello 
+        if(isMusicOn){
+            boardSound = new File("./src/main/java/SoEproj/Resource/MusicGame.wav");
+            try {
+                in = new FileInputStream(boardSound);
+                audios = new AudioStream(in);
+                AudioPlayer.player.start(audios);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
         shipExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionShip.png");
         alienExplSound = new File("./src/main/java/SoEproj/Resource/CollisionSound.wav");
@@ -88,10 +103,7 @@ public class Board extends JPanel implements Runnable {
             background = bgImgIcon.getImage();
         }
 
-        
-        
         menuPanel = p;
-        isMusicOn = m;          // eventualità di cambio musica ad ogni livello 
         keyModality = km;       // game commands switcher
         
         initGame(shipType);     // shipType may change with level
@@ -129,7 +141,7 @@ public class Board extends JPanel implements Runnable {
 
 
 
-    public String addToScoreBoard(String name) throws IOException {
+    /*public String addToScoreBoard(String name) throws IOException, ClassNotFoundException {
         SaveLoadData sld = new SaveLoadData();
         
         try {
@@ -150,7 +162,7 @@ public class Board extends JPanel implements Runnable {
 
         sld.SaveData(scoreBoard);
         return scoreBoard.toString();
-    }
+    }*/
 
     @Override
     // This method will be executed by the painting subsystem whenever you component needs to be rendered
@@ -164,7 +176,7 @@ public class Board extends JPanel implements Runnable {
             drawGame(g);
         } 
         else if(gameState == 2) {   // draw game over background gif after the lose condition 
-            //TODO da togliere messo solo per dare dimostrazione del funzionamento-----------
+            /*//TODO da togliere messo solo per dare dimostrazione del funzionamento-----------
             try {
                 String a = addToScoreBoard("wael");
                 System.out.println("scoreboard : "+a);
@@ -172,8 +184,7 @@ public class Board extends JPanel implements Runnable {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            //--------------------------------------------------------------------------------
-            isMusicOn = false;
+            //--------------------------------------------------------------------------------*/
             EndGameFunction(0);     // passing 0 to draw game over background 
         }
 
@@ -468,10 +479,19 @@ public class Board extends JPanel implements Runnable {
                         packs.get(i).updateSpaceShip(spaceShip1); 
                     
                     }
-
+                    
                     packs.get(i).setDying(true);
                     packs.poll();
                     
+                    if(isMusicOn){
+                        try {
+                            InputStream in = new FileInputStream("./src/main/java/SoEproj/Resource/PowerUp.wav");
+                            AudioStream audios = new AudioStream(in);
+                            AudioPlayer.player.start(audios);   
+                        } catch (IOException e) {
+                            System.out.println(e.getMessage());
+                        }
+                    }
                 }
             }
         }
@@ -658,6 +678,17 @@ public class Board extends JPanel implements Runnable {
                                 alien.setupLife(missile.getDamage());
                                 alife = alien.getLife();
                             }
+                            if(alife>0){
+                                if(isMusicOn){
+                                    try {
+                                        InputStream in = new FileInputStream("./src/main/java/SoEproj/Resource/ShoothedBoss.wav");
+                                        AudioStream audios = new AudioStream(in);
+                                        AudioPlayer.player.start(audios);   
+                                    } catch (IOException e) {
+                                        System.out.println(e.getMessage());
+                                    }
+                                }
+                            }
                             missile.setVisible(false);
 
                             if(alife <= 0){
@@ -721,9 +752,15 @@ public class Board extends JPanel implements Runnable {
 
     //Outcome viene passato al pannello per disegnare la foto giusta in caso i vittoria o di sconfitta 
     public void EndGameFunction(int outcome){
+        AudioPlayer.player.stop(audios);
+        int finalScore;
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
-        GameEndPanel gep = new GameEndPanel(outcome, menuPanel);
+        if(MULTIPLAYER == true)
+            finalScore = scoreS1 + scoreS2;
+        else
+            finalScore = scoreS1;
+        GameEndPanel gep = new GameEndPanel(outcome,menuPanel,finalScore,isMusicOn);
         old.add(gep).requestFocusInWindow();
         old.validate();
         old.repaint();
