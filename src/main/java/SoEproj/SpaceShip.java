@@ -5,6 +5,7 @@
  */
 package SoEproj;
 
+
 import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
@@ -17,31 +18,28 @@ import java.util.List;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
-public class SpaceShip extends Sprite{
 
-    private final int type;       // spaceship color: 1-Green, 2-Orange, 3-Red
+public class SpaceShip extends Sprite {
+     
     private float dx;
     private float dy;
     private List<Missile> missiles;
     private Boolean firing = false;
-    private int life;
-    private String missiletype; //imposta danno, velocita, image
+    private String missiletype; // set damage, speed and image
     private boolean music;
     private Thread shipMissileFire;
     private int keyModality;
-                 
-    
+    protected int life;
 
-    public SpaceShip(int x, int y, int color, boolean m, int km) {
-        super(x, y);
-        missiles = new ArrayList<>();
-        this.missiletype = "Laser";
+    public SpaceShip(int x, int y, int color, boolean music, int km) {
+        super(x, y);        
         this.life = 1;
-        this.type = color;
-        this.SPACE = 1;     // velocità
-        music = m;
-        keyModality = km;
-        setColor(color);
+        this.missiles = new ArrayList<>();
+        this.missiletype = "Laser";
+        this.SPACE = 3/2;       // speed
+        this.music = music;
+        this.keyModality = km;
+        setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
 
         shipMissileFire = new Thread(new FireThread(this));
         shipMissileFire.start();
@@ -54,9 +52,6 @@ public class SpaceShip extends Sprite{
     //Use reflection.
     private void setColor(int color) {
         String pathImage = "";
-        if(color != 1 && color != 2 && color != 3){
-            setColor(1);
-        }
 
         switch(color){
             case 1:{
@@ -71,12 +66,15 @@ public class SpaceShip extends Sprite{
                 pathImage = "./src/main/java/SoEproj/Resource/RedCraft.png";
                 break;
             }
+            default:{
+                pathImage = "./src/main/java/SoEproj/Resource/GreenCraft.png";
+                break;
+            }
         }
 
         loadImage(pathImage);
         getImageDimensions();
     }
-
 
     public synchronized int getLife() {
         return this.life;
@@ -88,21 +86,14 @@ public class SpaceShip extends Sprite{
         }
     }
 
-    public synchronized void setLife(int life) {
-        this.life = life;
-    }
-    
     public synchronized void setupLife(int life) {
-        
-        if(this.life<3 || life < 0){
+        if(this.life < 3)        // max 3 lives
             this.life += life;
-        }
     }
 
     public synchronized Boolean getFiring() {
         return this.firing;
     }
-
 
     public synchronized void setFiring(Boolean firing) {
         this.firing = firing;
@@ -118,57 +109,45 @@ public class SpaceShip extends Sprite{
 
     }
 
-
     public synchronized  List<Missile> getMissiles() {
         return missiles;
     }
 
-
     public synchronized void fire() {
-        if( missiletype != "3Missiles"){
-            
-            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
-            
-            
-            if(music) {
-                try {
-                    InputStream in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
-                    AudioStream audios = new AudioStream(in);
-                    AudioPlayer.player.start(audios);
-                } catch (IOException e) {
-                    System.out.println("Spaceship Music: " + e);
-                }
-            }
-        }
-        else{
-            missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
+
+        missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToRight" ));
+
+        if(missiletype.equals("3Missiles")) {
             missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToTop" ));
             missiles.add(new Missile(x + width, y + height / 2, missiletype, "leftToBottom" ));
-            
-            if(music){
-                try {
-                    InputStream in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
-                    AudioStream audios = new AudioStream(in);
-                    AudioPlayer.player.start(audios);
-                } catch (IOException e) {
-                    System.out.println("Spaceship Music: " + e);
-                }
-            }
         }  
-    }
 
+        if(music){
+            try {
+                InputStream in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
+                AudioStream audios = new AudioStream(in);
+                AudioPlayer.player.start(audios);
+            } catch (IOException e) {
+                System.out.println("Spaceship Music: " + e);
+            }
+        }
+    }
 
     public void move() {       
         x += dx;
         y += dy;
 
-        if (x < 1) {
+        if(x < 1)
             x = 1;
-        }
 
-        if (y < 1) {
-            y = 1;
-        }
+        if(x > B_WIDTH - this.width)
+            x = B_WIDTH - this.width;
+
+        if(y < 0) 
+            y = 0;
+
+        if(y > B_HEIGHT - this.height)
+            y = B_HEIGHT - this.height;
     }
 
     //TODO JUNIT all next methods is not tested

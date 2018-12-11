@@ -10,7 +10,6 @@ import java.awt.geom.Area;
 
 public class Missile extends Sprite {
 
-    private final int BOARD_WIDTH = 585;
     private int damage;
     private String direction;               // direction
     private double countX = 0; 
@@ -85,7 +84,7 @@ public class Missile extends Sprite {
         switch(direction){
             case "leftToRight":{
                 x += SPACE;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }
@@ -102,7 +101,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x += SPACE;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }
@@ -113,7 +112,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x += SPACE;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }
@@ -124,7 +123,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x -= SPACE + 2;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }
@@ -135,7 +134,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x -= SPACE + 2;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }

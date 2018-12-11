@@ -15,6 +15,8 @@ import javax.swing.ImageIcon;
 
 public abstract class Sprite {
 
+    protected final int B_WIDTH = 600;
+    protected final int B_HEIGHT = 450;
     protected int x;
     protected int y;
     protected int width;
@@ -23,13 +25,12 @@ public abstract class Sprite {
     protected boolean dying; 
     protected Image image;
     protected float SPACE;
-
  
 
     public Sprite(int x, int y) {
         this.x = x;
         this.y = y;
-        visible = true;
+        this.visible = true;
     }
 
     public float getSPACE() {
@@ -79,16 +80,11 @@ public abstract class Sprite {
     }
 
     public synchronized void die() {    
-        visible = false;
+        this.visible = false;
     }
 
     public void setImage(Image image) {   
         this.image = image;
-    }
-
-    // returns the bounding rectangle of the sprite image
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
     }
 
     public abstract Area getShape();

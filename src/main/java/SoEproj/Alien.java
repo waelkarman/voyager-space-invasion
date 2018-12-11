@@ -8,16 +8,15 @@ import java.util.List;
 
 public abstract class Alien extends Sprite {
 
+    protected final int INITIAL_X = B_WIDTH;
     protected List<Missile> missiles;
-    protected final int INITIAL_X = 600;
-    protected int life;
     protected int points;
-
+    protected int life;
 
     public Alien(int x, int y, int life) {
         super(x, y);
-        this.life = life;
         missiles = new ArrayList<>();
+        this.life = life;
     }
 
     public synchronized List<Missile> getMissiles() {
@@ -32,11 +31,11 @@ public abstract class Alien extends Sprite {
         return this.INITIAL_X;
     }
 
-    public int getLife(){
+    public synchronized int getLife(){
         return this.life;
     }
 
-    public void setupLife(int up){
+    public synchronized void setupLife(int up){
         this.life = this.life + up;
     }
     
