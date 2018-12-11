@@ -13,9 +13,9 @@ public class PackGenerator implements Runnable {
     private int level;
    
     private Random random = new Random();
-    private int aa = 44;
-    private int bb = 389;
-    private int cc = ((bb-aa) + 1);
+    private int maxY = 44;  // maximum (highest) pixel in which an alien can spawn
+    private int minY = 389; // minimum (lowest) pixel in which an alien can spawn
+    private int range = minY - maxY;    // range in which an alien can appear
 
 
     public PackGenerator(int bgwidth, int bgheight, LinkedList<UpgradePack> upack,int level) {
@@ -35,16 +35,13 @@ public class PackGenerator implements Runnable {
 
     @Override
     public void run() {
-        
-            
         while(true){
             
             synchronized(upack){
-                int y = random.nextInt(430);
-                Random r = new Random();
-                int randomUpgrade = r.nextInt(9);
-                upack.add(new UpgradePack(600,y,randomUpgrade));
-                
+                int h = random.nextInt(range);
+                int randomUpgrade = random.nextInt(9);
+
+                upack.add(new UpgradePack(600,h,randomUpgrade));
             }
             
 
