@@ -11,6 +11,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  *
@@ -23,15 +25,19 @@ public class GameOptionPanel extends javax.swing.JPanel {
     private boolean music;
     private int level;
     private int keyModality;
+    private boolean mulMode;
+    private AudioStream audios;
     
     /** Creates new form GameOptionPanel */
-    public GameOptionPanel(JPanel p, boolean m, int km) {
+    public GameOptionPanel(JPanel p, boolean m, int km, boolean mp, AudioStream audio) {
         initComponents();
+        this.audios = audio;
         level = 1;
         ship = 2;
         menuPanel = p;
         music = m;
         keyModality = km;
+        mulMode = mp;
     }
 
     /** This method is called from within the constructor to
@@ -78,6 +84,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("Rockwell", 1, 11)); // NOI18N
         jRadioButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Orange Craft");
         jRadioButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -108,13 +115,14 @@ public class GameOptionPanel extends javax.swing.JPanel {
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png")); // NOI18N
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jRadioButton4.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton4);
         jRadioButton4.setFont(new java.awt.Font("Rockwell", 1, 11)); // NOI18N
         jRadioButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButton4.setSelected(true);
         jRadioButton4.setText("World 1");
         jRadioButton4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -159,15 +167,15 @@ public class GameOptionPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png")); // NOI18N
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png")); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1_Logo.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround1_Logo.png")); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround2_Logo.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround2_Logo.png")); // NOI18N
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround3_Logo.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround3_Logo.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -282,9 +290,10 @@ public class GameOptionPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jRadioButton3MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        AudioPlayer.player.stop(audios);
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
-        Board b = new Board(ship, menuPanel,music,level,keyModality);
+        Board b = new Board(ship, menuPanel,music,level,keyModality,mulMode);
         old.add(b).requestFocusInWindow();
         old.validate();
         old.repaint();
