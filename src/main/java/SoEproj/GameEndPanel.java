@@ -27,7 +27,7 @@ public class GameEndPanel extends javax.swing.JPanel {
 
     JPanel menuPanel;
     int punteggio;
-    private ArrayList<scoreEntry> scoreBoard = new ArrayList<>();
+    private ArrayList<ScoreEntry> scoreBoard = new ArrayList<>();
     private InputStream in;
     private AudioStream audios;
     private File boardSound;
@@ -66,7 +66,7 @@ public class GameEndPanel extends javax.swing.JPanel {
         } catch (IOException e) {
             System.out.println("File non trovato, creato un nuovo file.");
         }
-        scoreBoard.add(new scoreEntry(name, punteggio));
+        scoreBoard.add(new ScoreEntry(name, punteggio));
         sld.SaveData(scoreBoard);
         return scoreBoard.toString();
     }
@@ -108,7 +108,7 @@ public class GameEndPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Your Name:");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\GameOverEnd.gif")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GameOverEnd.gif")); // NOI18N
 
         jButton3.setText("SAVE");
         jButton3.addActionListener(new java.awt.event.ActionListener() {

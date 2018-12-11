@@ -92,6 +92,7 @@ public class AlienGenerator implements Runnable {
         } while(!aliens.isEmpty());
         
         generateBoss();
+        
     }
 }  
  

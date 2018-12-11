@@ -15,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -300,7 +299,7 @@ public class Board extends JPanel implements Runnable {
                     if (alien instanceof Boss1Alien){ // i'm starting level 2
                         //threadGen.interrupt(); //TODO commentati metodo clear e interrupt
                         //aliens.clear();
-                    if(this.level < 3){
+                        if(this.level < 3){
 
                             this.level += 1;
                             if(this.level == 2){
