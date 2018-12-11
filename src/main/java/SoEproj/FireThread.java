@@ -17,7 +17,7 @@ public class FireThread implements Runnable{
         this.missiles = s.getMissiles();
     }
 
-    // TODO risolvere spari a raffica
+
     @Override
     public void run() { 
         while(s.isVisible()){    
@@ -37,7 +37,7 @@ public class FireThread implements Runnable{
                 try {
                     Thread.sleep(300);                                                                                                            
                 } catch (InterruptedException e) {
-                    System.out.println(e);
+                    System.out.println("FireThread sleep: " + e);
                 }
             }
         } 

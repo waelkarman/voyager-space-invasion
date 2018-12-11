@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
+
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,14 +9,10 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -31,8 +23,6 @@ import sun.audio.AudioStream;
 
 public class Board extends JPanel implements Runnable {
 
-    private final int ICRAFT_X = 40;
-    private final int ICRAFT_Y = 60;
     private final int B_WIDTH = 600;
     private final int B_HEIGHT = 450;
     private final int DELAY = 15;
@@ -131,9 +121,9 @@ public class Board extends JPanel implements Runnable {
         addKeyListener(new TAdapter());
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceShip1 = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn, keyModality);
+        spaceShip1 = new SpaceShip(0, B_HEIGHT/2, shipType, isMusicOn, keyModality);
         if(MULTIPLAYER == true){
-            spaceShip2 = new SpaceShip(ICRAFT_X, ICRAFT_Y, shipType, isMusicOn, 2);
+            spaceShip2 = new SpaceShip(0, B_HEIGHT/2 + spaceShip1.height, shipType, isMusicOn, 2);
         }
         // changes with level
         
@@ -486,7 +476,8 @@ public class Board extends JPanel implements Runnable {
                 packsHitbox.intersect(ship1Hitbox);
                 if (!packsHitbox.isEmpty()) {   
                     synchronized(spaceShip1){
-                        packs.get(i).updateSpaceShip(spaceShip1,packs.get(i).getType()); 
+                        packs.get(i).updateSpaceShip(spaceShip1); 
+                    
                     }
                     
                     packs.get(i).setDying(true);
@@ -517,7 +508,7 @@ public class Board extends JPanel implements Runnable {
                     packsHitbox.intersect(ship2Hitbox);
                     if (!packsHitbox.isEmpty()) {   
                         synchronized(spaceShip2){
-                            packs.get(i).updateSpaceShip(spaceShip2,packs.get(i).getType()); 
+                            packs.get(i).updateSpaceShip(spaceShip2); 
                         
                         }
     

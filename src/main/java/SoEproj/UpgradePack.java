@@ -1,23 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
+
 
 import java.awt.Rectangle;
 import java.awt.geom.Area;
-import java.util.List;
-import java.util.Random;
+
 
 public class UpgradePack extends Sprite{
 
-    private final int BOARD_WIDTH = 585;
-    private String upPower;
     private int type;
-
-
-  
 
     public UpgradePack(int x, int y, int randomUpgrade) {
         super(x, y);
@@ -29,49 +19,49 @@ public class UpgradePack extends Sprite{
         String pathImage = "";
        
         //TODO: immagini
-        switch(randomUpgrade){ //different pack color based on the upgrade type
+        switch(randomUpgrade){      //different pack color based on the upgrade type
             case 0:{
-                type = 0;//"3Missiles";
+                type = 0;   //"3Missiles";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             } 
             case 1:{
-                type = 1;//"fireBall";
+                type = 1;   //"fireBall";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             } 
             case 2:{
-                type = 2;//"Laser";
+                type = 2;   //"Laser";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 3:{
-                type = 3;//"Life";
+                type = 3;   //"Life";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 4:{
-                type = 4;//"Speed";
+                type = 4;   //"Speed";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 5:{
-                type = 5;//"Vecchia";
+                type = 5;   //"Vecchia";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 6:{
-                type = 6;//"Banana";
+                type = 6;   //"Banana";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 7:{
-                type = 7;//"memas";
+                type = 7;   //"memas";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 8:{
-                type = 8;//"pollo";
+                type = 8;   //"pollo";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
@@ -79,14 +69,11 @@ public class UpgradePack extends Sprite{
 
         loadImage(pathImage);
         getImageDimensions();
-
     }
 
 
-    public synchronized void updateSpaceShip(SpaceShip s,int skill) {
-        
-
-        switch(skill){ //different pack color based on the upgrade type
+    public synchronized void updateSpaceShip(SpaceShip s) {
+        switch(type){                          //different pack color based on the upgrade type
             case 0:{
                 s.setMissiletype("3Missiles");
                 break;
@@ -127,18 +114,16 @@ public class UpgradePack extends Sprite{
     }
 
 
-    public int getType() {
+    public synchronized int getType() {
         return this.type;
     }
 
-    public synchronized void move() {   
-        
+    public void move() {   
         x -= SPACE;
+
         if (x < 0)
             visible = false;
-    
     }
-    
     
 
     @Override
@@ -146,9 +131,5 @@ public class UpgradePack extends Sprite{
         Rectangle shape = new Rectangle(x,y,width,height);
         return new Area(shape);
     }
-
-
-
-
 
 }

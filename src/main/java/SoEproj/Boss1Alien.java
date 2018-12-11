@@ -1,18 +1,14 @@
 package SoEproj;
 
+
 import java.util.List;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 public class Boss1Alien extends Alien implements Runnable{
 
     // TODO Cambiare immagine boss1
     private String imagePath = "./src/main/java/SoEproj/Resource/HeavyAlien.png";
-    private boolean goDown = true;  // to set boss go at first down and then up
+    private boolean goDown = true;          // to set boss go at first down and then up
     private final int TOT_LIFE = life;
     private List<Alien> aliens;
 
@@ -30,10 +26,8 @@ public class Boss1Alien extends Alien implements Runnable{
     }
     
     
-    // Boss enters in scene and then moves up and down
     @Override
-    public void move() {
-
+    public void move() {            // Boss enters in scene and then moves up and down
         if (x >= INITIAL_X-30) {
             x -= SPACE;
         }
@@ -64,19 +58,18 @@ public class Boss1Alien extends Alien implements Runnable{
             missiles.add(new Missile(x , y + height/2, "Laser", "rightToBottom"));
     }
 
+
     @Override
     public void run() {
         while(isVisible()){
-            // TODO i BossHelper devono uscire solo se gli altri sono già morti prima
-            if (life < TOT_LIFE * 0.5) {
-                synchronized(aliens){
+            synchronized(aliens){
+                if (life < TOT_LIFE * 0.5 && aliens.size() == 1) {  // the aliens must appear only if there aren't other aliens 
                     aliens.add(new EasyAlien(x, y - 30, "BossHelper", goDown));
                     aliens.add(new EasyAlien(x, y, "BossHelper", goDown));
                     aliens.add(new EasyAlien(x, y + 30, "BossHelper", goDown));
                 }
             }
 
-            
             try {
                 Thread.sleep(5000);
                 fire();
