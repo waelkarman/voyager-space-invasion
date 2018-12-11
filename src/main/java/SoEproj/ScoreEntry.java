@@ -2,47 +2,42 @@ package SoEproj;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
-public class ScoreEntry implements Comparable<ScoreEntry>,Serializable{
-    private final String nome;
-    private final int punteggio;
+public class ScoreEntry implements Comparable<ScoreEntry>, Serializable {
+    private final String name;
+    private final int score;
 
-    public ScoreEntry(String nome, int punteggio) {
-        System.out.println("Sono in ScoreEntry");
-        this.nome = nome;
-        this.punteggio = punteggio;
+    public ScoreEntry(String name, int score) {
+        this.name = name;
+        this.score = score;
     }
     
     public String getNome() {
-        return nome;
+        return name;
     }
 
     public int getPunteggio() {
-        return punteggio;
+        return score;
     }
 
     @Override
     public String toString() {
-        return "Player: "+nome+", Score: "+punteggio;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String date = LocalDate.now().format(formatter);
+        return String.format("%15s%10d%12s", name, score, date);
+        //return "Player: " + name + ",\tScore: " + score;
     }
-
 
     @Override
     public int compareTo(ScoreEntry t) {
-        if(this.punteggio == t.punteggio){
+        if(this.score == t.score)
             return 0;
-        }
-        else if (this.punteggio < t.punteggio)
+        else if (this.score < t.score)
             return -1;
         else
             return 1;
-        
-    
     }
-    
-    
-    
-    
-    
 }
