@@ -27,7 +27,7 @@ public class GameEndPanel extends javax.swing.JPanel {
 
     JPanel menuPanel;
     int punteggio;
-    private ArrayList<scoreEntry> scoreBoard = new ArrayList<>();
+    private ArrayList<ScoreEntry> scoreBoard = new ArrayList<>();
     private InputStream in;
     private AudioStream audios;
     private File boardSound;
@@ -66,7 +66,7 @@ public class GameEndPanel extends javax.swing.JPanel {
         } catch (IOException e) {
             System.out.println("File non trovato, creato un nuovo file.");
         }
-        scoreBoard.add(new scoreEntry(name, punteggio));
+        scoreBoard.add(new ScoreEntry(name, punteggio));
         sld.SaveData(scoreBoard);
         return scoreBoard.toString();
     }
