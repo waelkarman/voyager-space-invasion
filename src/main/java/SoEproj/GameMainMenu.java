@@ -5,6 +5,7 @@
  */
 package SoEproj;
 
+
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -12,19 +13,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-/**
- *
- * @author aless
- */
+
+
 public class GameMainMenu extends javax.swing.JFrame {
 
-    
     private Image iconWindows;
     private Image background;
     private int ship;
@@ -48,15 +44,15 @@ public class GameMainMenu extends javax.swing.JFrame {
             audios = new AudioStream(in);
             AudioPlayer.player.start(audios);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Game Main Menu Sound :" + e);
 		}
 
         ship = 2;
         music = true;
         mulMode = false;
     }
+
     private void initUI() {
-        
         setResizable(false);
         pack();
         setTitle("Voyager On The Edge Of The Solar System");

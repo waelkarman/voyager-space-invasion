@@ -10,22 +10,22 @@ import java.awt.geom.Area;
 
 public class Missile extends Sprite {
 
-    private final int BOARD_WIDTH = 585;
     private int damage;
     private String direction;               // direction
     private double countX = 0; 
     private final int CoeffAng = 3; 
     
-    public Missile(int x, int y, String type, String direction) {  // the type è il danno, immagine e velocità
+    public Missile(int x, int y, String type, String direction) {  
         super(x, y);
         this.direction = direction;
 
         setType(type);
     }
  
-    private void setType(String type) {    // tipo di arma (numero e tipo di colpi ad esempio colpo triplo)
+    private void setType(String type) {     // type is damage, speed and image
 
         String pathImage = "";
+        
         switch(type){
             case "3Missiles":{
                 damage = -1;
@@ -85,7 +85,7 @@ public class Missile extends Sprite {
         switch(direction){
             case "leftToRight":{
                 x += SPACE;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }
@@ -102,7 +102,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x += SPACE;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }
@@ -113,7 +113,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x += SPACE;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }
@@ -124,7 +124,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x -= SPACE + 2;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }
@@ -135,7 +135,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x -= SPACE + 2;
-                if (x > BOARD_WIDTH)
+                if (x > B_WIDTH)
                     visible = false;
                 break;
             }

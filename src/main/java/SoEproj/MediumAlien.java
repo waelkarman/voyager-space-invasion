@@ -10,13 +10,14 @@ import java.util.List;
 
 public class MediumAlien extends Alien implements Runnable{
 
-    private String imagePath = "./src/main/java/SoEproj/Resource/MediumAlien.png";
+    private String imagePath;
 
     public MediumAlien(int x, int y) {
         super(x, y, 2);
         SPACE = 2;
         super.points = 75;
         
+        imagePath = "./src/main/java/SoEproj/Resource/MediumAlien.png";
         loadImage(imagePath);
         getImageDimensions();
 
@@ -44,7 +45,6 @@ public class MediumAlien extends Alien implements Runnable{
     @Override
     public void run() {
         while(isVisible()){
-
             try {
                 fire();
                 Thread.sleep(8000);
@@ -53,6 +53,5 @@ public class MediumAlien extends Alien implements Runnable{
             }
         }
     }
-
 
 }

@@ -1,7 +1,6 @@
 package SoEproj;
 
 import  java.lang.Math;
-import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -52,7 +51,6 @@ public class HardAlien extends Alien implements Runnable{
     @Override
     public void run() {
         while(isVisible()){
-
             try {
                 fire();
                 Thread.sleep(5000);

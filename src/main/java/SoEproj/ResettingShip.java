@@ -5,12 +5,12 @@ import java.util.TimerTask;
 import java.util.Scanner;
 import java.awt.Toolkit;
  
-public class resettingShip {
+public class ResettingShip {
     Timer timer;
     SpaceShip sp;
     String ammo;
 
-    public resettingShip(int seconds,SpaceShip s, String Ammotype) {
+    public ResettingShip(int seconds,SpaceShip s, String Ammotype) {
         this.sp = s;
         this.ammo = Ammotype;
         timer = new Timer();
@@ -19,7 +19,7 @@ public class resettingShip {
  
     class RemindTask extends TimerTask {
         public void run() {
-            sp.setMissiletypeUnconditionally(ammo);
+            sp.resetMissileType(ammo);
         }
     }
 

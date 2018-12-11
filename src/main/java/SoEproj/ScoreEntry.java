@@ -17,20 +17,21 @@ import java.io.Serializable;
  *
  * @author Wael Karman
  */
-public class scoreEntry implements Comparable<scoreEntry>,Serializable{
+public class ScoreEntry implements Comparable<ScoreEntry>,Serializable{
     private final String nome;
     private final int punteggio;
 
-    public scoreEntry(String nome, int punteggio) {
+    public ScoreEntry(String nome, int punteggio) {
+        System.out.println("Sono in ScoreEntry");
         this.nome = nome;
         this.punteggio = punteggio;
     }
     
-    public synchronized String getAutore() {
+    public String getNome() {
         return nome;
     }
 
-    public synchronized int getTitolo() {
+    public int getPunteggio() {
         return punteggio;
     }
 
@@ -41,7 +42,7 @@ public class scoreEntry implements Comparable<scoreEntry>,Serializable{
 
 
     @Override
-    public int compareTo(scoreEntry t) {
+    public int compareTo(ScoreEntry t) {
         if(this.punteggio == t.punteggio){
             return 0;
         }

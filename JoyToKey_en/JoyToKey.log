@@ -1,33 +1,24 @@
-2018/12/09 23:10:52.624 Info   C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
-2018/12/09 23:10:52.624 Info   Starting JoyToKey Ver6.1.1
-2018/12/09 23:10:52.624 Info   ExeFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
-2018/12/09 23:10:52.624 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\
-2018/12/09 23:10:52.624 Info   IniFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.ini
-2018/12/09 23:10:52.624 Info   Windows Version = 6.2
-2018/12/09 23:10:52.625 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#232)
-2018/12/09 23:10:52.626 Info   LicenseKey "" is not valid
-2018/12/09 23:10:52.712 Info   Loading XInput1_3.dll (Joystick.cpp#128)
-2018/12/09 23:10:52.713 Info   Initialized XInput (Joystick.cpp#146)
-2018/12/09 23:10:52.731 Info   Detected a DI joystick: {C6E3A090-FC06-11E8-8001-444553540000}, Microsoft® SideWinder® Plug & Play Game Pad, Microsoft® SideWinder® Plug & Play Game Pad
-2018/12/09 23:10:52.731 Info   Preferred index = -1
-2018/12/09 23:10:52.732 Info   numAxis = 2
-2018/12/09 23:10:52.732 Info   numPOVs = 0
-2018/12/09 23:10:52.732 Info   numButtons = 6
-2018/12/09 23:10:52.732 Info   EnumDeviceObject: Axis offset=0 type=102 name=Asse Y
-2018/12/09 23:10:52.732 Info   EnumDeviceObject: Axis offset=4 type=2 name=Asse X
-2018/12/09 23:10:52.732 Info   DetectJoysticks: Detected 1 DI joystick(s)
-2018/12/09 23:10:52.738 Info   Joystick #1: Microsoft® SideWinder® Plug & Play Game Pad
-2018/12/09 23:10:52.738 Info   1 joysticks are detected (Joystick.cpp#168)
-2018/12/09 23:10:52.738 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
-2018/12/09 23:10:52.741 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
-2018/12/09 23:10:52.770 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
-2018/12/09 23:11:09.839 Info   Detected a DI joystick: {C6E3A090-FC06-11E8-8001-444553540000}, Microsoft® SideWinder® Plug & Play Game Pad, Microsoft® SideWinder® Plug & Play Game Pad
-2018/12/09 23:11:09.839 Info   Preferred index = -1
-2018/12/09 23:11:09.840 Info   numAxis = 2
-2018/12/09 23:11:09.840 Info   numPOVs = 0
-2018/12/09 23:11:09.840 Info   numButtons = 6
-2018/12/09 23:11:09.840 Info   EnumDeviceObject: Axis offset=0 type=102 name=Asse Y
-2018/12/09 23:11:09.840 Info   EnumDeviceObject: Axis offset=4 type=2 name=Asse X
-2018/12/09 23:11:09.840 Info   DetectJoysticks: Detected 1 DI joystick(s)
-2018/12/09 23:11:09.841 Info   Joystick #1: Microsoft® SideWinder® Plug & Play Game Pad
-2018/12/09 23:11:11.544 Info   Application terminated (Utils\LogFile.cpp#20)
+2018/12/10 21:52:55.968 Info   C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
+2018/12/10 21:52:55.968 Info   Starting JoyToKey Ver6.1.1
+2018/12/10 21:52:55.968 Info   ExeFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
+2018/12/10 21:52:55.968 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\
+2018/12/10 21:52:55.968 Info   IniFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.ini
+2018/12/10 21:52:55.968 Info   Windows Version = 6.2
+2018/12/10 21:52:55.969 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#232)
+2018/12/10 21:52:55.970 Info   LicenseKey "" is not valid
+2018/12/10 21:52:56.183 Info   Loading XInput1_3.dll (Joystick.cpp#128)
+2018/12/10 21:52:56.185 Info   Initialized XInput (Joystick.cpp#146)
+2018/12/10 21:52:56.211 Info   Detected a DI joystick: {C6E3A090-FC06-11E8-8001-444553540000}, Microsoft® SideWinder® Plug & Play Game Pad, Microsoft® SideWinder® Plug & Play Game Pad
+2018/12/10 21:52:56.211 Info   Preferred index = -1
+2018/12/10 21:52:56.212 Info   numAxis = 2
+2018/12/10 21:52:56.212 Info   numPOVs = 0
+2018/12/10 21:52:56.212 Info   numButtons = 6
+2018/12/10 21:52:56.212 Info   EnumDeviceObject: Axis offset=0 type=102 name=Asse Y
+2018/12/10 21:52:56.212 Info   EnumDeviceObject: Axis offset=4 type=2 name=Asse X
+2018/12/10 21:52:56.215 Info   DetectJoysticks: Detected 1 DI joystick(s)
+2018/12/10 21:52:56.220 Info   Joystick #1: Microsoft® SideWinder® Plug & Play Game Pad
+2018/12/10 21:52:56.220 Info   1 joysticks are detected (Joystick.cpp#168)
+2018/12/10 21:52:56.220 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
+2018/12/10 21:52:56.223 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
+2018/12/10 21:52:56.248 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
+2018/12/10 21:56:35.831 Info   Application terminated (Utils\LogFile.cpp#20)

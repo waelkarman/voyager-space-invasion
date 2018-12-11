@@ -24,25 +24,27 @@ import java.util.TreeSet;
  */
 public class SaveLoadData {
     
-    File scoreData = new File("./src/main/java/SoEproj/scoreDataSaves");
+    File scoreData = new File("./src/main/java/SoEproj/ScoreDataSaves");
     FileOutputStream out;
     FileInputStream in;
 
-    public SaveLoadData() {
-    }
+    public SaveLoadData(){}
     
-    public void SaveData(ArrayList pd) throws IOException{
+    public void SaveData(ArrayList<ScoreEntry> pd) throws IOException{
         out = new FileOutputStream(scoreData);
         ObjectOutputStream ogg = new ObjectOutputStream(out);
         ogg.writeObject(pd);
         ogg.close();
     }
     
-    public ArrayList LoadData() throws IOException, ClassNotFoundException{
-        ArrayList k;
+    public ArrayList<ScoreEntry> LoadData() throws IOException, ClassNotFoundException {
+        System.out.println("Sono dentro LoadData");
+        ArrayList<ScoreEntry> k;
         in = new FileInputStream(scoreData);
         ObjectInputStream ogg = new ObjectInputStream(in);
-        k=(ArrayList) ogg.readObject();
+        System.out.println("Sono prima del cast");
+        k = (ArrayList<ScoreEntry>) ogg.readObject();
+        System.out.println("Sono dopo il cast");
         ogg.close();
         return k;
         
