@@ -38,13 +38,13 @@ public class SaveLoadData {
     }
     
     public ArrayList<ScoreEntry> LoadData() throws IOException, ClassNotFoundException {
-        System.out.println("Sono dentro LoadData");
+        
         ArrayList<ScoreEntry> k;
         in = new FileInputStream(scoreData);
         ObjectInputStream ogg = new ObjectInputStream(in);
-        System.out.println("Sono prima del cast");
+        
         k = (ArrayList<ScoreEntry>) ogg.readObject();
-        System.out.println("Sono dopo il cast");
+        
         ogg.close();
         return k;
         
