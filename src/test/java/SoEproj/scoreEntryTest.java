@@ -11,30 +11,30 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class scoreEntryTest 
+public class ScoreEntryTest 
 {
 
     @Test
-    public void scoreEntryTest()
+    public void ScoreEntryTest()
     {
-        scoreEntry one = new scoreEntry("player",500);
-        scoreEntry two = new scoreEntry("player",500);
+        ScoreEntry one = new ScoreEntry("player",500);
+        ScoreEntry two = new ScoreEntry("player",500);
         assertNotEquals(one,two);
     }
 
     @Test
     public void getPunteggioTest()
     {
-        scoreEntry one = new scoreEntry("player",500);
-        scoreEntry two = new scoreEntry("player",500);
+        ScoreEntry one = new ScoreEntry("player",500);
+        ScoreEntry two = new ScoreEntry("player",500);
         assertEquals(one.getPunteggio(), two.getPunteggio());
     }
    
     @Test
     public void getNomeTest()
     {
-        scoreEntry one = new scoreEntry("player",500);
-        scoreEntry two = new scoreEntry("player",500);
+        ScoreEntry one = new ScoreEntry("player",500);
+        ScoreEntry two = new ScoreEntry("player",500);
         assertEquals(one.getNome(), two.getNome());
     }
 
@@ -42,8 +42,8 @@ public class scoreEntryTest
     @Test
     public void compareToTest()
     {
-        scoreEntry one = new scoreEntry("player",500);
-        scoreEntry two = new scoreEntry("player",400);
+        ScoreEntry one = new ScoreEntry("player",500);
+        ScoreEntry two = new ScoreEntry("player",400);
         assertEquals(one.compareTo(two),1);
     }
 
