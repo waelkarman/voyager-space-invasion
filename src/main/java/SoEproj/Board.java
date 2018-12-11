@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -19,11 +18,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -41,16 +37,15 @@ public class Board extends JPanel implements Runnable {
     private final int B_HEIGHT = 450;
     private final int DELAY = 15;
     private final double BG_SPEED = 0.5;    // background speed
-    
-    // TODO Lo score deve essere controllato nel ciclo di update per aggiornarsi dinamicamente
-    private int scoreS1 = 0;      // every kill updates the score
-    private int scoreS2 = 0;
-    private ArrayList<scoreEntry> scoreBoard = new ArrayList<>();
-
     private final ImageIcon alienExpl;
     private final ImageIcon shipExpl;
     private final File alienExplSound;
     private final File shipExplSound;
+
+    // TODO Lo score deve essere controllato nel ciclo di update per aggiornarsi dinamicamente
+    private int scoreS1 = 0;      // every kill updates the score
+    private int scoreS2 = 0;
+    private ArrayList<ScoreEntry> scoreBoard = new ArrayList<>();
 
     private boolean MULTIPLAYER;
     private SpaceShip spaceShip1;
@@ -62,9 +57,9 @@ public class Board extends JPanel implements Runnable {
     private int level;
 
     private Thread threadGen;  
-    private Thread threadpackGen;         // alien generator thread 
+    private Thread threadpackGen;       // alien generator thread 
     private AlienGenerator alienGen;    // alien generator class
-    private packGenerator packsGen;
+    private PackGenerator packsGen;
 
     private ImageIcon bgImgIcon;
     private Image background;
@@ -131,7 +126,7 @@ public class Board extends JPanel implements Runnable {
         // changes with level
         
         packs = new LinkedList<>();
-        packsGen = new packGenerator(background.getWidth(null),background.getHeight(null), packs,this.level);
+        packsGen = new PackGenerator(background.getWidth(null),background.getHeight(null), packs,this.level);
         threadpackGen = new Thread(packsGen);
         
         aliens = new ArrayList<>();
@@ -156,10 +151,10 @@ public class Board extends JPanel implements Runnable {
         }
         
         if(MULTIPLAYER == true){
-            scoreBoard.add(new scoreEntry(name,scoreS1+scoreS2));    
+            scoreBoard.add(new ScoreEntry(name,scoreS1+scoreS2));    
         }
         else{
-            scoreBoard.add(new scoreEntry(name,scoreS1));
+            scoreBoard.add(new ScoreEntry(name,scoreS1));
         }
 
         sld.SaveData(scoreBoard);

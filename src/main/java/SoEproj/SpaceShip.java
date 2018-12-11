@@ -104,7 +104,7 @@ public class SpaceShip extends Sprite {
     }
         
     public synchronized void setMissiletype(String missiletype) {
-        resettingShip a = new resettingShip(20, this, this.missiletype);
+        ResettingShip a = new ResettingShip(20, this, this.missiletype);
         this.missiletype = missiletype;
 
     }

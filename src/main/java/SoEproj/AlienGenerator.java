@@ -6,95 +6,77 @@ import java.util.Random;
 
 public class AlienGenerator implements Runnable {
 
-    private int ref_width;
-    private int ref_heigth;
-    private Alien current_alien;
+    private int bgWidth;
+    private int bgHeight;
+    private Alien currentAlien;
     private List<Alien> aliens;
     private int dim = 60;
-    private boolean flag = true;
     private int level;
     private int ref;
 
     private Random random = new Random();
-    private int aa = 44;
-    private int bb = 389;
-    private int cc = ((bb-aa) + 1);
+    private int maxY = 44;  // maximum (highest) pixel in which an alien can spawn
+    private int minY = 389; // minimum (lowest) pixel in which an alien can spawn
+    private int seed = minY - maxY;
     
 
-    public AlienGenerator(int bgwidth, int bgheight, List<Alien> aliens,int level) {
-        this.ref_width=bgwidth;
-        this.ref_heigth=bgheight;
+    public AlienGenerator(int bgWidth, int bgHeight, List<Alien> aliens, int level) {
+        this.bgWidth = bgWidth;
+        this.bgHeight = bgHeight;
         this.aliens = aliens;
         this.level = level;
+        this.ref = 0;
 	}
 
 
-    public void generate(){          //Livello!!
+    public void generate() {
         
-        int h = random.nextInt(cc)+aa;
+        int h = random.nextInt(seed) + maxY;
         
-
         switch(this.level){
-            case 1: // livello 1 alieni easy
-           
-                current_alien = new EasyAlien(ref_width+40, h);
-                aliens.add(current_alien);
+            case 1: // lev. 1 : Only EasyAliens
+                currentAlien = new EasyAlien(bgWidth+40, h);
+                aliens.add(currentAlien);
                 break;
 
-            case 2: // livello 2 alieni medi/easy rapporto 2:1
-                if (ref % 3 == 0){
-                    current_alien = new EasyAlien(ref_width + 40, h);
-                    
+            case 2: // lev. 2 : MediumAliens and EasyAliens, ratio 2:1
+                if (ref % 3 == 0) {
+                    currentAlien = new EasyAlien(bgWidth + 40, h);
+                    ref = 0;
                 }
                 else {
-                    current_alien = new MediumAlien(ref_width + 40, h); 
-                     
+                    currentAlien = new MediumAlien(bgWidth + 40, h); 
                 }
-                aliens.add(current_alien);
+                aliens.add(currentAlien);
                 break;
 
-            case 3: // livello 3 alieni medi/hard rapporto 2:1
-                if (ref % 3 == 0){
-                    current_alien = new MediumAlien(ref_width + 40, h);
-                    
+            case 3: // lev. 3 : HardAliens and MediumAliens, ratio 2:1
+                if (ref % 3 == 0) {
+                    currentAlien = new MediumAlien(bgWidth + 40, h);
+                    ref = 0;
                 }
                 else {
-                    current_alien = new HardAlien(ref_width + 20, h); 
-                    
+                    currentAlien = new HardAlien(bgWidth + 20, h); 
                 }
-                aliens.add(current_alien);
+                aliens.add(currentAlien);
                 break;
         }
 
-        /*
-        if(level == 1){
-        Random random = new Random();
-        
-        int aa = 44;
-        int bb = 389;
-        int cc = ((bb-aa) + 1);
-        int h = random.nextInt(cc)+aa;
-        
-        al = new EasyAlien(ref_width+40, h);
-        aliens.add(al);
-        
-        }*/
+        ref++;
+    }
 
-
-}
-
-    
+    @Override
     public void run(){
             int i=0;
-            ref = 0;
             
-            while(i<dim || flag == false){
+            while(i < dim) {
                 
-                synchronized(this.aliens){
+                synchronized(this.aliens) {
                     generate(); //1 provvisorio
                 }
-                i=i+1;
-                ref = i;
+
+                i++;
+
                 int sleep = 500;
 
                 try {
@@ -102,33 +84,16 @@ public class AlienGenerator implements Runnable {
                 } catch (InterruptedException e) {
                     String msg = String.format("Alien generation interrupted %s", e.getMessage());
                     System.out.println(msg);
+                }
             }
-    
-         
         
-        
-    }
-        
-        generateBoss(); 
-    
+        generateBoss();
     }
 
-    public void stop(){
-        flag = false;
-    }
-
-    public void generateBoss(){
-
-        
+    public void generateBoss() {
         synchronized(this.aliens){
-            this.aliens.add(new Boss1Alien(ref_width, ref_heigth/2, aliens));
+            this.aliens.add(new Boss1Alien(bgWidth, bgHeight/2, aliens));
         }
-        
-        
-        
-        
     }
-
-
 }  
  

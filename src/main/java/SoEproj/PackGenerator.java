@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class packGenerator implements Runnable {
+public class PackGenerator implements Runnable {
 
     protected LinkedList<UpgradePack> upack;
     private int ref_width;
@@ -19,7 +19,7 @@ public class packGenerator implements Runnable {
     private int cc = ((bb-aa) + 1);
 
 
-    public packGenerator(int bgwidth, int bgheight, LinkedList<UpgradePack> upack,int level) {
+    public PackGenerator(int bgwidth, int bgheight, LinkedList<UpgradePack> upack,int level) {
         this.ref_width=bgwidth;
         this.ref_heigth=bgheight;
         this.upack = upack;
