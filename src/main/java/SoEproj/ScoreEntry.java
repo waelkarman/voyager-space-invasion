@@ -22,6 +22,7 @@ public class ScoreEntry implements Comparable<ScoreEntry>,Serializable{
     private final int punteggio;
 
     public ScoreEntry(String nome, int punteggio) {
+        System.out.println("Sono in ScoreEntry");
         this.nome = nome;
         this.punteggio = punteggio;
     }

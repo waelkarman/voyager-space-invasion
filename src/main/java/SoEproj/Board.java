@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -139,21 +140,22 @@ public class Board extends JPanel implements Runnable {
 
 
 
-    public String addToScoreBoard(String name) throws IOException, ClassNotFoundException {
+    public String addToScoreBoard(String name) throws IOException {
         SaveLoadData sld = new SaveLoadData();
         
         try {
             scoreBoard = sld.LoadData();
-        } catch (ClassNotFoundException e) {
-            System.out.println("File non trovato, creato un nuovo file.");
-        } catch (IOException e) {
-            System.out.println("File non trovato, creato un nuovo file.");
+        } catch (FileNotFoundException e) {
+            System.out.println("Scoreboard not found. Creating new...");
+        } catch (Exception e) {
+            System.out.println("Generic Exception: " + e);
         }
         
         if(MULTIPLAYER == true){
             scoreBoard.add(new ScoreEntry(name,scoreS1+scoreS2));    
         }
         else{
+            System.out.println("Sono prima di ScoreEntry");
             scoreBoard.add(new ScoreEntry(name,scoreS1));
         }
 
@@ -176,10 +178,7 @@ public class Board extends JPanel implements Runnable {
             //TODO da togliere messo solo per dare dimostrazione del funzionamento-----------
             try {
                 String a = addToScoreBoard("wael");
-                System.out.println("scoreboard : "+a);            
-            } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                System.out.println("scoreboard : "+a);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
