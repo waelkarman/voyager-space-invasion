@@ -5,10 +5,19 @@
  */
 package SoEproj;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  *
@@ -17,17 +26,49 @@ import javax.swing.SwingUtilities;
 public class GameEndPanel extends javax.swing.JPanel {
 
     JPanel menuPanel;
-    public GameEndPanel(int outcome, JPanel p) {
-        menuPanel=p;
+    int punteggio;
+    private ArrayList<scoreEntry> scoreBoard = new ArrayList<>();
+    private InputStream in;
+    private AudioStream audios;
+    private File boardSound;
+    private boolean isMusicOn;
+    
+    public GameEndPanel(int outcome, JPanel p, int pnt, boolean m) {
+        this.menuPanel = p;
         initComponents();
-        
+        this.isMusicOn = m;
+        if(isMusicOn){
+            boardSound = new File("./src/main/java/SoEproj/Resource/MusicEnd.wav");
+            try {
+                in = new FileInputStream(boardSound);
+                audios = new AudioStream(in);
+                AudioPlayer.player.start(audios);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        this.punteggio = pnt;
         if(outcome == 1)
             loadWinImage();
     }
     
     public void loadWinImage(){
-        ImageIcon gameWin = new ImageIcon("");
+        ImageIcon gameWin = new ImageIcon("./src/main/java/SoEproj/Resource/GameWinEnd.png");
         jLabel3.setIcon(gameWin);
+    }
+    
+    public String addToScoreBoard(String name) throws IOException, ClassNotFoundException {
+        SaveLoadData sld = new SaveLoadData();
+        try {
+            scoreBoard = sld.LoadData();
+        } catch (ClassNotFoundException e) {
+            System.out.println("File non trovato, creato un nuovo file.");
+        } catch (IOException e) {
+            System.out.println("File non trovato, creato un nuovo file.");
+        }
+        scoreBoard.add(new scoreEntry(name, punteggio));
+        sld.SaveData(scoreBoard);
+        return scoreBoard.toString();
     }
 
     /**
@@ -57,14 +98,24 @@ public class GameEndPanel extends javax.swing.JPanel {
         });
 
         jButton2.setText("SCOREBOARD");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Your Name:");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GameOverEnd.gif")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\GameOverEnd.gif")); // NOI18N
 
         jButton3.setText("SAVE");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -114,12 +165,35 @@ public class GameEndPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
+        AudioPlayer.player.stop(audios);
+        GameMainMenu old = (GameMainMenu) SwingUtilities.getWindowAncestor(this);        
         old.getContentPane().remove(this);
         old.add(menuPanel);
+        if(isMusicOn)
+            old.startMusic();
         old.validate();
         old.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
+        old.getContentPane().remove(this);
+        old.add(new ScoreboardPanel(menuPanel,isMusicOn,audios));
+        old.validate();
+        old.repaint();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       String name = jTextField1.getText();
+        try {
+            String entry = addToScoreBoard(name);
+        } catch (IOException ex) {
+            Logger.getLogger(GameEndPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(GameEndPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+        this.jButton3.setEnabled(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
