@@ -57,12 +57,11 @@ public class GameEndPanel extends javax.swing.JPanel {
         jLabel3.setIcon(gameWin);
     }
     
-    public String addToScoreBoard(String name) throws IOException, ClassNotFoundException {
+    public void addToScoreBoard(String name) throws IOException, ClassNotFoundException {
         SaveLoadData sld = new SaveLoadData();
         scoreBoard = sld.LoadData();
         scoreBoard.add(new ScoreEntry(name, punteggio));
         sld.SaveData(scoreBoard);
-        return scoreBoard.toString();
     }
 
     /**
@@ -180,7 +179,7 @@ public class GameEndPanel extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        String name = jTextField1.getText();
         try {
-            String entry = addToScoreBoard(name);
+            addToScoreBoard(name);
         } catch (IOException ex) {
             Logger.getLogger(GameEndPanel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

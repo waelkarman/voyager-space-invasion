@@ -9,17 +9,15 @@ public class PackGenerator implements Runnable {
 
     protected LinkedList<UpgradePack> pack;
     private int bgWidth;
-    private int level;
     private Random random;
     private int minX = 44;  // maximum (highest) pixel in which a pack can spawn
     private int maxY = 389; // minimum (lowest) pixel in which a pack can spawn
     private int range = maxY - minX;    // range in which a pack can appear
 
 
-    public PackGenerator(int bgwidth, LinkedList<UpgradePack> pack, int level) {
+    public PackGenerator(int bgwidth, LinkedList<UpgradePack> pack) {
         this.bgWidth = bgwidth;
         this.pack = pack;
-        this.level = level;
         random = new Random();
 	}
 

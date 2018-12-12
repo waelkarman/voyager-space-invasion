@@ -5,11 +5,8 @@
  */
 package SoEproj;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import sun.audio.AudioPlayer;
@@ -36,7 +33,7 @@ public class ScoreboardPanel extends javax.swing.JPanel {
     }
     
     public void showScoreboard(){
-        ArrayList<ScoreEntry> ScBoard = new ArrayList();
+        ArrayList<ScoreEntry> ScBoard = new ArrayList<>();
         ScBoard = sld.LoadData();
         
         for (ScoreEntry x : ScBoard){

@@ -32,6 +32,8 @@ public class Board extends JPanel implements Runnable {
     private final File alienExplSound;
     private final File shipExplSound;
     private final File powerUpSound;
+    private final File bossHitSound;
+    private File boardSound;
 
     private boolean MULTIPLAYER;
     private ArrayList<SpaceShip> spaceShips; 
@@ -41,7 +43,7 @@ public class Board extends JPanel implements Runnable {
     private Thread boardAnimator;
     private int level;
 
-    private Thread threadAliensGen;     // alien generator thread
+    private Thread threadAliensGen;      // alien generator thread
     private AlienGenerator aliensGen;    // alien generator class
     private Thread threadPacksGen;
     private PackGenerator packsGen;
@@ -56,18 +58,17 @@ public class Board extends JPanel implements Runnable {
 
     private InputStream in;
     private AudioStream audios;
-    private File boardSound;
 
 
     public Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
         this.MULTIPLAYER = mp;
         this.level = level;
         // Images and soundtracks initialization
-        this.isMusicOn = m;          // eventualità di cambio musica ad ogni livello
+        this.isMusicOn = m;          // TODO music may change in each level
         this.menuPanel = p;
         this.keyModality = km;       // game commands switcher
 
-        if(isMusicOn){
+        if(isMusicOn) {
             boardSound = new File("./src/main/java/SoEproj/Resource/MusicGame.wav");
             try {
                 in = new FileInputStream(boardSound);
@@ -83,6 +84,7 @@ public class Board extends JPanel implements Runnable {
         alienExplSound = new File("./src/main/java/SoEproj/Resource/CollisionSound.wav");
         shipExplSound = new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav");
         powerUpSound = new File("./src/main/java/SoEproj/Resource/PowerUp.wav");
+        bossHitSound = new File("./src/main/java/SoEproj/Resource/ShoothedBoss.wav");
 
         setBackground();
         initGame(shipType);     // shipType may change with level
@@ -110,7 +112,7 @@ public class Board extends JPanel implements Runnable {
             spaceShips.add( new SpaceShip(0, B_HEIGHT/2 + 60, shipType + 1 % 3 , isMusicOn, keyModality + 1 % 2) ); // +1 % 2 for set a different type
 
         packs = new LinkedList<>();
-        packsGen = new PackGenerator(background.getWidth(null), packs, this.level);
+        packsGen = new PackGenerator(background.getWidth(null), packs);
         threadPacksGen = new Thread(packsGen);
 
         aliens = new ArrayList<>();
@@ -135,16 +137,16 @@ public class Board extends JPanel implements Runnable {
 
     private void drawGame(Graphics g) {
         for(int i=0; i<spaceShips.size(); i++){
-            SpaceShip Ship = spaceShips.get(i);
+            SpaceShip ship = spaceShips.get(i);
             
-            if (Ship.isVisible()) {
-                g.drawImage(Ship.getImage(), Ship.getX(), Ship.getY(), this);
-                if (Ship.isDying()) 
-                    Ship.die();
+            if (ship.isVisible()) {
+                g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
+                if (ship.isDying()) 
+                    ship.die();
             }
 
-            synchronized(Ship){
-                List<Missile> ms = Ship.getMissiles();
+            synchronized(ship){
+                List<Missile> ms = ship.getMissiles();
                 for (Missile missile : ms) {
                     if (missile.isVisible()) {
                         g.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
@@ -208,19 +210,20 @@ public class Board extends JPanel implements Runnable {
 
         g.setColor(Color.WHITE); // In the top-left corner of the window, we draw how many aliens are left.
 
-        int posizione_y = 15;
-        int posizione_x = 5;
-        int scostamento = 0;
-        for(int i=0;i<spaceShips.size();i++){
-            SpaceShip Ship = spaceShips.get(i);
-            if(i!=scostamento)
-                posizione_y += 60;
-            synchronized(Ship){
-                g.drawString("Score "+i+" : " + Ship.getScore(), posizione_x, posizione_y);
-                g.drawString("Life "+i+": " + Ship.getLife(), posizione_x, posizione_y+20);
-                g.drawString("Speed "+i+": " + Ship.getSPACE(), posizione_x, posizione_y+40);
+        int yPos = 15;
+        int xPos = 5;
+        int offset = 0;
+
+        for(int i = 0; i < spaceShips.size(); i++) {
+            SpaceShip ship = spaceShips.get(i);
+            if(i != offset)
+                yPos += 16;
+            
+            synchronized(ship){
+                g.drawString("Player " + (i+1) + " --- Lives: " + ship.getLife() + "    Score: " + ship.getScore(), xPos, yPos);
+                //g.drawString("Speed: " + ship.getSPACE(), xPos, yPos+20);
             }
-            scostamento = i;
+            offset = i;
         }
     }
 
@@ -325,7 +328,7 @@ public class Board extends JPanel implements Runnable {
 
                         packs.get(i).setDying(true);
 
-                        if(isMusicOn){
+                        if(isMusicOn) {
                             try {
                                 InputStream in = new FileInputStream(powerUpSound);
                                 AudioStream audios = new AudioStream(in);
@@ -381,7 +384,7 @@ public class Board extends JPanel implements Runnable {
                                         ship.setDying(true);
                                         ship.setImage(shipExpl.getImage());
                                     }
-                                    if(isMusicOn){
+                                    if(isMusicOn) {
                                         try {
                                             InputStream in = new FileInputStream(shipExplSound);
                                             AudioStream audios = new AudioStream(in);
@@ -409,7 +412,7 @@ public class Board extends JPanel implements Runnable {
                                 if(alien.getLife() > 0){
                                     if(isMusicOn){
                                         try {
-                                            InputStream in = new FileInputStream("./src/main/java/SoEproj/Resource/ShoothedBoss.wav");
+                                            InputStream in = new FileInputStream(bossHitSound);
                                             AudioStream audios = new AudioStream(in);
                                             AudioPlayer.player.start(audios);
                                         } catch (IOException e) {
@@ -423,7 +426,7 @@ public class Board extends JPanel implements Runnable {
                                 if(alien.getLife() <= 0){
                                     synchronized(alien){
                                         alien.setDying(true);
-                                        ship.setScore(ship.getScore() + alien.getPoints());
+                                        ship.setupScore(alien.getPoints());
                                         alien.setImage(alienExpl.getImage());
                                     }
                                     if(isMusicOn) {
@@ -444,20 +447,19 @@ public class Board extends JPanel implements Runnable {
         }
     }
 
-
-    //Outcome viene passato al pannello per disegnare la foto giusta in caso i vittoria o di sconfitta
-    public void EndGameFunction(int outcome){
+    //Outcome is passed to the panel to draw the right image (game won or game lost)
+    public void EndGameFunction(int outcome) {
         AudioPlayer.player.stop(audios);
-        int finalScore = 0;
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
 
-        for(int k=0;k<spaceShips.size();k++){
-            SpaceShip Ship = spaceShips.get(k);
-            finalScore += Ship.getScore();
+        int finalScore = 0;
+        for(int k = 0; k < spaceShips.size(); k++) {
+            SpaceShip ship = spaceShips.get(k);
+            finalScore += ship.getScore();
         }
 
-        GameEndPanel gep = new GameEndPanel(outcome,menuPanel,finalScore,isMusicOn);
+        GameEndPanel gep = new GameEndPanel(outcome, menuPanel, finalScore, isMusicOn);
         old.add(gep).requestFocusInWindow();
         old.validate();
         old.repaint();
@@ -480,9 +482,9 @@ public class Board extends JPanel implements Runnable {
         @Override
         public void keyPressed(KeyEvent e) {
             try{
-                for(int k=0;k<spaceShips.size();k++){
-                    SpaceShip Ship = spaceShips.get(k);
-                    Ship.keyPressed(e);
+                for(int k=0; k < spaceShips.size(); k++) {
+                    SpaceShip ship = spaceShips.get(k);
+                    ship.keyPressed(e);
                 }
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
@@ -533,6 +535,4 @@ public class Board extends JPanel implements Runnable {
         }
         repaint();
     }
-
-
 }
