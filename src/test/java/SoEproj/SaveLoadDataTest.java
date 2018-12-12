@@ -29,7 +29,7 @@ public class SaveLoadDataTest
     public void SaveDateTest() throws IOException
     {
         SaveLoadData one = new SaveLoadData();
-        ArrayList anArray = new ArrayList();
+        ArrayList anArray = new ArrayList<>();
         one.SaveData(anArray);
     }
    
@@ -37,7 +37,7 @@ public class SaveLoadDataTest
     public void LoadDataTest() throws IOException, ClassNotFoundException
     {
         SaveLoadData one = new SaveLoadData();
-        ArrayList anArray = new ArrayList();
+        ArrayList anArray = new ArrayList<>();
         ArrayList sameArray;
         one.SaveData(anArray);
         sameArray = one.LoadData();

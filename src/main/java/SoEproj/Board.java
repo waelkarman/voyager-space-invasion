@@ -221,7 +221,6 @@ public class Board extends JPanel implements Runnable {
             
             synchronized(ship){
                 g.drawString("Player " + (i+1) + " --- Lives: " + ship.getLife() + "    Score: " + ship.getScore(), xPos, yPos);
-                //g.drawString("Speed: " + ship.getSPACE(), xPos, yPos+20);
             }
             offset = i;
         }
