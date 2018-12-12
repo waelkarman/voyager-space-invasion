@@ -33,9 +33,13 @@ public class SpaceShip extends Sprite {
     private Thread shipMissileFire;
     private int keyModality;
     protected int life;
+    private int score;
+
+
 
     public SpaceShip(int x, int y, int color, boolean music, int km) {
         super(x, y);        
+        this.score = 0;
         this.life = 1;
         this.missiles = new ArrayList<>();
         this.missileType = "Laser";
@@ -53,6 +57,15 @@ public class SpaceShip extends Sprite {
     //Give the methods package access.
     //Use a nested test class.
     //Use reflection.
+
+    public int getScore() {
+        return this.score;
+    }
+
+    public void setScore(int points){
+        this.score += points ;
+    }
+
     private void setColor(int color) {
         String pathImage = "";
 
@@ -155,11 +168,11 @@ public class SpaceShip extends Sprite {
 
     //TODO JUNIT all next methods is not tested
     // TODO risolvere certe combinazioni di tasti che non funzionano (es. space+down+right)
-    public void keyPressed(KeyEvent e) {
+    public void keyPressed(KeyEvent e)  throws InterruptedException {
 
         int key = e.getKeyCode();
         
-        if(keyModality == 2){
+        if(keyModality == 1){
             if (key == KeyEvent.VK_K) {
                 synchronized(missiles){
                     setFiring(true);
@@ -178,7 +191,7 @@ public class SpaceShip extends Sprite {
             if (key == KeyEvent.VK_S) {
                 dy = SPACE;
             }
-        }else{
+        }else if(keyModality == 0){
             if (key == KeyEvent.VK_SPACE) {
                 synchronized(missiles){
                     setFiring(true);
@@ -204,7 +217,7 @@ public class SpaceShip extends Sprite {
 
         int key = e.getKeyCode();
         
-        if(keyModality == 2){
+        if(keyModality == 1){
             if (key == KeyEvent.VK_K) { // modificato SPACE con K in modo che in caso di multi player si possa avere dei comandi separati
                 setFiring(false);
             }
@@ -220,7 +233,7 @@ public class SpaceShip extends Sprite {
             if (key == KeyEvent.VK_S) {
                 dy = 0;
             }
-        }else{
+        }else if (keyModality == 0){
             if (key == KeyEvent.VK_SPACE) {
                 setFiring(false);
             }
