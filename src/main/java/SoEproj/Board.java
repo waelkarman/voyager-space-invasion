@@ -129,23 +129,6 @@ public class Board extends JPanel implements Runnable {
         threadPacksGen.start();
     }
 
-    // This method will be executed by the painting subsystem whenever you component needs to be rendered
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // TODO Rendere gameState un enum
-        if(gameState == 1) {        // draw background and game elements
-            drawBackground(g);
-            drawGame(g);
-        }
-        else if(gameState == 2) {   // draw game over background gif after the lose condition
-            EndGameFunction(0);     // passing 0 to draw game over background
-        }
-        // TODO fare la condizione di win
-        Toolkit.getDefaultToolkit().sync();
-    }
-
-
     private void drawBackground(Graphics g) {
         if (bgShiftX > background.getWidth(null)) {
             bgShiftX = 0;
@@ -517,6 +500,22 @@ public class Board extends JPanel implements Runnable {
                 e1.printStackTrace();
             }
         }
+    }
+    
+    // This method will be executed by the painting subsystem whenever you component needs to be rendered
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // TODO Rendere gameState un enum
+        if(gameState == 1) {        // draw background and game elements
+            drawBackground(g);
+            drawGame(g);
+        }
+        else if(gameState == 2) {   // draw game over background gif after the lose condition
+            EndGameFunction(0);     // passing 0 to draw game over background
+        }
+        // TODO fare la condizione di win
+        Toolkit.getDefaultToolkit().sync();
     }
 
     @Override
