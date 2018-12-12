@@ -62,7 +62,7 @@ public class SpaceShip extends Sprite {
         return this.score;
     }
 
-    public void setScore(int points){
+    public void setupScore(int points){
         this.score += points ;
     }
 
