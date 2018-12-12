@@ -326,7 +326,7 @@ public class Board extends JPanel implements Runnable {
                         }
 
                         packs.get(i).setDying(true);
-                        packs.poll();
+                        packs.remove(i);
 
                         if(isMusicOn){
                             try {
