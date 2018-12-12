@@ -8,7 +8,7 @@ import java.util.Random;
 public class AlienGenerator implements Runnable {
 
     
-    private final int ALIEN_NUM = 3;   // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                        
+    private final int ALIEN_NUM = 30;   // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                        
     private final int bgWidth;
     
     private List<Alien> aliens;
@@ -30,27 +30,28 @@ public class AlienGenerator implements Runnable {
 
 
     public void generateAliens() {
+        int x = bgWidth;
         int h = r.nextInt(range) + minY;
         
         switch(this.level){
             case 1: // lev. 1 : Only EasyAliens
-                aliens.add(new EasyAlien(bgWidth + 40, h));
+                aliens.add(new EasyAlien(x, h));
                 break;
 
             case 2: // lev. 2 : MediumAliens and EasyAliens, ratio 2:1
                 if (ref % 3 == 0) {
-                    aliens.add(new EasyAlien(bgWidth + 40, h));
+                    aliens.add(new EasyAlien(x, h));
                     ref = 0;
                 } else
-                    aliens.add(new MediumAlien(bgWidth + 40, h));
+                    aliens.add(new MediumAlien(x, h));
                 break;
 
             case 3: // lev. 3 : HardAliens and MediumAliens, ratio 2:1
                 if (ref % 3 == 0) {
-                    aliens.add(new MediumAlien(bgWidth + 40, h));
+                    aliens.add(new MediumAlien(x, h));
                     ref = 0;
                 } else
-                    aliens.add(new HardAlien(bgWidth + 40, h)); 
+                    aliens.add(new HardAlien(x, h)); 
                 
                 break;
         }
