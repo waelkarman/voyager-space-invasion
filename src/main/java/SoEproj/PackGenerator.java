@@ -2,12 +2,13 @@ package SoEproj;
 
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 
 public class PackGenerator implements Runnable {
 
-    protected LinkedList<UpgradePack> pack;
+    protected List<UpgradePack> pack;
     private int bgWidth;
     private Random random;
     private int minX = 44;  // maximum (highest) pixel in which a pack can spawn
@@ -15,16 +16,11 @@ public class PackGenerator implements Runnable {
     private int range = maxY - minX;    // range in which a pack can appear
 
 
-    public PackGenerator(int bgwidth, LinkedList<UpgradePack> pack) {
-        this.bgWidth = bgwidth;
+    public PackGenerator(int bgWidth, List<UpgradePack> pack) {
+        this.bgWidth = bgWidth;
         this.pack = pack;
         random = new Random();
 	}
-
-
-    public LinkedList<UpgradePack> getPack() {
-        return this.pack;
-    }
 
 
     @Override
