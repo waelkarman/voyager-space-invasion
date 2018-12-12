@@ -115,7 +115,7 @@ public class Board extends JPanel implements Runnable {
         }
 
         packs = new LinkedList<>();
-        packsGen = new PackGenerator(background.getWidth(null), packs, this.level);
+        packsGen = new PackGenerator(background.getWidth(null), packs);
         threadPacksGen = new Thread(packsGen);
 
         aliens = new ArrayList<>();

@@ -7,12 +7,6 @@ package SoEproj;
 
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 

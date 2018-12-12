@@ -5,7 +5,6 @@
  */
 package SoEproj;
 
-import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.Image;
 import javax.swing.ImageIcon;
