@@ -437,6 +437,7 @@ public class Board extends JPanel implements Runnable {
                                 if(alien.getLife() <= 0){
                                     synchronized(alien){
                                         alien.setDying(true);
+                                        // TODO vengono aggiornati qui i punti?
                                         ship.setScore(ship.getScore() + alien.getPoints());
                                         alien.setImage(alienExpl.getImage());
                                     }
