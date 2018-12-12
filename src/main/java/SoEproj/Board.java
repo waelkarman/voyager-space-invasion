@@ -27,6 +27,7 @@ public class Board extends JPanel implements Runnable {
     private final int B_HEIGHT = 450;
     private final int DELAY = 15;
     private final double BG_SPEED = 0.5;    // background speed
+
     private final ImageIcon alienExpl;
     private final ImageIcon shipExpl;
     private final File alienExplSound;
@@ -35,33 +36,33 @@ public class Board extends JPanel implements Runnable {
     private final File bossHitSound;
     private File boardSound;
 
-    private boolean MULTIPLAYER;
-    private ArrayList<SpaceShip> spaceShips; 
-    private List<Alien> aliens;
-    private LinkedList<UpgradePack> packs;
-    private int gameState;
-    private Thread boardAnimator;
-    private int level;
-
-    private Thread threadAliensGen;      // alien generator thread
-    private AlienGenerator aliensGen;    // alien generator class
-    private Thread threadPacksGen;
-    private PackGenerator packsGen;
+    private InputStream in;
+    private AudioStream audios;
+    private boolean isMusicOn;
 
     private ImageIcon bgImgIcon;
     private Image background;
     private double bgShiftX;
 
-    private JPanel menuPanel;
-    private boolean isMusicOn;
-    private int keyModality;
+    private Thread threadAliensGen;      // alien generator thread
+    private AlienGenerator aliensGen;    // alien generator class
+    private Thread threadPacksGen;
+    private PackGenerator packsGen;
+    private Thread boardAnimator;
 
-    private InputStream in;
-    private AudioStream audios;
+    private GameStateEnum gameState;
+    private JPanel menuPanel;
+    private int keyModality;
+    private int level;
+    private boolean isMultiplayer;
+
+    private List<SpaceShip> spaceShips; 
+    private List<Alien> aliens;
+    private List<UpgradePack> packs;
 
 
     public Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
-        this.MULTIPLAYER = mp;
+        this.isMultiplayer = mp;
         this.level = level;
         // Images and soundtracks initialization
         this.isMusicOn = m;          // TODO music may change in each level
@@ -102,23 +103,23 @@ public class Board extends JPanel implements Runnable {
     }
 
     public void initGame(int shipType) {
-        gameState = 1;
+        gameState = GameStateEnum.IN_GAME;
         addKeyListener(new TAdapter());
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
 
-        spaceShips = new ArrayList<>();
-        if(MULTIPLAYER){
+        spaceShips = new ArrayList<SpaceShip>();
+        if(isMultiplayer){
             spaceShips.add( new SpaceShip(0, B_HEIGHT/2, shipType, isMusicOn, keyModality) );
             spaceShips.add( new SpaceShip(0, B_HEIGHT/2 + 60, shipType + 1 % 3 , isMusicOn, keyModality + 1 % 2) );// +1 % 2 for set a different type
         }else{
             spaceShips.add( new SpaceShip(0, B_HEIGHT/2, shipType, isMusicOn, keyModality) );
         }
 
-        packs = new LinkedList<>();
+        packs = new LinkedList<UpgradePack>();
         packsGen = new PackGenerator(background.getWidth(null), packs);
         threadPacksGen = new Thread(packsGen);
 
-        aliens = new ArrayList<>();
+        aliens = new ArrayList<Alien>();
         aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
         threadAliensGen = new Thread(aliensGen);
 
@@ -165,7 +166,7 @@ public class Board extends JPanel implements Runnable {
                 alive = true;
         }
         if(alive == false){
-            gameState = 2;
+            gameState = GameStateEnum.GAME_LOST;
         }
 
         synchronized(packs){
@@ -205,7 +206,7 @@ public class Board extends JPanel implements Runnable {
                             threadAliensGen.start();
                         }
                         else {
-                            gameState = 2;
+                            gameState = GameStateEnum.GAME_LOST;
                         }
                     }
                 }
@@ -232,7 +233,7 @@ public class Board extends JPanel implements Runnable {
     }
 
     public void gameLaunch() {
-        if(gameState == 1) {
+        if(gameState == GameStateEnum.IN_GAME) {
             boardAnimator = new Thread(this);
             boardAnimator.start();
         }
@@ -509,11 +510,11 @@ public class Board extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         // TODO Rendere gameState un enum
-        if(gameState == 1) {        // draw background and game elements
+        if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
             drawBackground(g);
             drawGame(g);
         }
-        else if(gameState == 2) {   // draw game over background gif after the lose condition
+        else if(gameState == GameStateEnum.GAME_LOST) {   // draw game over background gif after the lose condition
             EndGameFunction(0);     // passing 0 to draw game over background
         }
         // TODO fare la condizione di win
@@ -524,7 +525,7 @@ public class Board extends JPanel implements Runnable {
     public void run() {
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
-        while (gameState != 2) {
+        while (gameState != GameStateEnum.GAME_LOST) {
             updateShip();
             updateAliens();
             updatePacks();
