@@ -112,7 +112,7 @@ public class Board extends JPanel implements Runnable {
         SpaceShips = new ArrayList<>();
         if(MULTIPLAYER){
             SpaceShips.add( new SpaceShip(0, B_HEIGHT/2, shipType, isMusicOn, keyModality) );
-            SpaceShips.add( new SpaceShip(0, B_HEIGHT/2, shipType + 1 % 3 , isMusicOn, keyModality + 1 % 2) );// +1 % 2 for set a different type
+            SpaceShips.add( new SpaceShip(0, B_HEIGHT/2 + 60, shipType + 1 % 3 , isMusicOn, keyModality + 1 % 2) );// +1 % 2 for set a different type
         }else{
             SpaceShips.add( new SpaceShip(0, B_HEIGHT/2, shipType, isMusicOn, keyModality) );
         }
