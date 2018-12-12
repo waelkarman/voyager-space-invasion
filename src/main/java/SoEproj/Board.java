@@ -31,6 +31,7 @@ public class Board extends JPanel implements Runnable {
     private final ImageIcon shipExpl;
     private final File alienExplSound;
     private final File shipExplSound;
+    private final File powerUpSound;
 
     // TODO Lo score deve essere controllato nel ciclo di update per aggiornarsi dinamicamente
     private int scoreS1 = 0;      // every kill updates the score
@@ -89,6 +90,7 @@ public class Board extends JPanel implements Runnable {
         shipExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionShip.png");
         alienExplSound = new File("./src/main/java/SoEproj/Resource/CollisionSound.wav");
         shipExplSound = new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav");
+        powerUpSound = new File("./src/main/java/SoEproj/Resource/PowerUp.wav");
 
         setBackground();
         initGame(shipType);     // shipType may change with level
@@ -216,6 +218,9 @@ public class Board extends JPanel implements Runnable {
                 if (pack.isVisible()) {
                     g.drawImage(pack.getImage(), pack.getX(), pack.getY(), this);
                 }
+
+                if (pack.isDying())
+                    pack.die();
             }
 
         }
@@ -361,7 +366,7 @@ public class Board extends JPanel implements Runnable {
                         pack.move();
                     }  
                     else {
-                        packs.poll();
+                        packs.remove(i);
                     }
                 } 
             }
@@ -422,7 +427,7 @@ public class Board extends JPanel implements Runnable {
                     
                     if(isMusicOn){
                         try {
-                            InputStream in = new FileInputStream("./src/main/java/SoEproj/Resource/PowerUp.wav");
+                            InputStream in = new FileInputStream(powerUpSound);
                             AudioStream audios = new AudioStream(in);
                             AudioPlayer.player.start(audios);   
                         } catch (IOException e) {

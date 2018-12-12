@@ -69,7 +69,6 @@ public class AlienGenerator implements Runnable {
     @Override
     public void run(){
         int i = 0;
-        int elapsedTime = 0;
         
         while(true){
             synchronized(aliens) {
