@@ -89,11 +89,8 @@ public class Board extends JPanel implements Runnable {
         gameLaunch();
     }
 
-
     private void setBackground() {
-        // level 1 background image
         bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround1.png");
-
         if(level == 2)
             bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
         if(level == 3)
@@ -101,8 +98,6 @@ public class Board extends JPanel implements Runnable {
 
         background = bgImgIcon.getImage();
     }
-
-
 
     public void initGame(int shipType) {
         gameState = 1;
