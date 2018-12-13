@@ -113,9 +113,9 @@ public class GameMainMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\Voyager_Title_1.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\Voyager_Title_1.png")); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\Vojager_Logo_Menu.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\Vojager_Logo_Menu.png")); // NOI18N
 
         jCheckBox1.setBackground(new java.awt.Color(0, 0, 102));
         jCheckBox1.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
