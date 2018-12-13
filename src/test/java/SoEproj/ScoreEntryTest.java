@@ -17,24 +17,24 @@ public class ScoreEntryTest
     @Test
     public void ScoreEntryTest()
     {
-        ScoreEntry one = new ScoreEntry("player",500);
-        ScoreEntry two = new ScoreEntry("player",500);
-        assertNotEquals(one,two);
+        ScoreEntry one = new ScoreEntry("player", 500);
+        ScoreEntry two = new ScoreEntry("player", 500);
+        assertNotEquals(one, two);
     }
 
     @Test
     public void getScoreTest()
     {
-        ScoreEntry one = new ScoreEntry("player",500);
-        ScoreEntry two = new ScoreEntry("player",500);
+        ScoreEntry one = new ScoreEntry("player", 500);
+        ScoreEntry two = new ScoreEntry("player", 500);
         assertEquals(one.getScore(), two.getScore());
     }
    
     @Test
     public void getNameTest()
     {
-        ScoreEntry one = new ScoreEntry("player",500);
-        ScoreEntry two = new ScoreEntry("player",500);
+        ScoreEntry one = new ScoreEntry("player", 500);
+        ScoreEntry two = new ScoreEntry("player", 500);
         assertEquals(one.getName(), two.getName());
     }
 
@@ -42,9 +42,9 @@ public class ScoreEntryTest
     @Test
     public void compareToTest()
     {
-        ScoreEntry one = new ScoreEntry("player",500);
-        ScoreEntry two = new ScoreEntry("player",400);
-        assertEquals(one.compareTo(two),1);
+        ScoreEntry one = new ScoreEntry("player", 500);
+        ScoreEntry two = new ScoreEntry("player", 400);
+        assertEquals(one.compareTo(two), 0);
     }
 
 }

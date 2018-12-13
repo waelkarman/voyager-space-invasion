@@ -3,15 +3,21 @@ package SoEproj;
 
 import java.awt.Rectangle;
 import java.awt.geom.Area;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class UpgradePack extends Sprite{
 
     private int type;
+    private Timer t;
+    private TimerTask task;
 
     public UpgradePack(int x, int y, int randomUpgrade) {
         super(x, y);
         SPACE = 1;
+        this.t = new Timer();
+
         setPackIcon(randomUpgrade);
     }
     
@@ -71,19 +77,35 @@ public class UpgradePack extends Sprite{
         getImageDimensions();
     }
 
+    private void scheduleResetUpgrade(SpaceShip s){
+        t.cancel();
+        t = new Timer();
+        task = new ResetUpgradeAmmo(s);
+        t.schedule(task, 10 * 1000);
+    }
+
+    private void scheduleResetSpace(SpaceShip s, float space){
+        t.cancel();
+        t = new Timer();
+        task = new ResetUpgradeSpace(s, space);
+        t.schedule(task, 10 * 1000);
+    }
 
     public synchronized void updateSpaceShip(SpaceShip s) {
         switch(type){                          //different pack color based on the upgrade type
             case 0:{
-                s.setMissiletype("3Missiles");
+                scheduleResetUpgrade(s);
+                s.setMissileType("3Missiles");
                 break;
             } 
             case 1:{
-                s.setMissiletype("fireBall");
+                scheduleResetUpgrade(s);
+                s.setMissileType("fireBall");
                 break;
             } 
             case 2:{
-                s.setMissiletype("Laser");  
+                scheduleResetUpgrade(s);
+                s.setMissileType("Laser");  
                 break;
             }
             case 3:{
@@ -91,23 +113,28 @@ public class UpgradePack extends Sprite{
                 break;
             }
             case 4:{
-                s.setupSPACE(1);
+                s.setupSPACE(3/2);
+                scheduleResetSpace(s, -3/2);
                 break;
             }
             case 5:{
-                s.setMissiletype("Vecchia");
+                scheduleResetUpgrade(s);
+                s.setMissileType("Vecchia");
                 break;
             }
             case 6:{
-                s.setMissiletype("Banana");
+                scheduleResetUpgrade(s);
+                s.setMissileType("Banana");
                 break;
             }
             case 7:{
-                s.setMissiletype("memas");
+                scheduleResetUpgrade(s);
+                s.setMissileType("memas");
                 break;
             }
             case 8:{
-                s.setMissiletype("pollo");
+                scheduleResetUpgrade(s);
+                s.setMissileType("pollo");
                 break;
             }
         }
@@ -132,4 +159,33 @@ public class UpgradePack extends Sprite{
         return new Area(shape);
     }
 
+
+    class ResetUpgradeAmmo extends TimerTask  {
+        SpaceShip s;
+   
+        public ResetUpgradeAmmo(SpaceShip s) {
+            this.s = s;
+        }
+   
+        @Override
+        public void run() {
+            s.setMissileType("Laser"); 
+        }
+    }
+
+
+    class ResetUpgradeSpace extends TimerTask  {
+        SpaceShip s;
+        float space;
+   
+        public ResetUpgradeSpace(SpaceShip s, float space) {
+            this.s = s;
+            this.space = space;
+        }
+   
+        @Override
+        public void run() {
+            s.setupSPACE(space);
+        }
+    }
 }
