@@ -62,7 +62,7 @@ public class Board extends JPanel implements Runnable {
     private List<SpaceShip> spaceShips; 
     private List<Alien> aliens;
     private List<UpgradePack> packs;
-
+    private MusicManager mumZero;
 
     public Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
         this.isMultiplayer = mp;
@@ -72,25 +72,18 @@ public class Board extends JPanel implements Runnable {
         this.menuPanel = p;
         this.keyModality = km;       // game commands switcher
 
-        if(isMusicOn) {
-            boardSound = new File("./src/main/java/SoEproj/Resource/MusicGame.wav");
-            try {
-                in = new FileInputStream(boardSound);
-                audios = new AudioStream(in);
-                AudioPlayer.player.start(audios);
-                
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            
-        }
-
         alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
         shipExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionShip.png");
         alienExplSound = new File("./src/main/java/SoEproj/Resource/CollisionSound.wav");
         shipExplSound = new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav");
         powerUpSound = new File("./src/main/java/SoEproj/Resource/PowerUp.wav");
         bossHitSound = new File("./src/main/java/SoEproj/Resource/ShoothedBoss.wav");
+        boardSound = new File("./src/main/java/SoEproj/Resource/MusicGame.wav");
+        
+        if(isMusicOn) {
+            mumZero = new MusicManager(boardSound);
+            mumZero.loopMusic();
+        }
 
         setBackground();
         initGame(shipType);     // shipType may change with level
@@ -338,13 +331,8 @@ public class Board extends JPanel implements Runnable {
                         packs.get(i).setDying(true);
 
                         if(isMusicOn) {
-                            try {
-                                InputStream in = new FileInputStream(powerUpSound);
-                                AudioStream audios = new AudioStream(in);
-                                AudioPlayer.player.start(audios);
-                            } catch (IOException e) {
-                                System.out.println(e.getMessage());
-                            }
+                            MusicManager mumOne = new MusicManager(powerUpSound);
+                            mumOne.startMusic();
                         }
                     }
                 }
@@ -362,19 +350,19 @@ public class Board extends JPanel implements Runnable {
 
                         if(ship.getLife() <= 0){
                             synchronized(ship){
+                                
+                        
                                 ship.setDying(true);
                                 ship.setImage(shipExpl.getImage());
                             }
-
+                            
                             if(isMusicOn){
-                                try {
-                                    InputStream in = new FileInputStream(shipExplSound);
-                                    AudioStream audios = new AudioStream(in);
-                                    AudioPlayer.player.start(audios);
-                                } catch (IOException e) {
-                                    System.out.println(e.getMessage());
-                                }
+                            
+                                MusicManager mumTwo = new MusicManager(bossHitSound);
+                                mumTwo.startMusic();
+
                             }
+                            
                         }
 
                     }
@@ -394,13 +382,9 @@ public class Board extends JPanel implements Runnable {
                                         ship.setImage(shipExpl.getImage());
                                     }
                                     if(isMusicOn) {
-                                        try {
-                                            InputStream in = new FileInputStream(shipExplSound);
-                                            AudioStream audios = new AudioStream(in);
-                                            AudioPlayer.player.start(audios);
-                                        } catch (IOException e) {
-                                            System.out.println(e.getMessage());
-                                        }
+                                    
+                                        MusicManager mumThree = new MusicManager(shipExplSound);
+                                        mumThree.startMusic();
                                     }
                                 }
                             }
@@ -420,13 +404,10 @@ public class Board extends JPanel implements Runnable {
                                 
                                 if(alien.getLife() > 0){
                                     if(isMusicOn){
-                                        try {
-                                            InputStream in = new FileInputStream(bossHitSound);
-                                            AudioStream audios = new AudioStream(in);
-                                            AudioPlayer.player.start(audios);
-                                        } catch (IOException e) {
-                                            System.out.println(e.getMessage());
-                                        }
+                                        
+                                        MusicManager mumFour = new MusicManager(bossHitSound);
+                                        mumFour.startMusic();
+                                    
                                     }
                                 }
 
@@ -439,13 +420,8 @@ public class Board extends JPanel implements Runnable {
                                         alien.setImage(alienExpl.getImage());
                                     }
                                     if(isMusicOn) {
-                                        try {
-                                            InputStream in = new FileInputStream(alienExplSound);
-                                            AudioStream audios = new AudioStream(in);
-                                            AudioPlayer.player.start(audios);
-                                        } catch (IOException e) {
-                                            System.out.println(e.getMessage());
-                                        }
+                                        MusicManager mumFive = new MusicManager(alienExplSound);
+                                        mumFive.startMusic();
                                     }
                                 }
                             }
@@ -458,7 +434,8 @@ public class Board extends JPanel implements Runnable {
 
     //Outcome is passed to the panel to draw the right image (game won or game lost)
     public void EndGameFunction(int outcome) {
-        AudioPlayer.player.stop(audios);
+        if(mumZero != null)
+            mumZero.stopMusic();
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
 

@@ -5,6 +5,10 @@
  */
 package SoEproj;
 
+import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 import javax.swing.JPanel;
@@ -22,13 +26,15 @@ public class SettingPanel extends javax.swing.JPanel {
     private JPanel menuPanel;
     private boolean music;
     private int controlMode;
-    private AudioStream audios;
+    private MusicManager mumZero ;
+    private Clip clip;
     
-    public SettingPanel(JPanel p, AudioStream audios) {
+    public SettingPanel(JPanel p, MusicManager mu) {
         initComponents();
-        this.audios = audios;
-        menuPanel=p;
-        controlMode = 1;
+        this.mumZero = mu;
+        menuPanel= p;
+        controlMode = 0;
+        this.music = true;
     }
 
     /**
@@ -343,7 +349,7 @@ public class SettingPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        controlMode = 1;
+        controlMode = 0;
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -358,16 +364,16 @@ public class SettingPanel extends javax.swing.JPanel {
 
     private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
         music = true;
-        AudioPlayer.player.start(audios);
+        mumZero.startMusic();
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
     private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
        music = false;
-       AudioPlayer.player.stop(audios);
+       mumZero.stopMusic();
     }//GEN-LAST:event_jRadioButton6ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-       controlMode = 2;
+       controlMode = 1;
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
 

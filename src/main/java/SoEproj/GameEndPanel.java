@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,23 +31,20 @@ public class GameEndPanel extends javax.swing.JPanel {
     int punteggio;
     private ArrayList<ScoreEntry> scoreBoard = new ArrayList<>();
     private InputStream in;
-    private AudioStream audios;
-    private File boardSound;
+    private File endMusic;
     private boolean isMusicOn;
+    private MusicManager mumZero;
+    private Clip clip;
     
     public GameEndPanel(int outcome, JPanel p, int pnt, boolean m) {
         this.menuPanel = p;
         initComponents();
         this.isMusicOn = m;
+        endMusic = new File("./src/main/java/SoEproj/Resource/MusicEnd.wav");
+
         if(isMusicOn){
-            boardSound = new File("./src/main/java/SoEproj/Resource/MusicEnd.wav");
-            try {
-                in = new FileInputStream(boardSound);
-                audios = new AudioStream(in);
-                AudioPlayer.player.start(audios);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            mumZero = new MusicManager(endMusic);
+            mumZero.loopMusic();
         }
         this.punteggio = pnt;
         if(outcome == 1)
@@ -158,7 +157,9 @@ public class GameEndPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AudioPlayer.player.stop(audios);
+        if(mumZero != null)
+            mumZero.stopMusic();   
+        
         GameMainMenu old = (GameMainMenu) SwingUtilities.getWindowAncestor(this);        
         old.getContentPane().remove(this);
         old.add(menuPanel);
@@ -171,7 +172,7 @@ public class GameEndPanel extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
-        old.add(new ScoreboardPanel(menuPanel,isMusicOn,audios));
+        old.add(new ScoreboardPanel(menuPanel,isMusicOn,mumZero));
         old.validate();
         old.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed

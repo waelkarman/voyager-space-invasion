@@ -6,11 +6,16 @@
 
 package SoEproj;
 
+import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
+
 
 /**
  *
@@ -24,12 +29,14 @@ public class GameOptionPanel extends javax.swing.JPanel {
     private int level;
     private int keyModality;
     private boolean mulMode;
-    private AudioStream audios;
+    private AudioInputStream audios;
+    private Clip clip;
+    MusicManager mumZero;
     
     /** Creates new form GameOptionPanel */
-    public GameOptionPanel(JPanel p, boolean m, int km, boolean mp, AudioStream audio) {
+    public GameOptionPanel(JPanel p, boolean m, int km, boolean mp, MusicManager mu) {
         initComponents();
-        this.audios = audio;
+        this.mumZero = mu;
         level = 1;
         ship = 2;
         menuPanel = p;
@@ -288,7 +295,8 @@ public class GameOptionPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jRadioButton3MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AudioPlayer.player.stop(audios);
+        if(mumZero != null)
+            mumZero.stopMusic();
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
         Board b = new Board(ship, menuPanel,music,level,keyModality,mulMode);

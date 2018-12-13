@@ -40,6 +40,7 @@ public class SpaceShip extends Sprite {
     private int keyModality;
     protected int life;
     private int score;
+    private MusicManager mumZero;
     
 
     public SpaceShip(int x, int y, int color, boolean music, int km) {
@@ -147,13 +148,8 @@ public class SpaceShip extends Sprite {
         }  
 
         if(music){
-            try {
-                InputStream in = new FileInputStream(laserSound);
-                AudioStream audios = new AudioStream(in);
-                AudioPlayer.player.start(audios);
-            } catch (Exception e) {
-                System.out.println("Spaceship Music: " + e);
-            }
+            mumZero = new MusicManager(laserSound);
+            mumZero.startMusic();
         }
     }
 

@@ -15,7 +15,13 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 
 
 public class GameMainMenu extends javax.swing.JFrame {
@@ -25,30 +31,30 @@ public class GameMainMenu extends javax.swing.JFrame {
     private int ship;
     private boolean music;
     private int keyModality;
-    private InputStream in;
-    private AudioStream audios;
-    private final File boardSound;
+    private final File menuMusic;
     private boolean mulMode; // boolean for check multiplayer mode
-
+    private Clip clip;
+    private MusicManager mumZero;
+    
     public GameMainMenu() { 
-        initComponents();
-        initUI();
-        loadWindowsIcon();
-        loadBackground();
-
-        boardSound = new File("./src/main/java/SoEproj/Resource/MusicMenu.wav");
         
-        try {
-            in = new FileInputStream(boardSound);
-            audios = new AudioStream(in);
-            AudioPlayer.player.start(audios);
-        } catch (Exception e) {
-            System.out.println("Game Main Menu Sound :" + e);
-		}
-
-        ship = 2;
-        music = true;
-        mulMode = false;
+            initComponents();
+            initUI();
+            loadWindowsIcon();
+            loadBackground();
+            try {
+                clip = AudioSystem.getClip();
+            } catch (LineUnavailableException ex) {
+            }
+            menuMusic = new File("./src/main/java/SoEproj/Resource/MusicMenu.wav");
+            
+            mumZero = new MusicManager(menuMusic);
+            mumZero.loopMusic();
+            
+            ship = 2;
+            music = true;
+            mulMode = false;
+        
     }
 
     private void initUI() {
@@ -184,39 +190,33 @@ public class GameMainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AudioPlayer.player.stop(audios);
-        JPanel principalPanel = this.jPanel1;
-        this.getContentPane().remove(jPanel1);
-        Board b = new Board(ship, principalPanel,music,1,keyModality,mulMode);
-        this.add(b).requestFocusInWindow();
-        this.validate();
-        this.repaint();
+            mumZero.stopMusic();
+            JPanel principalPanel = this.jPanel1;
+            this.getContentPane().remove(jPanel1);
+            Board b = new Board(ship, principalPanel,music,1,keyModality,mulMode);
+            this.add(b).requestFocusInWindow();
+            this.validate();
+            this.repaint();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         JPanel principalPanel = this.jPanel1;
         this.getContentPane().remove(jPanel1);
-        GameOptionPanel gop = new GameOptionPanel(principalPanel,music,keyModality,mulMode,audios);
+        GameOptionPanel gop = new GameOptionPanel(principalPanel,music,keyModality,mulMode,mumZero);
         this.add(gop).requestFocusInWindow();
         this.validate();
         this.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    
     public void setMusic(boolean m){
         music = m;
     }
     
     public void startMusic(){
         
-        try {
-            in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/MusicMenu.wav"));
-            audios = new AudioStream(in);
-            AudioPlayer.player.start(audios);
-        } catch (Exception e) {
-            e.printStackTrace();
-		}
+        mumZero.loopMusic();
+                           	
     }
      
     public void setKeyMode(int mod){
@@ -226,7 +226,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         JPanel principalPanel = this.jPanel1;
         this.getContentPane().remove(jPanel1);
-        SettingPanel sp = new SettingPanel(principalPanel, audios);
+        SettingPanel sp = new SettingPanel(principalPanel,mumZero);
         this.add(sp).requestFocusInWindow();
         this.validate();
         this.repaint();
