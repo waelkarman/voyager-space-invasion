@@ -34,7 +34,8 @@ public class SpaceShip extends Sprite {
     private int keyModality;
     protected int life;
     private int score;
-
+    private Timer t;
+    private TimerTask task;
 
 
     public SpaceShip(int x, int y, int color, boolean music, int km) {
@@ -46,6 +47,8 @@ public class SpaceShip extends Sprite {
         this.SPACE = 3/2;       // speed
         this.music = music;
         this.keyModality = km;
+        this.t = new Timer();
+        this.task = new ResetUpgradeAmmo(this);
         setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
 
         shipMissileFire = new Thread(new FireThread(this));
@@ -120,8 +123,10 @@ public class SpaceShip extends Sprite {
     }
         
     public synchronized void setMissiletype(String missiletype) {
-        Timer t = new Timer();
-        t.schedule(new ResetUpgradeAmmo(this), 20 * 1000);
+        t.cancel();
+        t = new Timer();
+        task = new ResetUpgradeAmmo(this);
+        t.schedule(task, 10 * 1000);
         this.missileType = missiletype;
     }
 
@@ -264,16 +269,16 @@ public class SpaceShip extends Sprite {
 
     class ResetUpgradeAmmo extends TimerTask  {
         SpaceShip s;
-        String ammo;
+        //String ammo;
    
         public ResetUpgradeAmmo(SpaceShip s) {
             this.s = s;
-            ammo = s.missileType;
+            //ammo = s.missileType;
         }
    
         @Override
         public void run() {
-            s.resetMissileType(ammo); 
+            s.resetMissileType("Laser"); 
         }
     }
 

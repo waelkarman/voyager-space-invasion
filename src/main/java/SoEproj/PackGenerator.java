@@ -34,7 +34,7 @@ public class PackGenerator implements Runnable {
             }
 
             try {
-                Thread.sleep(15000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 System.out.println("Pack generation interrupted %s" + e.getMessage());
             }
