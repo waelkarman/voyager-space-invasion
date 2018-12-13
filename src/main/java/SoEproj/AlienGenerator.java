@@ -62,7 +62,15 @@ public class AlienGenerator implements Runnable {
 
     public void generateBoss() {
         synchronized(this.aliens){
-            this.aliens.add(new Boss1Level(bgWidth, range/2, aliens));
+            if(level == 1){
+                this.aliens.add(new Boss1Level(bgWidth, range/2, aliens));
+            }
+            if(level == 2){
+                this.aliens.add(new Boss2Level(bgWidth, range/2, aliens));
+            }
+            if(level == 3){
+                this.aliens.add(new Boss3Level(bgWidth, range/2, aliens));
+            }
         }
     }
 

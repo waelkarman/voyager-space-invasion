@@ -202,7 +202,8 @@ public class Board extends JPanel implements Runnable {
                 if (alien.isDying()) {
                     alien.die();
                     if (alien instanceof Boss1Level || alien instanceof Boss2Level){
-                        this.level +=1;
+                        this.level += 1;
+                        //System.out.println(level);
                         setBackground();
                         aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
                         threadAliensGen = new Thread(aliensGen);
