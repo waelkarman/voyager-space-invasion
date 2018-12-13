@@ -30,7 +30,7 @@ public class GameEndPanel extends javax.swing.JPanel {
         this.menuPanel = p;
         this.score = score;
         this.isMusicOn = m;
-        endMusic = new File("./src/main/java/SoEproj/Resource/MusicEnd.wav");
+        endMusic = new File(".\\src\\main\\java\\SoEproj\\Resource\\MusicEnd.wav");
         
         if(isMusicOn){
             mumZero = new MusicManager(endMusic);
@@ -44,7 +44,7 @@ public class GameEndPanel extends javax.swing.JPanel {
     }
     
     public void loadWinImage(){
-        ImageIcon gameWin = new ImageIcon("./src/main/java/SoEproj/Resource/GameWinEnd.png");
+        ImageIcon gameWin = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GameWinEnd.png");
         jLabel3.setIcon(gameWin);
     }
     
@@ -103,7 +103,7 @@ public class GameEndPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Your Name:");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GameOverEnd.gif")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GameOverEnd.gif")); // NOI18N
 
         jButton3.setText("SAVE");
         jButton3.addActionListener(new java.awt.event.ActionListener() {

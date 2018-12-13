@@ -10,7 +10,7 @@ public class MediumAlien extends Alien implements Runnable{
         SPACE = 2;
         super.points = 75;
         
-        imagePath = "./src/main/java/SoEproj/Resource/MediumAlien.png";
+        imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\MediumAlien.png";
         loadImage(imagePath);
         getImageDimensions();
 

@@ -27,7 +27,7 @@ public class GameMainMenu extends javax.swing.JFrame {
             loadWindowsIcon();
             loadBackground();
             
-            menuMusic = new File("./src/main/java/SoEproj/Resource/MusicMenu.wav");
+            menuMusic = new File(".\\src\\main\\java\\SoEproj\\Resource\\MusicMenu.wav");
             
             mumZero = new MusicManager(menuMusic);
             mumZero.loopMusic();
@@ -50,12 +50,12 @@ public class GameMainMenu extends javax.swing.JFrame {
     }
  
     private void loadWindowsIcon() {
-        ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/ico.png");
+        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ico.png");
         iconWindows = ii.getImage();         
     }
     
     private void loadBackground(){
-        ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/MenuBackground.jpg");
+        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\MenuBackground.jpg");
         background = ii.getImage();
     }
     
