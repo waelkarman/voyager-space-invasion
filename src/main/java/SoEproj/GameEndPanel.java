@@ -26,6 +26,7 @@ import sun.audio.AudioStream;
  */
 public class GameEndPanel extends javax.swing.JPanel {
 
+    private final int SCBD_MAX_DIM = 10;    // The scoreboard max dimension is 10
     private JPanel menuPanel;
     private int score;
     private List<ScoreEntry> scoreboard;
@@ -66,16 +67,17 @@ public class GameEndPanel extends javax.swing.JPanel {
     public void addToScoreBoard(String name) {
         SaveLoadData sld = new SaveLoadData();
         scoreboard = sld.LoadData();
-        scoreboard.add(new ScoreEntry(name, score));
-        scoreboard.sort(null);
-        // The saved list must have 10 entries
-        ArrayList<ScoreEntry> toSaveList = new ArrayList<ScoreEntry>();
-        if (scoreboard.size() > 10)
-            for(int i = 0; i < 10; i++) {
-                toSaveList.add(scoreboard.get(i));
-            }
+        ScoreEntry newScore = new ScoreEntry(name, score);
         
-        sld.SaveData(toSaveList);
+        // A new score is inserted only if greater than 0 and greater than the last recorded score
+        if (score > 0 && scoreboard.size() >= SCBD_MAX_DIM)
+            if (scoreboard.get(scoreboard.size()-1).compareTo(newScore) > 0) {
+                scoreboard.add(new ScoreEntry(name, score));
+                scoreboard.sort(null);
+                scoreboard.remove(scoreboard.size()-1);
+            }
+
+        sld.SaveData(scoreboard);
     }
 
     /**
