@@ -44,6 +44,7 @@ public class GameEndPanel extends javax.swing.JPanel {
         this.menuPanel = p;
         this.score = score;
         this.isMusicOn = m;
+        endMusic = new File("./src/main/java/SoEproj/Resource/MusicEnd.wav");
         
         if(isMusicOn){
             mumZero = new MusicManager(endMusic);
