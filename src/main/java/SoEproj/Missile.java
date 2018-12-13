@@ -42,22 +42,22 @@ public class Missile extends Sprite {
                 pathImage = "./src/main/java/SoEproj/Resource/Laser.png";
                 break;
             }
-            case "Vecchia":{
+            case "blueFireball":{
                 damage = -3;
                 SPACE = 1;
-                pathImage = "./src/main/java/SoEproj/Resource/vecchia.png";
+                pathImage = "./src/main/java/SoEproj/Resource/BluetFireball.png";
                 break;
             }
-            case "Banana":{
+            case "GreenShoot":{
                 damage = -1;
                 SPACE = 2;
-                pathImage = "./src/main/java/SoEproj/Resource/banana.png";
+                pathImage = "./src/main/java/SoEproj/Resource/GreenShott.png";
                 break;
             }
-            case "memas":{
+            case "VioletLaser":{
                 damage = -2;
                 SPACE = 2;
-                pathImage = "./src/main/java/SoEproj/Resource/memas.png";
+                pathImage = "./src/main/java/SoEproj/Resource/VioletLaser.png";
                 break;
             }
             case "pollo":{

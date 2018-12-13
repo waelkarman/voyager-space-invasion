@@ -52,17 +52,17 @@ public class UpgradePack extends Sprite{
                 break;
             }
             case 5:{
-                type = 5;   //"Vecchia";
+                type = 5;   //"BlueFireball";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 6:{
-                type = 6;   //"Banana";
+                type = 6;   //"GreenShoot";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
             case 7:{
-                type = 7;   //"memas";
+                type = 7;   //"VioletLaser";
                 pathImage = "./src/main/java/SoEproj/Resource/box.png";
                 break;
             }
@@ -119,17 +119,17 @@ public class UpgradePack extends Sprite{
             }
             case 5:{
                 scheduleResetUpgrade(s);
-                s.setMissileType("Vecchia");
+                s.setMissileType("blueFireball");
                 break;
             }
             case 6:{
                 scheduleResetUpgrade(s);
-                s.setMissileType("Banana");
+                s.setMissileType("GreenShoot");
                 break;
             }
             case 7:{
                 scheduleResetUpgrade(s);
-                s.setMissileType("memas");
+                s.setMissileType("VioletLaser");
                 break;
             }
             case 8:{
