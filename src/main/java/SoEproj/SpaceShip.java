@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
 
 
@@ -10,20 +5,8 @@ import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 
 public class SpaceShip extends Sprite {

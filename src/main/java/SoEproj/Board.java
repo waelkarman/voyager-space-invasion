@@ -17,11 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 
 public class Board extends JPanel implements Runnable {
@@ -39,8 +34,6 @@ public class Board extends JPanel implements Runnable {
     private final File bossHitSound;
     private File boardSound;
 
-    private InputStream in;
-    private AudioStream audios;
     private boolean isMusicOn;
 
     private ImageIcon bgImgIcon;

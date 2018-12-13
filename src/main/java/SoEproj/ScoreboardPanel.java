@@ -6,16 +6,10 @@
 package SoEproj;
 
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 
 /**
@@ -27,7 +21,7 @@ public class ScoreboardPanel extends javax.swing.JPanel {
     private JPanel menuPanel;
     private boolean isMusicOn;
     private MusicManager mumZero;
-    private Clip clip;
+    
     /**
      * Creates new form ScoreboardPanel
      */

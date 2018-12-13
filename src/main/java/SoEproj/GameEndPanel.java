@@ -1,26 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
 
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
 
 /**
  *
@@ -32,11 +20,9 @@ public class GameEndPanel extends javax.swing.JPanel {
     private JPanel menuPanel;
     private int score;
     private List<ScoreEntry> scoreboard;
-    private InputStream in;
     private File endMusic;
     private boolean isMusicOn;
     private MusicManager mumZero;
-    private Clip clip;
     
     public GameEndPanel(int outcome, JPanel p, int score, boolean m) {
         initComponents();

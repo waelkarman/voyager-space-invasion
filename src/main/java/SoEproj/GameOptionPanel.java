@@ -1,20 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package SoEproj;
 
-import java.io.IOException;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 
 /**
@@ -29,9 +18,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
     private int level;
     private int keyModality;
     private boolean mulMode;
-    private AudioInputStream audios;
-    private Clip clip;
-    MusicManager mumZero;
+    private MusicManager mumZero;
     
     /** Creates new form GameOptionPanel */
     public GameOptionPanel(JPanel p, boolean m, int km, boolean mp, MusicManager mu) {

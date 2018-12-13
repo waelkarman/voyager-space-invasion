@@ -1,18 +1,14 @@
 package SoEproj;
 
+
 import  java.lang.Math;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 public class HardAlien extends Alien implements Runnable{
 
     private final int amplitude;    // oscillation dimension
     private final int meanY;        // alien swings around this mean value
-    private String imagePath = "./src/main/java/SoEproj/Resource/HeavyAlien.png";
+    private String imagePath;
 
     public HardAlien(int x, int y) {
         super(x, y, 2);
@@ -20,6 +16,8 @@ public class HardAlien extends Alien implements Runnable{
         SPACE = 3/2;
         amplitude = 50;
         super.points = 100;
+
+        imagePath = "./src/main/java/SoEproj/Resource/HeavyAlien.png";
         loadImage(imagePath);
         getImageDimensions();
 

@@ -1,17 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
 
-import java.awt.Rectangle;
+
 import java.awt.geom.Area;
+import java.awt.Rectangle;
+
 
 public class Missile extends Sprite {
 
     private int damage;
-    private String direction;               // direction
+    private String direction;
     private double countX = 0; 
     private final int CoeffAng = 3; 
     

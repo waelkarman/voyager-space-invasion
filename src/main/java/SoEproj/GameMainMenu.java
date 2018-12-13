@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
 
 
@@ -11,17 +6,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
 
 
 public class GameMainMenu extends javax.swing.JFrame {
@@ -32,8 +17,7 @@ public class GameMainMenu extends javax.swing.JFrame {
     private boolean music;
     private int keyModality;
     private final File menuMusic;
-    private boolean mulMode; // boolean for check multiplayer mode
-    private Clip clip;
+    private boolean mulMode;    // boolean for check multiplayer mode
     private MusicManager mumZero;
     
     public GameMainMenu() { 
@@ -42,10 +26,7 @@ public class GameMainMenu extends javax.swing.JFrame {
             initUI();
             loadWindowsIcon();
             loadBackground();
-            try {
-                clip = AudioSystem.getClip();
-            } catch (LineUnavailableException ex) {
-            }
+            
             menuMusic = new File("./src/main/java/SoEproj/Resource/MusicMenu.wav");
             
             mumZero = new MusicManager(menuMusic);
