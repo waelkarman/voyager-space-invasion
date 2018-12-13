@@ -54,7 +54,6 @@ public class SpaceShip extends Sprite {
         this.music = music;
         this.keyModality = km;
         this.t = new Timer();
-        this.task = new ResetUpgradeAmmo(this);
         setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
 
         laserSound = new File("./src/main/java/SoEproj/Resource/LaserSound.wav");
@@ -126,15 +125,7 @@ public class SpaceShip extends Sprite {
         this.firing = firing;
     }
 
-    public synchronized void resetMissileType(String missiletype) {
-        this.missileType = missiletype;
-    }
-        
-    public synchronized void setMissiletype(String missiletype) {
-        t.cancel();
-        t = new Timer();
-        task = new ResetUpgradeAmmo(this);
-        t.schedule(task, 10 * 1000);
+    public synchronized void setMissileType(String missiletype) {
         this.missileType = missiletype;
     }
 
@@ -272,22 +263,6 @@ public class SpaceShip extends Sprite {
         int[] ypos = { y, y + height/2, y + height };
         Polygon shape = new Polygon(xpos,ypos,3);
         return new Area(shape);
-    }
-
-
-    class ResetUpgradeAmmo extends TimerTask  {
-        SpaceShip s;
-        //String ammo;
-   
-        public ResetUpgradeAmmo(SpaceShip s) {
-            this.s = s;
-            //ammo = s.missileType;
-        }
-   
-        @Override
-        public void run() {
-            s.resetMissileType("Laser"); 
-        }
     }
 
 }
