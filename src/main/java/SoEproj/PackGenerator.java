@@ -8,17 +8,18 @@ import java.util.Random;
 
 public class PackGenerator implements Runnable {
 
-    protected List<UpgradePack> pack;
-    private int bgWidth;
+    private final int bgWidth;
+    protected List<UpgradePack> packs;
+
     private Random random;
     private int minX = 44;  // maximum (highest) pixel in which a pack can spawn
     private int maxY = 389; // minimum (lowest) pixel in which a pack can spawn
     private int range = maxY - minX;    // range in which a pack can appear
 
 
-    public PackGenerator(int bgWidth, List<UpgradePack> pack) {
+    public PackGenerator(int bgWidth, List<UpgradePack> packs) {
         this.bgWidth = bgWidth;
-        this.pack = pack;
+        this.packs = packs;
         random = new Random();
 	}
 
@@ -26,11 +27,11 @@ public class PackGenerator implements Runnable {
     @Override
     public void run() {
         while(true){
-            synchronized(pack){
+            synchronized(packs){
                 int h = random.nextInt(range) + minX;
                 int randomUpgrade = random.nextInt(9);
 
-                pack.add(new UpgradePack(bgWidth + 40 , h, randomUpgrade));
+                packs.add(new UpgradePack(bgWidth + 40 , h, randomUpgrade));
             }
 
             try {

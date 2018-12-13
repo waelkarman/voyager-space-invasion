@@ -17,6 +17,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -75,9 +78,11 @@ public class Board extends JPanel implements Runnable {
                 in = new FileInputStream(boardSound);
                 audios = new AudioStream(in);
                 AudioPlayer.player.start(audios);
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            
         }
 
         alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
@@ -409,7 +414,7 @@ public class Board extends JPanel implements Runnable {
                             missileHitbox = missile.getShape();
                             missileHitbox.intersect(alienHitbox);
 
-                            if (!missileHitbox.isEmpty() && missile.isVisible()) {     // intersection is empty if shapes aren't collided
+                            if (!missileHitbox.isEmpty() && !alien.isDying()) {     // intersection is empty if shapes aren't collided
                                 alien.setupLife(missile.getDamage());
                                 
                                 if(alien.getLife() > 0){

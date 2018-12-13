@@ -18,12 +18,18 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 
 public class SpaceShip extends Sprite {
-     
+    
+    private final File laserSound;
+
     private float dx;
     private float dy;
     private List<Missile> missiles;
@@ -50,6 +56,8 @@ public class SpaceShip extends Sprite {
         this.t = new Timer();
         this.task = new ResetUpgradeAmmo(this);
         setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
+
+        laserSound = new File("./src/main/java/SoEproj/Resource/LaserSound.wav");
 
         shipMissileFire = new Thread(new FireThread(this));
         shipMissileFire.start();
@@ -145,10 +153,10 @@ public class SpaceShip extends Sprite {
 
         if(music){
             try {
-                InputStream in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
+                InputStream in = new FileInputStream(laserSound);
                 AudioStream audios = new AudioStream(in);
                 AudioPlayer.player.start(audios);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Spaceship Music: " + e);
             }
         }
