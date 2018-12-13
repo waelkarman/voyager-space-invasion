@@ -3,8 +3,8 @@ package SoEproj;
 
 public class EasyAlien extends Alien {
 
-    private String imagePath;
-    private String moveType;  
+    private final String imagePath;
+    private final String moveType;  // changes alien movements  
     private boolean goDown;         // to set boss helpers go up and down as thier boss
     
 
@@ -12,9 +12,9 @@ public class EasyAlien extends Alien {
         super(x, y, 1);             // 1 is the life
         SPACE = 1;
         points = 50;
-        moveType = "";
-        imagePath = "./src/main/java/SoEproj/Resource/WeakAlien.png";
+        this.moveType = "";
 
+        imagePath = "./src/main/java/SoEproj/Resource/WeakAlien.png";
         loadImage(imagePath);
         getImageDimensions();
     }
@@ -26,6 +26,7 @@ public class EasyAlien extends Alien {
         this.moveType = moveType;
         this.goDown = goDown;
 
+        imagePath = "./src/main/java/SoEproj/Resource/WeakAlien.png";
         loadImage(imagePath);
         getImageDimensions();
     }

@@ -71,8 +71,8 @@ public class Boss1Alien extends Alien implements Runnable{
             }
 
             try {
-                Thread.sleep(5000);
                 fire();
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 System.out.println("Thread Boss1: " + e.getMessage());
             }

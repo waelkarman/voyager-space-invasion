@@ -18,12 +18,18 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 
 public class SpaceShip extends Sprite {
-     
+    
+    private final File laserSound;
+
     private float dx;
     private float dy;
     private List<Missile> missiles;
@@ -34,7 +40,8 @@ public class SpaceShip extends Sprite {
     private int keyModality;
     protected int life;
     private int score;
-
+    private Timer t;
+    private TimerTask task;
 
 
     public SpaceShip(int x, int y, int color, boolean music, int km) {
@@ -46,7 +53,11 @@ public class SpaceShip extends Sprite {
         this.SPACE = 3/2;       // speed
         this.music = music;
         this.keyModality = km;
+        this.t = new Timer();
+        this.task = new ResetUpgradeAmmo(this);
         setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
+
+        laserSound = new File("./src/main/java/SoEproj/Resource/LaserSound.wav");
 
         shipMissileFire = new Thread(new FireThread(this));
         shipMissileFire.start();
@@ -120,8 +131,10 @@ public class SpaceShip extends Sprite {
     }
         
     public synchronized void setMissiletype(String missiletype) {
-        Timer t = new Timer();
-        t.schedule(new ResetUpgradeAmmo(this), 20 * 1000);
+        t.cancel();
+        t = new Timer();
+        task = new ResetUpgradeAmmo(this);
+        t.schedule(task, 10 * 1000);
         this.missileType = missiletype;
     }
 
@@ -140,10 +153,10 @@ public class SpaceShip extends Sprite {
 
         if(music){
             try {
-                InputStream in = new FileInputStream(new File("./src/main/java/SoEproj/Resource/LaserSound.wav"));
+                InputStream in = new FileInputStream(laserSound);
                 AudioStream audios = new AudioStream(in);
                 AudioPlayer.player.start(audios);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Spaceship Music: " + e);
             }
         }
@@ -264,16 +277,16 @@ public class SpaceShip extends Sprite {
 
     class ResetUpgradeAmmo extends TimerTask  {
         SpaceShip s;
-        String ammo;
+        //String ammo;
    
         public ResetUpgradeAmmo(SpaceShip s) {
             this.s = s;
-            ammo = s.missileType;
+            //ammo = s.missileType;
         }
    
         @Override
         public void run() {
-            s.resetMissileType(ammo); 
+            s.resetMissileType("Laser"); 
         }
     }
 
