@@ -52,7 +52,6 @@ public class SpaceShip extends Sprite {
         this.SPACE = 3/2;       // speed
         this.music = music;
         this.keyModality = km;
-        this.t = new Timer();
         setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
 
         laserSound = new File("./src/main/java/SoEproj/Resource/LaserSound.wav");

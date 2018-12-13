@@ -68,13 +68,15 @@ public class GameEndPanel extends javax.swing.JPanel {
         ScoreEntry newScore = new ScoreEntry(name, score);
         
         // A new score is inserted only if greater than 0 and greater than the last recorded score
-        if (score > 0 && scoreboard.size() >= SCBD_MAX_DIM)
-            if (scoreboard.get(scoreboard.size()-1).compareTo(newScore) > 0) {
-                scoreboard.add(new ScoreEntry(name, score));
-                scoreboard.sort(null);
-                scoreboard.remove(scoreboard.size()-1);
+        if (score > 0) {
+            scoreboard.add(new ScoreEntry(name, score));
+            if (scoreboard.size() > SCBD_MAX_DIM) {
+                if (scoreboard.get(scoreboard.size()-1).compareTo(newScore) > 0) {
+                    scoreboard.sort(null);
+                    scoreboard.remove(scoreboard.size()-1);
+                }
             }
-
+        }
         sld.SaveData(scoreboard);
     }
 
