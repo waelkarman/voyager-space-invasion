@@ -8,7 +8,7 @@ import java.util.Random;
 public class AlienGenerator implements Runnable {
 
     
-    private final int ALIEN_NUM = 3;   // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                        
+    private final int ALIEN_NUM = 20;   // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                        
     private final int bgWidth;
     
     private List<Alien> aliens;
@@ -62,8 +62,15 @@ public class AlienGenerator implements Runnable {
 
     public void generateBoss() {
         synchronized(this.aliens){
-            // TODO fare 3 boss diversi per i 3 livelli
-            this.aliens.add(new Boss1Alien(bgWidth, range/2, aliens));
+            if(level == 1){
+                this.aliens.add(new Boss1Level(bgWidth, range/2, aliens));
+            }
+            if(level == 2){
+                this.aliens.add(new Boss2Level(bgWidth, range/2, aliens));
+            }
+            if(level == 3){
+                this.aliens.add(new Boss3Level(bgWidth, range/2, aliens));
+            }
         }
     }
 

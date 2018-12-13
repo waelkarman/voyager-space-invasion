@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,18 +26,22 @@ import sun.audio.AudioStream;
  */
 public class GameEndPanel extends javax.swing.JPanel {
 
-    JPanel menuPanel;
-    int punteggio;
-    private ArrayList<ScoreEntry> scoreBoard = new ArrayList<>();
+    private final int SCBD_MAX_DIM = 10;    // The scoreboard max dimension is 10
+    private JPanel menuPanel;
+    private int score;
+    private List<ScoreEntry> scoreboard;
     private InputStream in;
     private AudioStream audios;
     private File boardSound;
     private boolean isMusicOn;
     
-    public GameEndPanel(int outcome, JPanel p, int pnt, boolean m) {
-        this.menuPanel = p;
+    public GameEndPanel(int outcome, JPanel p, int score, boolean m) {
         initComponents();
+
+        this.menuPanel = p;
+        this.score = score;
         this.isMusicOn = m;
+        
         if(isMusicOn){
             boardSound = new File("./src/main/java/SoEproj/Resource/MusicEnd.wav");
             try {
@@ -47,9 +52,11 @@ public class GameEndPanel extends javax.swing.JPanel {
                 e.printStackTrace();
             }
         }
-        this.punteggio = pnt;
+        
         if(outcome == 1)
             loadWinImage();
+        
+        scoreboard = new ArrayList<ScoreEntry>();
     }
     
     public void loadWinImage(){
@@ -57,11 +64,20 @@ public class GameEndPanel extends javax.swing.JPanel {
         jLabel3.setIcon(gameWin);
     }
     
-    public void addToScoreBoard(String name) throws IOException, ClassNotFoundException {
+    public void addToScoreBoard(String name) {
         SaveLoadData sld = new SaveLoadData();
-        scoreBoard = sld.LoadData();
-        scoreBoard.add(new ScoreEntry(name, punteggio));
-        sld.SaveData(scoreBoard);
+        scoreboard = sld.LoadData();
+        ScoreEntry newScore = new ScoreEntry(name, score);
+        
+        // A new score is inserted only if greater than 0 and greater than the last recorded score
+        if (score > 0 && scoreboard.size() >= SCBD_MAX_DIM)
+            if (scoreboard.get(scoreboard.size()-1).compareTo(newScore) > 0) {
+                scoreboard.add(new ScoreEntry(name, score));
+                scoreboard.sort(null);
+                scoreboard.remove(scoreboard.size()-1);
+            }
+
+        sld.SaveData(scoreboard);
     }
 
     /**
@@ -178,13 +194,9 @@ public class GameEndPanel extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        String name = jTextField1.getText();
-        try {
-            addToScoreBoard(name);
-        } catch (IOException ex) {
-            Logger.getLogger(GameEndPanel.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(GameEndPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }    
+        
+        addToScoreBoard(name);
+            
         this.jButton3.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 

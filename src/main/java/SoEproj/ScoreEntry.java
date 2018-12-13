@@ -33,7 +33,7 @@ public class ScoreEntry implements Comparable<ScoreEntry>, Serializable {
 
     @Override
     public int compareTo(ScoreEntry t) {
-        return this.score - t.score;
+        return t.score - this.score;
     }
     
 }

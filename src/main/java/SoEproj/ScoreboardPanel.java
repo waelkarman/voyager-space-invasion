@@ -7,6 +7,8 @@ package SoEproj;
 
 
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import sun.audio.AudioPlayer;
@@ -33,7 +35,7 @@ public class ScoreboardPanel extends javax.swing.JPanel {
     }
     
     public void showScoreboard(){
-        ArrayList<ScoreEntry> ScBoard = new ArrayList<>();
+        List<ScoreEntry> ScBoard = new ArrayList<>();
         ScBoard = sld.LoadData();
         
         for (ScoreEntry x : ScBoard){

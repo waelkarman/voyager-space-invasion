@@ -98,7 +98,8 @@ public class Board extends JPanel implements Runnable {
     }
 
     private void setBackground() {
-        bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround1.png");
+        if(level == 1)    
+            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround1.png");
         if(level == 2)
             bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
         if(level == 3)
@@ -200,19 +201,21 @@ public class Board extends JPanel implements Runnable {
 
                 if (alien.isDying()) {
                     alien.die();
-                    if (alien instanceof Boss1Level){ // TODO questa tecnica non è corretta secondo SoE 
-                        if(this.level < 3){           // i'm starting a new level
-                            this.level += 1;
-                            setBackground();
-
-                            aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
-                            threadAliensGen = new Thread(aliensGen);
-                            threadAliensGen.start();
-                        }
-                        else {
-                            gameState = GameStateEnum.GAME_LOST;
-                        }
+                    if (alien instanceof Boss1Level || alien instanceof Boss2Level){
+                        this.level += 1;
+                        //System.out.println(level);
+                        setBackground();
+                        aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
+                        threadAliensGen = new Thread(aliensGen);
+                        threadAliensGen.start();
                     }
+
+                    // se muore il 3 bosso metto gamestate a 2 e il gioco finisce
+                    if (alien instanceof Boss3Level){ 
+                        //condizione di vittoria, deve uscire you win
+                        gameState = GameStateEnum.GAME_LOST;
+                    }
+                    
                 }
             }
         }
