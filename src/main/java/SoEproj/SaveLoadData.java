@@ -7,17 +7,18 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class SaveLoadData {
     
-    private File scoreData;
+    private final File scoreData;
 
     public SaveLoadData(){
         scoreData = new File("./src/main/java/SoEproj/ScoreDataSaves");
     }
     
-    public void SaveData(ArrayList<ScoreEntry> pd) {
+    public void SaveData(List<ScoreEntry> pd) {
         try {
             FileOutputStream out = new FileOutputStream(scoreData);
             ObjectOutputStream ogg = new ObjectOutputStream(out);
