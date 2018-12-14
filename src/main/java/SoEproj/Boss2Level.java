@@ -7,7 +7,7 @@ import java.util.List;
 public class Boss2Level extends Alien implements Runnable{
 
     // TODO Cambiare immagine boss1
-    private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\Boss2Image.gif";
+    private String imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\Boss2Image.png";
     private boolean goDown = true;          // to set boss go at first down and then up
     private final int TOT_LIFE = life;
     private List<Alien> aliens;
