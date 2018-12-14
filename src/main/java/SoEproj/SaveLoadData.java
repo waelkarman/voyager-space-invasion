@@ -20,13 +20,15 @@ public class SaveLoadData {
     
     public void SaveData(List<ScoreEntry> pd) {
         try {
-            ObjectOutputStream ogg = new ObjectOutputStream(new FileOutputStream(scoreData));
+            FileOutputStream out = new FileOutputStream(scoreData);
+            ObjectOutputStream ogg = new ObjectOutputStream(out);
             ogg.writeObject(pd);
             ogg.close();
         } 
         catch (Exception e) {
             System.out.println("SaveData: " + e);
         }
+      
     }
     
     public ArrayList<ScoreEntry> LoadData() {
@@ -34,7 +36,8 @@ public class SaveLoadData {
         ArrayList<ScoreEntry> scores = new ArrayList<>();
         
         try {
-            ObjectInputStream ogg = new ObjectInputStream(new FileInputStream(scoreData));
+            FileInputStream in = new FileInputStream(scoreData);
+            ObjectInputStream ogg = new ObjectInputStream(in);
             scores = (ArrayList<ScoreEntry>) ogg.readObject();
             ogg.close();
         } catch (Exception e) {

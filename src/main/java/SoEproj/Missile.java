@@ -60,12 +60,6 @@ public class Missile extends Sprite {
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\VioletLaser.png";
                 break;
             }
-            case "pollo":{
-                damage = 0;
-                SPACE = 2;
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\pollo.png";
-                break;
-            }
         }
 
         loadImage(pathImage);

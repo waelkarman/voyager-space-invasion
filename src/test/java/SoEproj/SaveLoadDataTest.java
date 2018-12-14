@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
-
+/**
+ * Unit test for simple App.
+ */
 public class SaveLoadDataTest 
 {
 

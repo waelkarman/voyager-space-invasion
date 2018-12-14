@@ -43,12 +43,12 @@ public class UpgradePack extends Sprite{
             }
             case 3:{
                 type = 3;   //"Life";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Grbox.png";//Original box
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\heart.gif";//Original box
                 break;
             }
             case 4:{
                 type = 4;   //"Speed";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Obox.png"; //Orange box
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\flash.png"; //Orange box
                 break;
             }
             case 5:{
@@ -66,11 +66,6 @@ public class UpgradePack extends Sprite{
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Pbox.png"; //Purple box
                 break;
             }
-            case 8:{
-                type = 8;   //"pollo";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Grbox.png"; //Original box
-                break;
-            }
         }
 
         loadImage(pathImage);
@@ -81,14 +76,14 @@ public class UpgradePack extends Sprite{
         t.cancel();
         t = new Timer();
         task = new ResetUpgradeAmmo(s);
-        t.schedule(task, 20 * 1000);
+        t.schedule(task, 10 * 1000);
     }
 
     private void scheduleResetSpace(SpaceShip s, float space){
         t.cancel();
         t = new Timer();
         task = new ResetUpgradeSpace(s, space);
-        t.schedule(task, 20 * 1000);
+        t.schedule(task, 10 * 1000);
     }
 
     public synchronized void updateSpaceShip(SpaceShip s) {
