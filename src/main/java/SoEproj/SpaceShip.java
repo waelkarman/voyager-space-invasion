@@ -163,8 +163,8 @@ public class SpaceShip extends Sprite {
         if(x > B_WIDTH - this.width)
             x = B_WIDTH - this.width;
 
-        if(y < 0) 
-            y = 0;
+        if(y < B_SCORE_SPACE) 
+            y = B_SCORE_SPACE;
 
         if(y > B_HEIGHT - this.height)
             y = B_HEIGHT - this.height;

@@ -46,6 +46,7 @@ public class HardAlien extends Alien implements Runnable{
         }
     }
 
+    
     @Override
     public void run() {
         while(isVisible()){

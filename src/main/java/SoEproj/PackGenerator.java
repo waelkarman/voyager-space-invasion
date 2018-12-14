@@ -7,34 +7,37 @@ import java.util.Random;
 
 public class PackGenerator implements Runnable {
 
+    private final int B_SCORE_SPACE = 30;   // space that is occupied by player's score
     private final int bgWidth;
-    protected List<UpgradePack> packs;
-
+    
+    private List<UpgradePack> packs;
     private Random random;
-    private int minX = 44;  // maximum (highest) pixel in which a pack can spawn
-    private int maxY = 389; // minimum (lowest) pixel in which a pack can spawn
-    private int range = maxY - minX;    // range in which a pack can appear
+    private int range;    // range in which a pack can appear
 
 
-    public PackGenerator(int bgWidth, List<UpgradePack> packs) {
+    public PackGenerator(int bgWidth, int B_HEIGHT, List<UpgradePack> packs) {
         this.bgWidth = bgWidth;
         this.packs = packs;
         random = new Random();
+        range = B_HEIGHT - B_SCORE_SPACE;
 	}
 
 
     @Override
     public void run() {
+        int h, randomUpgrade, randomSleep;
+        
         while(true){
             synchronized(packs){
-                int h = random.nextInt(range) + minX;
-                int randomUpgrade = random.nextInt(9);
+                h = random.nextInt(range) + B_SCORE_SPACE;
+                randomUpgrade = random.nextInt(9);
 
                 packs.add(new UpgradePack(bgWidth + 40 , h, randomUpgrade));
             }
 
             try {
-                Thread.sleep(5000);
+                randomSleep = (5 + random.nextInt(15)) * 1000;   // next box is generated after 5-20 seconds
+                Thread.sleep(randomSleep);
             } catch (InterruptedException e) {
                 System.out.println("Pack generation interrupted %s" + e.getMessage());
             }
