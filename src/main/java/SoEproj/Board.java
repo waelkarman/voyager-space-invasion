@@ -34,6 +34,9 @@ public class Board extends JPanel implements Runnable {
     private final File bossHitSound;
     private File boardSound;
 
+    private static Board istance = null; //Vittorio
+    private Boolean isPause = false;
+
     private boolean isMusicOn;
 
     private ImageIcon bgImgIcon;
@@ -57,7 +60,7 @@ public class Board extends JPanel implements Runnable {
     private List<UpgradePack> packs;
     private MusicManager mumZero;
 
-    public Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
+    private Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
         this.isMultiplayer = mp;
         this.level = level;
         // Images and soundtracks initialization
@@ -81,6 +84,21 @@ public class Board extends JPanel implements Runnable {
         setBackground();
         initGame(shipType);     // shipType may change with level
         gameLaunch();
+    }
+
+ 
+
+    public static Board setBoard(int shipType, JPanel p, boolean m, int level, int km, boolean mp){
+
+        if(istance == null){
+            istance = new Board(shipType,p, m, level,km, mp);
+        }
+        return istance;
+
+    }
+
+    public void resetBoard(){ //Vittorio ho cambiato da privato a pubblico
+        istance = null;
     }
 
     private void setBackground() {
@@ -444,6 +462,7 @@ public class Board extends JPanel implements Runnable {
         old.add(gep).requestFocusInWindow();
         old.validate();
         old.repaint();
+        resetBoard();
     }
 
 
@@ -462,7 +481,22 @@ public class Board extends JPanel implements Runnable {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            try{
+
+            int key = e.getKeyCode();                       //Vittorio
+                if (key == KeyEvent.VK_P){        
+                    if (isPause == false){
+                        System.out.println("METTI LA PAUSA");
+                        isPause = true;
+                        threadPacksGen.suspend();
+                        threadAliensGen.suspend();
+                        pauseGameFunction();
+                    }else{
+                        System.out.println("TOGLI LA PAUSA");
+                        resumeGame();
+                    }
+                }
+
+             try{
                 for(int k=0; k < spaceShips.size(); k++) {
                     SpaceShip ship = spaceShips.get(k);
                     ship.keyPressed(e);
@@ -490,30 +524,58 @@ public class Board extends JPanel implements Runnable {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    public void resumeGame(){         //Alessio funzione da richiamare per far ripartire il gioco
+        isPause = false;
+        threadPacksGen.resume();
+        threadAliensGen.resume();
+        boardAnimator.resume();
+    }
+
+
+    public void pauseGame(){           
+        boardAnimator.suspend();
+    }
+  
+    public void pauseGameFunction(){  //Alessio funzione per il passaggio a PausePanel
+        JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
+        old.getContentPane().remove(this);
+        PausePanel gep = new PausePanel(istance,menuPanel,mumZero,isMusicOn);   //Alessio ti passo l'istanza di questa board cosi che puoi lavorarci nel PausePanel
+        old.add(gep).requestFocusInWindow();           //TI ho commentato il costruttore e cosa si dovrebbere fare
+        old.validate();
+        old.repaint();
+        pauseGame();  
+    }
+
     @Override
     public void run() {
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
         while (gameState != GameStateEnum.GAME_LOST) {
-            updateShip();
-            updateAliens();
-            updatePacks();
-            checkCollisions();
-            repaint();
+            if(isPause == true){
+                pauseGame();
+            }
+            else{
+                updateShip();
+                updateAliens();
+                updatePacks();
+                checkCollisions();
+                repaint();
             
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
-            if (sleep < 0) {
-                sleep = 2;
-            }
+                timeDiff = System.currentTimeMillis() - beforeTime;
+                sleep = DELAY - timeDiff;
+                if (sleep < 0) {
+                    sleep = 2;
+                }
 
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                System.out.println("Thread Board: " + e.getMessage());
+                try {
+                    Thread.sleep(sleep);
+                } catch (InterruptedException e) {
+                    System.out.println("Thread Board: " + e.getMessage());
+                }
+                beforeTime = System.currentTimeMillis();
             }
-            beforeTime = System.currentTimeMillis();
+            repaint();
         }
-        repaint();
     }
+            
 }
