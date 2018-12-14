@@ -94,9 +94,8 @@ public class SpaceShip extends Sprite {
     }
 
     public void setupSPACE(float SPACE) {
-        if(this.SPACE<4){
+        if(this.SPACE<4)
             this.SPACE += SPACE;
-        }
     }
 
     public synchronized void setupLife(int life) {
@@ -125,8 +124,8 @@ public class SpaceShip extends Sprite {
         missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToRight" ));
 
         if(missileType.equals("3Missiles")) {
-            missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToTop" ));
-            missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToBottom" ));            
+            missiles.add(new Missile(x + width, y + height/2, missileType, "leftToTop" ));
+            missiles.add(new Missile(x + width, y + height/2, missileType, "leftToBottom" ));            
         } 
         
         if(music){
@@ -146,12 +145,9 @@ public class SpaceShip extends Sprite {
                 mumZero = new MusicManager(laserSound);
                 mumZero.startMusic();
             }
-            
-            
         }
-
-        
     }
+
 
     public void move() {       
         x += dx;

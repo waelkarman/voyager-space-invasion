@@ -24,7 +24,7 @@ public class Board extends JPanel implements Runnable {
     private final int B_WIDTH = 590;
     private final int B_HEIGHT = 435;
     private final int DELAY = 15;
-    private final double BG_SPEED = 0.5;    // background speed
+    private final double BG_SPEED = 0.3;    // background speed
 
     private final ImageIcon alienExpl;
     private final ImageIcon shipExpl;
@@ -482,7 +482,7 @@ public class Board extends JPanel implements Runnable {
         @Override
         public void keyPressed(KeyEvent e) {
 
-            int key = e.getKeyCode();                       //Vittorio
+            int key = e.getKeyCode();                       
                 if (key == KeyEvent.VK_P){        
                     if (isPause == false){
                         System.out.println("METTI LA PAUSA");

@@ -36,7 +36,7 @@ public class PackGenerator implements Runnable {
             }
 
             try {
-                randomSleep = (5 + random.nextInt(15)) * 1000;   // next box is generated after 5-20 seconds
+                randomSleep = (5 + random.nextInt(5)) * 1000;   // next box is generated after 5-10 seconds
                 Thread.sleep(randomSleep);
             } catch (InterruptedException e) {
                 System.out.println("Pack generation interrupted %s" + e.getMessage());

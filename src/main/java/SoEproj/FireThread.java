@@ -32,7 +32,7 @@ public class FireThread implements Runnable{
             
             if(s.getFiring()){
                 try {
-                    Thread.sleep(300);                                                                                                            
+                    Thread.sleep(350);                                                                                                            
                 } catch (InterruptedException e) {
                     System.out.println("FireThread sleep: " + e);
                 }
