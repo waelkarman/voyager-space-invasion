@@ -81,14 +81,14 @@ public class UpgradePack extends Sprite{
         t.cancel();
         t = new Timer();
         task = new ResetUpgradeAmmo(s);
-        t.schedule(task, 10 * 1000);
+        t.schedule(task, 20 * 1000);
     }
 
     private void scheduleResetSpace(SpaceShip s, float space){
         t.cancel();
         t = new Timer();
         task = new ResetUpgradeSpace(s, space);
-        t.schedule(task, 10 * 1000);
+        t.schedule(task, 20 * 1000);
     }
 
     public synchronized void updateSpaceShip(SpaceShip s) {
