@@ -28,20 +28,18 @@ public class Boss1Alien extends Alien implements Runnable{
     
     @Override
     public void move() {            // Boss enters in scene and then moves up and down
-        if (x >= INITIAL_X-30) {
+        if (x >= INITIAL_X - 50) {
             x -= SPACE;
         }
         else {
             if (goDown) {
                 y += SPACE;
-                if (y > 400) {
+                if (y > B_HEIGHT - height)
                     goDown = false;
-                }
             } else {
                 y -= SPACE;
-                if (y < 0) {
+                if (y < B_SCORE_SPACE)
                     goDown = true;
-                }
             }
         }
     }

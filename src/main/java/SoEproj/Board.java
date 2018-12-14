@@ -21,8 +21,8 @@ import javax.swing.SwingUtilities;
 
 public class Board extends JPanel implements Runnable {
 
-    private final int B_WIDTH = 600;
-    private final int B_HEIGHT = 450;
+    private final int B_WIDTH = 590;
+    private final int B_HEIGHT = 435;
     private final int DELAY = 15;
     private final double BG_SPEED = 0.5;    // background speed
 
@@ -105,11 +105,11 @@ public class Board extends JPanel implements Runnable {
             spaceShips.add( new SpaceShip(0, B_HEIGHT/2 + 60, shipType + 1 % 3 , isMusicOn, keyModality + 1 % 2) ); // +1 % 2 for set a different type
 
         packs = new LinkedList<UpgradePack>();
-        packsGen = new PackGenerator(background.getWidth(null), packs);
+        packsGen = new PackGenerator(B_WIDTH, B_HEIGHT, packs);
         threadPacksGen = new Thread(packsGen);
 
         aliens = new ArrayList<Alien>();
-        aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
+        aliensGen = new AlienGenerator(B_WIDTH, B_HEIGHT, aliens, this.level);
         threadAliensGen = new Thread(aliensGen);
 
         threadAliensGen.start();
@@ -191,7 +191,7 @@ public class Board extends JPanel implements Runnable {
                         this.level += 1;
                         //System.out.println(level);
                         setBackground();
-                        aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
+                        aliensGen = new AlienGenerator(B_WIDTH, B_HEIGHT, aliens, this.level);
                         threadAliensGen = new Thread(aliensGen);
                         threadAliensGen.start();
                     }

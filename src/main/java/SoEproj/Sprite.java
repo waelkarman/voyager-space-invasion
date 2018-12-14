@@ -14,8 +14,9 @@ import javax.swing.ImageIcon;
 
 public abstract class Sprite {
 
-    protected final int B_WIDTH = 600;
-    protected final int B_HEIGHT = 450;
+    protected final int B_WIDTH = 590;
+    protected final int B_HEIGHT = 435;
+    protected final int B_SCORE_SPACE = 30; // space that is occupied by player's score
     protected int x;
     protected int y;
     protected int width;
@@ -43,6 +44,9 @@ public abstract class Sprite {
     protected void getImageDimensions() {
         width = image.getWidth(null);
         height = image.getHeight(null);
+
+        if(y + height > B_HEIGHT)
+            y = B_HEIGHT - height;
     }
 
     protected void loadImage(String imageName) {

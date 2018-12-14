@@ -34,17 +34,17 @@ public class EasyAlien extends Alien {
 
     public void move() {  
         if(moveType == "BossHelper") {
-            if (x >= INITIAL_X-65)
+            if (x >= INITIAL_X - 65)
                 x -= SPACE;
             
             if (goDown) {
                 y += SPACE;
-                if (y > B_HEIGHT - this.width)  // the alien touches the down board limit
+                if (y > B_HEIGHT - this.height)  // the alien touches the down board limit
                     goDown = false;
             } 
             else {
                 y -= SPACE;
-                if (y < 0)
+                if (y < B_SCORE_SPACE)
                     goDown = true;
             }
         }
