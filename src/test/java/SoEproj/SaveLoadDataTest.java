@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.hamcrest.core.Is;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,9 +16,9 @@ import org.junit.Test;
 
 public class SaveLoadDataTest {
 
-    SaveLoadData data1;
-    SaveLoadData data2;
-    List<ScoreEntry> list;
+    private SaveLoadData data1;
+    private SaveLoadData data2;
+    private List<ScoreEntry> list;
 
 
     @Before
@@ -31,10 +32,10 @@ public class SaveLoadDataTest {
         ScoreEntry entry3 = new ScoreEntry("Player3", 20);
         list = Arrays.asList(entry1, entry2, entry3);
     }
-
+    
 
     @Test
-    public void SaveDateTest() {
+    public void saveDataTest() {
         assertNotEquals(data1, data2);
         data1.SaveData(list);
         data2.SaveData(list);
@@ -43,7 +44,7 @@ public class SaveLoadDataTest {
 
 
     @Test
-    public void LoadDataTest() {
+    public void loadDataTest() {
         assertEquals(data1.LoadData(), data2.LoadData());
     }
 

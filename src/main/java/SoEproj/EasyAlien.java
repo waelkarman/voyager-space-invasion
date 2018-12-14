@@ -34,7 +34,7 @@ public class EasyAlien extends Alien {
 
     public void move() {  
         if(moveType == "BossHelper") {
-            if (x >= INITIAL_X - 65)
+            if (x >= B_WIDTH - 65)
                 x -= SPACE;
             
             if (goDown) {
