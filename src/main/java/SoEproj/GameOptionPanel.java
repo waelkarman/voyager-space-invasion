@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package SoEproj;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
 
 /**
  *
@@ -24,12 +18,12 @@ public class GameOptionPanel extends javax.swing.JPanel {
     private int level;
     private int keyModality;
     private boolean mulMode;
-    private AudioStream audios;
+    private MusicManager mumZero;
     
     /** Creates new form GameOptionPanel */
-    public GameOptionPanel(JPanel p, boolean m, int km, boolean mp, AudioStream audio) {
+    public GameOptionPanel(JPanel p, boolean m, int km, boolean mp, MusicManager mu) {
         initComponents();
-        this.audios = audio;
+        this.mumZero = mu;
         level = 1;
         ship = 2;
         menuPanel = p;
@@ -113,7 +107,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OrangeCraft.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png")); // NOI18N
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jRadioButton4.setBackground(new java.awt.Color(0, 0, 102));
@@ -165,15 +159,15 @@ public class GameOptionPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/RedCraft.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png")); // NOI18N
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GreenCraft.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png")); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround1_Logo.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1_Logo.png")); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround2_Logo.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround2_Logo.png")); // NOI18N
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround3_Logo.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround3_Logo.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -288,7 +282,8 @@ public class GameOptionPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jRadioButton3MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AudioPlayer.player.stop(audios);
+        if(mumZero != null)
+            mumZero.stopMusic();
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
         Board b = new Board(ship, menuPanel,music,level,keyModality,mulMode);

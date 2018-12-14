@@ -1,24 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
 
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
 
 /**
  *
@@ -30,10 +20,9 @@ public class GameEndPanel extends javax.swing.JPanel {
     private JPanel menuPanel;
     private int score;
     private List<ScoreEntry> scoreboard;
-    private InputStream in;
-    private AudioStream audios;
-    private File boardSound;
+    private File endMusic;
     private boolean isMusicOn;
+    private MusicManager mumZero;
     
     public GameEndPanel(int outcome, JPanel p, int score, boolean m) {
         initComponents();
@@ -41,16 +30,11 @@ public class GameEndPanel extends javax.swing.JPanel {
         this.menuPanel = p;
         this.score = score;
         this.isMusicOn = m;
+        endMusic = new File(".\\src\\main\\java\\SoEproj\\Resource\\MusicEnd.wav");
         
         if(isMusicOn){
-            boardSound = new File("./src/main/java/SoEproj/Resource/MusicEnd.wav");
-            try {
-                in = new FileInputStream(boardSound);
-                audios = new AudioStream(in);
-                AudioPlayer.player.start(audios);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            mumZero = new MusicManager(endMusic);
+            mumZero.loopMusic();
         }
         
         if(outcome == 1)
@@ -60,7 +44,7 @@ public class GameEndPanel extends javax.swing.JPanel {
     }
     
     public void loadWinImage(){
-        ImageIcon gameWin = new ImageIcon("./src/main/java/SoEproj/Resource/GameWinEnd.png");
+        ImageIcon gameWin = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GameWinEnd.png");
         jLabel3.setIcon(gameWin);
     }
     
@@ -70,13 +54,15 @@ public class GameEndPanel extends javax.swing.JPanel {
         ScoreEntry newScore = new ScoreEntry(name, score);
         
         // A new score is inserted only if greater than 0 and greater than the last recorded score
-        if (score > 0 && scoreboard.size() >= SCBD_MAX_DIM)
-            if (scoreboard.get(scoreboard.size()-1).compareTo(newScore) > 0) {
-                scoreboard.add(new ScoreEntry(name, score));
-                scoreboard.sort(null);
-                scoreboard.remove(scoreboard.size()-1);
+        if (score > 0) {
+            scoreboard.add(new ScoreEntry(name, score));
+            if (scoreboard.size() > SCBD_MAX_DIM) {
+                if (scoreboard.get(scoreboard.size()-1).compareTo(newScore) > 0) {
+                    scoreboard.sort(null);
+                    scoreboard.remove(scoreboard.size()-1);
+                }
             }
-
+        }
         sld.SaveData(scoreboard);
     }
 
@@ -117,7 +103,7 @@ public class GameEndPanel extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Your Name:");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GameOverEnd.gif")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\GameOverEnd.gif")); // NOI18N
 
         jButton3.setText("SAVE");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +160,9 @@ public class GameEndPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AudioPlayer.player.stop(audios);
+        if(mumZero != null)
+            mumZero.stopMusic();   
+        
         GameMainMenu old = (GameMainMenu) SwingUtilities.getWindowAncestor(this);        
         old.getContentPane().remove(this);
         old.add(menuPanel);
@@ -187,7 +175,7 @@ public class GameEndPanel extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
-        old.add(new ScoreboardPanel(menuPanel,isMusicOn,audios));
+        old.add(new ScoreboardPanel(menuPanel,isMusicOn,mumZero));
         old.validate();
         old.repaint();
     }//GEN-LAST:event_jButton2ActionPerformed

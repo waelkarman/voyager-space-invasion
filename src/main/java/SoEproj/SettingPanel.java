@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
 
 /**
  *
@@ -22,13 +17,14 @@ public class SettingPanel extends javax.swing.JPanel {
     private JPanel menuPanel;
     private boolean music;
     private int controlMode;
-    private AudioStream audios;
+    private MusicManager mumZero ;
     
-    public SettingPanel(JPanel p, AudioStream audios) {
+    public SettingPanel(JPanel p, MusicManager mu) {
         initComponents();
-        this.audios = audios;
-        menuPanel=p;
-        controlMode = 1;
+        this.mumZero = mu;
+        menuPanel= p;
+        controlMode = 0;
+        this.music = true;
     }
 
     /**
@@ -131,7 +127,7 @@ public class SettingPanel extends javax.swing.JPanel {
         jLabel10.setText("I Satanassi Infernali");
 
         jLabel11.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel11.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/logo1-5.png")); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\logo1-5.png")); // NOI18N
 
         jRadioButton5.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton5);
@@ -181,14 +177,14 @@ public class SettingPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/canadian_notebook_!-3.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\canadian_notebook_!-3.png")); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/canadian_notebook_2-3.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\canadian_notebook_2-3.png")); // NOI18N
 
         jLabel16.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel16.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/ON_Icon_1.png")); // NOI18N
+        jLabel16.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ON_Icon_1.png")); // NOI18N
 
-        jLabel17.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OFF_Icon_1.png")); // NOI18N
+        jLabel17.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\OFF_Icon_1.png")); // NOI18N
 
         jButton1.setText("M\nE\nN\nU\n");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -343,7 +339,7 @@ public class SettingPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        controlMode = 1;
+        controlMode = 0;
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -358,16 +354,16 @@ public class SettingPanel extends javax.swing.JPanel {
 
     private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
         music = true;
-        AudioPlayer.player.start(audios);
+        mumZero.startMusic();
     }//GEN-LAST:event_jRadioButton5ActionPerformed
 
     private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
        music = false;
-       AudioPlayer.player.stop(audios);
+       mumZero.stopMusic();
     }//GEN-LAST:event_jRadioButton6ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-       controlMode = 2;
+       controlMode = 1;
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
 

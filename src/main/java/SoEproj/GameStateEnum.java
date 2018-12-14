@@ -1,5 +1,5 @@
-
 package SoEproj;
+
 
 public enum GameStateEnum {
     MENU,

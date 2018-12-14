@@ -1,17 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
 
-import java.awt.Rectangle;
+
 import java.awt.geom.Area;
+import java.awt.Rectangle;
+
 
 public class Missile extends Sprite {
 
     private int damage;
-    private String direction;               // direction
+    private String direction;
     private double countX = 0; 
     private final int CoeffAng = 3; 
     
@@ -30,43 +27,43 @@ public class Missile extends Sprite {
             case "3Missiles":{
                 damage = -1;
                 SPACE = 2;
-                pathImage = "./src/main/java/SoEproj/Resource/Laser.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
                 break;
             } 
             case "fireBall":{
                 damage = -2;
                 SPACE = 4;
-                pathImage = "./src/main/java/SoEproj/Resource/fireBall.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\fireBall.png";
                 break;
             } 
             case "Laser":{
                 damage = -3;
                 SPACE = 2;
-                pathImage = "./src/main/java/SoEproj/Resource/Laser.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Laser.png";
                 break;
             }
-            case "Vecchia":{
+            case "blueFireball":{
                 damage = -3;
                 SPACE = 1;
-                pathImage = "./src/main/java/SoEproj/Resource/vecchia.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\BluetFireball.png";
                 break;
             }
-            case "Banana":{
+            case "GreenShoot":{
                 damage = -1;
                 SPACE = 2;
-                pathImage = "./src/main/java/SoEproj/Resource/banana.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\GreenShott.png";
                 break;
             }
-            case "memas":{
+            case "VioletLaser":{
                 damage = -2;
                 SPACE = 2;
-                pathImage = "./src/main/java/SoEproj/Resource/memas.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\VioletLaser.png";
                 break;
             }
             case "pollo":{
                 damage = 0;
                 SPACE = 2;
-                pathImage = "./src/main/java/SoEproj/Resource/pollo.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\pollo.png";
                 break;
             }
         }

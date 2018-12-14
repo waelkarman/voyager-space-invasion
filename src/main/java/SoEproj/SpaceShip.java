@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package SoEproj;
 
 
@@ -10,20 +5,8 @@ import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Area;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 
 public class SpaceShip extends Sprite {
@@ -40,9 +23,8 @@ public class SpaceShip extends Sprite {
     private int keyModality;
     protected int life;
     private int score;
-    private Timer t;
-    private TimerTask task;
-
+    private MusicManager mumZero;
+    
 
     public SpaceShip(int x, int y, int color, boolean music, int km) {
         super(x, y);        
@@ -53,10 +35,9 @@ public class SpaceShip extends Sprite {
         this.SPACE = 3/2;       // speed
         this.music = music;
         this.keyModality = km;
-        this.t = new Timer();
         setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
 
-        laserSound = new File("./src/main/java/SoEproj/Resource/LaserSound.wav");
+        laserSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\LaserSound.wav");
 
         shipMissileFire = new Thread(new FireThread(this));
         shipMissileFire.start();
@@ -81,19 +62,19 @@ public class SpaceShip extends Sprite {
 
         switch(color){
             case 1:{
-                pathImage = "./src/main/java/SoEproj/Resource/GreenCraft.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png";
                 break;
             } 
             case 2:{
-                pathImage = "./src/main/java/SoEproj/Resource/OrangeCraft.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
                 break;
             } 
             case 3:{
-                pathImage = "./src/main/java/SoEproj/Resource/RedCraft.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png";
                 break;
             }
             default:{
-                pathImage = "./src/main/java/SoEproj/Resource/GreenCraft.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png";
                 break;
             }
         }
@@ -143,13 +124,8 @@ public class SpaceShip extends Sprite {
         }  
 
         if(music){
-            try {
-                InputStream in = new FileInputStream(laserSound);
-                AudioStream audios = new AudioStream(in);
-                AudioPlayer.player.start(audios);
-            } catch (Exception e) {
-                System.out.println("Spaceship Music: " + e);
-            }
+            mumZero = new MusicManager(laserSound);
+            mumZero.startMusic();
         }
     }
 

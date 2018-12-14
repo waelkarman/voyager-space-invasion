@@ -1,9 +1,10 @@
 package SoEproj;
 
+
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 
 public abstract class Alien extends Sprite {

@@ -28,47 +28,47 @@ public class UpgradePack extends Sprite{
         switch(randomUpgrade){      //different pack color based on the upgrade type
             case 0:{
                 type = 0;   //"3Missiles";
-                pathImage = "./src/main/java/SoEproj/Resource/box.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Bbox.png"; //Blue box
                 break;
             } 
             case 1:{
                 type = 1;   //"fireBall";
-                pathImage = "./src/main/java/SoEproj/Resource/box.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Cbox.png"; //Cyan box
                 break;
             } 
             case 2:{
                 type = 2;   //"Laser";
-                pathImage = "./src/main/java/SoEproj/Resource/box.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Gbox.png"; //Green box
                 break;
             }
             case 3:{
                 type = 3;   //"Life";
-                pathImage = "./src/main/java/SoEproj/Resource/box.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Grbox.png";//Original box
                 break;
             }
             case 4:{
                 type = 4;   //"Speed";
-                pathImage = "./src/main/java/SoEproj/Resource/box.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Obox.png"; //Orange box
                 break;
             }
             case 5:{
-                type = 5;   //"Vecchia";
-                pathImage = "./src/main/java/SoEproj/Resource/box.png";
+                type = 5;   //"BlueFireball";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Rbox.png"; //Red box
                 break;
             }
             case 6:{
-                type = 6;   //"Banana";
-                pathImage = "./src/main/java/SoEproj/Resource/box.png";
+                type = 6;   //"GreenShoot";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Vbox.png"; //Violet box
                 break;
             }
             case 7:{
-                type = 7;   //"memas";
-                pathImage = "./src/main/java/SoEproj/Resource/box.png";
+                type = 7;   //"VioletLaser";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Pbox.png"; //Purple box
                 break;
             }
             case 8:{
                 type = 8;   //"pollo";
-                pathImage = "./src/main/java/SoEproj/Resource/box.png";
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Grbox.png"; //Original box
                 break;
             }
         }
@@ -119,17 +119,17 @@ public class UpgradePack extends Sprite{
             }
             case 5:{
                 scheduleResetUpgrade(s);
-                s.setMissileType("Vecchia");
+                s.setMissileType("blueFireball");
                 break;
             }
             case 6:{
                 scheduleResetUpgrade(s);
-                s.setMissileType("Banana");
+                s.setMissileType("GreenShoot");
                 break;
             }
             case 7:{
                 scheduleResetUpgrade(s);
-                s.setMissileType("memas");
+                s.setMissileType("VioletLaser");
                 break;
             }
             case 8:{

@@ -6,13 +6,11 @@
 package SoEproj;
 
 
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
 
 /**
  *
@@ -22,14 +20,15 @@ public class ScoreboardPanel extends javax.swing.JPanel {
     private SaveLoadData sld = new SaveLoadData();
     private JPanel menuPanel;
     private boolean isMusicOn;
-    private AudioStream audios;
+    private MusicManager mumZero;
+    
     /**
      * Creates new form ScoreboardPanel
      */
-    public ScoreboardPanel(JPanel p, boolean m, AudioStream audio) {
+    public ScoreboardPanel(JPanel p, boolean m, MusicManager mu) {
         initComponents();
         this.menuPanel = p;
-        this.audios=audio;
+        this.mumZero=mu;
         this.isMusicOn=m;
         showScoreboard();
     }
@@ -95,7 +94,8 @@ public class ScoreboardPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        AudioPlayer.player.stop(audios);
+        if(mumZero != null)
+            mumZero.stopMusic();
         GameMainMenu old = (GameMainMenu) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
         old.add(menuPanel);
