@@ -6,45 +6,40 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import org.hamcrest.core.Is;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Unit test for simple App.
  */
-public class ScoreEntryTest 
-{
+public class ScoreEntryTest {
+    ScoreEntry score1, score2, score3, score4;
 
+    @Before
+    public void initList() {
+        score1 = new ScoreEntry("player", 500);
+        score2 = new ScoreEntry("player", 350);
+        score3 = new ScoreEntry("player1", 350);
+        score4 = new ScoreEntry("player", 500);
+    }
+    
     @Test
-    public void ScoreEntryTest()
-    {
-        ScoreEntry one = new ScoreEntry("player", 500);
-        ScoreEntry two = new ScoreEntry("player", 500);
-        assertNotEquals(one, two);
+    public void getNameTest() {
+        assertEquals(score1.getName(), score2.getName());
     }
 
     @Test
-    public void getScoreTest()
-    {
-        ScoreEntry one = new ScoreEntry("player", 500);
-        ScoreEntry two = new ScoreEntry("player", 500);
-        assertEquals(one.getScore(), two.getScore());
+    public void getScoreTest() {
+        assertEquals(score2.getScore(), score3.getScore());
     }
-   
-    @Test
-    public void getNameTest()
-    {
-        ScoreEntry one = new ScoreEntry("player", 500);
-        ScoreEntry two = new ScoreEntry("player", 500);
-        assertEquals(one.getName(), two.getName());
-    }
-
 
     @Test
-    public void compareToTest()
-    {
-        ScoreEntry one = new ScoreEntry("player", 500);
-        ScoreEntry two = new ScoreEntry("player", 400);
-        assertEquals(one.compareTo(two), 0);
+    public void toStringTest() {
+        assertEquals(score1.toString(), score4.toString());
     }
 
+    @Test
+    public void compareToTest() {
+        assertNotEquals(score2.compareTo(score4), 0);
+    }
 }
