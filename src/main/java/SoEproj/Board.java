@@ -368,7 +368,7 @@ private void Story(int stage){
     if(stage == 6){
         if(!lock){
             lock = true;
-            EndGameFunction(0);// TODO WON condition
+            EndGameFunction(1);// TODO WON condition
         }
     }
 
@@ -584,8 +584,7 @@ private void Story(int stage){
         }
         if(alive == false)
             EndGameFunction(0);
-        else if(level == 3) // TODO LA CONDIZIONE è SBAGLIATA VA CORRETTA 
-            EndGameFunction(1);
+        
 
     }
 
