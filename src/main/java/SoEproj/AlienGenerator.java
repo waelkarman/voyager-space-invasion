@@ -9,7 +9,7 @@ import java.util.Random;
 public class AlienGenerator extends Thread {
 
     
-    private final int ALIEN_NUM = 20;   // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                        
+    private final int ALIEN_NUM = 120;   // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                        
     private final int bgWidth;
     
     private List<Alien> aliens;

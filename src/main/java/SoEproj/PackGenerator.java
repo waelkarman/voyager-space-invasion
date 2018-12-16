@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class PackGenerator implements Runnable {
+public class PackGenerator extends Thread {
 
     private final int bgWidth;
     protected List<UpgradePack> packs;

@@ -124,14 +124,14 @@ public class Board extends JPanel implements Runnable {
 
         packs = new LinkedList<UpgradePack>();
         packsGen = new PackGenerator(background.getWidth(null), packs);
-        threadPacksGen = new Thread(packsGen);
+        //threadPacksGen = new Thread(packsGen);
 
         aliens = new ArrayList<Alien>();
         //aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
         //threadAliensGen = new Thread(aliensGen);
 
         //threadAliensGen.start();
-        //threadPacksGen.start();
+        packsGen.start();
     }
 //---------------------------END GAME INITIALIZATION----------------------------------->
 
@@ -279,7 +279,7 @@ private void Story(int stage){
             lock = true;
             aliensGen = new AlienGenerator(background.getWidth(null), aliens, 1);
             aliensGen.start();
-            interStage(10,0);
+            interStage(125,0);
             
         }else if(interstage == 0 && !interstageEnd){
             aliensGen.Shutdown();
@@ -308,7 +308,7 @@ private void Story(int stage){
             setBackground();
             aliensGen = new AlienGenerator(background.getWidth(null), aliens, 2);
             aliensGen.start();
-            interStage(10,1);
+            interStage(125,1);
             
         }else if(interstage == 1 && !interstageEnd){
             aliensGen.Shutdown();
@@ -337,7 +337,7 @@ private void Story(int stage){
             setBackground();
             aliensGen = new AlienGenerator(background.getWidth(null), aliens, 3);
             aliensGen.start();
-            interStage(10,2);
+            interStage(125,2);
             
         }else if(interstage == 2 && !interstageEnd){
             aliensGen.Shutdown();
