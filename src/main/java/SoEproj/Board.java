@@ -288,7 +288,7 @@ private void Story(int stage){
             lock = true;
             aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 1);
             aliensGen.start();
-            interStage(125,0);
+            interStage(120,0);
             
         }else if(interstage == 0 && !interstageEnd){
             aliensGen.Shutdown();
@@ -317,7 +317,7 @@ private void Story(int stage){
             setBackground();
             aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 2);
             aliensGen.start();
-            interStage(125,1);
+            interStage(120,1);
             
         }else if(interstage == 1 && !interstageEnd){
             aliensGen.Shutdown();
@@ -346,7 +346,7 @@ private void Story(int stage){
             setBackground();
             aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 3);
             aliensGen.start();
-            interStage(125,2);
+            interStage(120,2);
             
         }else if(interstage == 2 && !interstageEnd){
             aliensGen.Shutdown();
@@ -371,7 +371,7 @@ private void Story(int stage){
     if(stage == 6){
         if(!lock){
             lock = true;
-            gameState = GameStateEnum.GAME_WON;
+            EndGameFunction(0);// TODO WON condition
         }
     }
 
@@ -653,7 +653,7 @@ private void Story(int stage){
                 alive = true;
         }
         if(alive == false)
-            gameState = GameStateEnum.GAME_LOST;
+            EndGameFunction(0);
         // set won condition
     }
 
