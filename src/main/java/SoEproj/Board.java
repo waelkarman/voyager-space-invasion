@@ -21,41 +21,41 @@ import javax.swing.SwingUtilities;
 
 public class Board extends JPanel implements Runnable {
 
-    private final int B_WIDTH = 600;
-    private final int B_HEIGHT = 450;
-    private final int DELAY = 15;
-    private final double BG_SPEED = 0.5;    // background speed
+    protected final int B_WIDTH = 600;
+    protected final int B_HEIGHT = 450;
+    protected final int DELAY = 15;
+    protected final double BG_SPEED = 0.5;    // background speed
 
-    private final ImageIcon alienExpl;
-    private final ImageIcon shipExpl;
-    private final File alienExplSound;
-    private final File shipExplSound;
-    private final File powerUpSound;
-    private final File bossHitSound;
-    private File boardSound;
+    protected final ImageIcon alienExpl;
+    protected final ImageIcon shipExpl;
+    protected final File alienExplSound;
+    protected final File shipExplSound;
+    protected final File powerUpSound;
+    protected final File bossHitSound;
+    protected File boardSound;
 
-    private boolean isMusicOn;
+    protected boolean isMusicOn;
 
-    private ImageIcon bgImgIcon;
-    private Image background;
-    private double bgShiftX;
+    protected ImageIcon bgImgIcon;
+    protected Image background;
+    protected double bgShiftX;
 
-    private Thread threadAliensGen;      // alien generator thread
-    private AlienGenerator aliensGen;    // alien generator class
-    private Thread threadPacksGen;
-    private PackGenerator packsGen;
-    private Thread boardAnimator;
+    protected Thread threadAliensGen;      // alien generator thread
+    protected AlienGenerator aliensGen;    // alien generator class
+    protected Thread threadPacksGen;
+    protected PackGenerator packsGen;
+    protected Thread boardAnimator;
 
-    private GameStateEnum gameState;
-    private JPanel menuPanel;
-    private int keyModality;
-    private int level;
-    private boolean isMultiplayer;
+    protected GameStateEnum gameState;
+    protected JPanel menuPanel;
+    protected int keyModality;
+    protected int level;
+    protected boolean isMultiplayer;
 
-    private List<SpaceShip> spaceShips; 
-    private List<Alien> aliens;
-    private List<UpgradePack> packs;
-    private MusicManager mumZero;
+    protected List<SpaceShip> spaceShips; 
+    protected List<Alien> aliens;
+    protected List<UpgradePack> packs;
+    protected MusicManager mumZero;
 
     public Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
         this.isMultiplayer = mp;
@@ -83,7 +83,7 @@ public class Board extends JPanel implements Runnable {
         gameLaunch();
     }
 
-    private void setBackground() {
+    protected void setBackground() {
         if(level == 1)    
             bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
         if(level == 2)
@@ -117,7 +117,7 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    private void drawBackground(Graphics g) {
+    protected void drawBackground(Graphics g) {
         if (bgShiftX > background.getWidth(null)) {
             bgShiftX = 0;
         } else {
@@ -128,7 +128,7 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    private void drawGame(Graphics g) {
+    protected void drawGame(Graphics g) {
         for(int i=0; i<spaceShips.size(); i++){
             SpaceShip ship = spaceShips.get(i);
             
@@ -233,7 +233,7 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    private void updateShip() {
+    protected void updateShip() {
         synchronized(spaceShips) {
             for(int k=0; k < spaceShips.size(); k++){
                 SpaceShip ship = spaceShips.get(k);
@@ -260,7 +260,7 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    private void updatePacks() {
+    protected void updatePacks() {
         synchronized(packs){
             for (int i=0; i < packs.size(); i++) {
                 UpgradePack pack = packs.get(i);
@@ -275,7 +275,7 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    private void updateAliens() {
+    protected void updateAliens() {
         synchronized(aliens){
             for (int i=0; i < aliens.size(); i++) {
                 Alien alien = aliens.get(i);
@@ -447,7 +447,7 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    private class TAdapter extends KeyAdapter {
+    class TAdapter extends KeyAdapter {
         @Override
         public void keyReleased(KeyEvent e) {
             try {

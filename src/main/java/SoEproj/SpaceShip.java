@@ -15,7 +15,7 @@ public class SpaceShip extends Sprite {
 
     private float dx;
     private float dy;
-    private List<Missile> missiles;
+    protected List<Missile> missiles;
     private Boolean firing = false;
     private String missileType; // set damage, speed and image
     private boolean music;
@@ -55,6 +55,44 @@ public class SpaceShip extends Sprite {
 
     public void setupScore(int points){
         this.score += points ;
+    }
+
+    public synchronized boolean ForceMove(int pos_x, int pos_y){
+        boolean posizione = true;
+        dx = 0;
+        dy = 0; 
+        
+        if(this.getX()>pos_x && abs(pos_x-this.getX())>SPACE ){
+            dx = -SPACE;
+            posizione = false;
+        }
+        if(this.getX()<pos_x && abs(pos_x-this.getX())>SPACE){
+            dx = +SPACE;
+            posizione = false;
+        }
+        
+        
+        if(this.getY()>pos_y && abs(pos_y-this.getY())>SPACE){
+            dy = -SPACE;
+            posizione = false;
+        }
+        if(this.getY()<pos_y && abs(this.getY()-pos_y)>SPACE){
+            dy = +SPACE;
+            posizione = false;
+        }
+       
+        return posizione;
+    }
+
+    private int abs(int a) {
+        if(a >= 0)
+        {  
+            return a;
+        }
+        else
+        {  
+            return -a;
+        }
     }
 
     private void setColor(int color) {

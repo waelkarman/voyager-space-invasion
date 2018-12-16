@@ -128,6 +128,12 @@ public class GameMainMenu extends javax.swing.JFrame {
         });
 
         jButton4.setText("DEMO MODE");
+        jButton4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("SCOREBOARD");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -196,7 +202,8 @@ public class GameMainMenu extends javax.swing.JFrame {
             mumZero.stopMusic();
             JPanel principalPanel = this.jPanel1;
             this.getContentPane().remove(jPanel1);
-            Board b = new Board(ship, principalPanel,music,1,keyModality,mulMode);
+            //PlayOrganizzation b = new PlayOrganizzation(ship, principalPanel, music, 1, keyModality, mulMode);
+            Board b = new Board(ship, principalPanel, music, 1, keyModality, mulMode);
             this.add(b).requestFocusInWindow();
             this.validate();
             this.repaint();
@@ -241,6 +248,17 @@ public class GameMainMenu extends javax.swing.JFrame {
         else
             mulMode = false;
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        mumZero.stopMusic();
+        JPanel principalPanel = this.jPanel1;
+        this.getContentPane().remove(jPanel1);
+        Demo b = new Demo(ship, principalPanel,music,1,keyModality,mulMode);
+        this.add(b).requestFocusInWindow();
+        this.validate();
+        this.repaint();
+    
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         JPanel principalPanel = this.jPanel1;

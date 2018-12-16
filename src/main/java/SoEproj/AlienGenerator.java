@@ -27,8 +27,37 @@ public class AlienGenerator implements Runnable {
         this.aliens = aliens;
         this.level = level;
         this.ref = 0;
-	}
+    }
 
+    public void generateAliens(int hb) {
+        int x = bgWidth;
+        int h = hb;
+        
+        switch(this.level){
+            case 1: // lev. 1 : Only EasyAliens
+                aliens.add(new EasyAlien(x, h));
+                break;
+
+            case 2: // lev. 2 : MediumAliens and EasyAliens, ratio 2:1
+                if (ref % 3 == 0) {
+                    aliens.add(new EasyAlien(x, h));
+                    ref = 0;
+                } else
+                    aliens.add(new MediumAlien(x, h));
+                break;
+
+            case 3: // lev. 3 : HardAliens and MediumAliens, ratio 2:1
+                if (ref % 3 == 0) {
+                    aliens.add(new MediumAlien(x, h));
+                    ref = 0;
+                } else
+                    aliens.add(new HardAlien(x, h)); 
+                
+                break;
+        }
+
+        ref++;
+    }
 
     public void generateAliens() {
         int x = bgWidth;
