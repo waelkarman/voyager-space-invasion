@@ -89,9 +89,19 @@ public class Board extends JPanel implements Runnable {
             mumZero = new MusicManager(boardSound);
             mumZero.loopMusic();
         }
+        if(level == 1 ){
+            stage = 0;
+            interstage = 0;
+        }
+        if(level == 2 ){
+            stage = 2;
+            interstage = 1;
+        }
+        if(level == 3 ){
+            stage = 4;
+            interstage = 2;
+        }
 
-        stage = 0;
-        interstage = 0;
         interstageEnd = true;
         t = new Timer();
         lock = false;
