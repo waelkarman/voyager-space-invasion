@@ -37,7 +37,6 @@ public class Board extends JPanel implements Runnable {
     protected final File bossHitSound;
     protected File boardSound;
 
-    private static Board istance = null; //Vittorio
     private Boolean isPause = false;
 
     protected boolean isMusicOn;
@@ -70,7 +69,7 @@ public class Board extends JPanel implements Runnable {
     private boolean interstageEnd;
     private boolean lock;
 
-    private Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
+    protected Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
         this.isMultiplayer = mp;
         this.level = level;
         // Images and soundtracks initialization
@@ -102,20 +101,7 @@ public class Board extends JPanel implements Runnable {
         gameLaunch();
     }
 
- 
 
-    public static Board setBoard(int shipType, JPanel p, boolean m, int level, int km, boolean mp){
-
-        if(istance == null){
-            istance = new Board(shipType,p, m, level,km, mp);
-        }
-        return istance;
-
-    }
-
-    public void resetBoard(){ //Vittorio ho cambiato da privato a pubblico
-        istance = null;
-    }
 
 //---------------------------GAME INITIALIZATION----------------------------------->
     protected void setBackground() {
@@ -593,7 +579,6 @@ private void Story(int stage){
         old.add(gep).requestFocusInWindow();
         old.validate();
         old.repaint();
-        resetBoard();
     }
 
     public void gameLaunch() {
@@ -672,7 +657,7 @@ private void Story(int stage){
     public void pauseGameFunction(){  //Alessio funzione per il passaggio a PausePanel
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
-        PausePanel gep = new PausePanel(istance,menuPanel,mumZero,isMusicOn);   //Alessio ti passo l'istanza di questa board cosi che puoi lavorarci nel PausePanel
+        PausePanel gep = new PausePanel(this,menuPanel,mumZero,isMusicOn);   //Alessio ti passo l'istanza di questa board cosi che puoi lavorarci nel PausePanel
         old.add(gep).requestFocusInWindow();           //TI ho commentato il costruttore e cosa si dovrebbere fare
         old.validate();
         old.repaint();

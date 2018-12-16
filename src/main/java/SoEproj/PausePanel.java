@@ -141,7 +141,6 @@ public class PausePanel extends javax.swing.JPanel {
         GameMainMenu old = (GameMainMenu) SwingUtilities.getWindowAncestor(this);        
         old.getContentPane().remove(this);
         old.add(menuPanel);
-        prevBoard.resetBoard();
         if(isMusicOn)
             old.startMusic();
             

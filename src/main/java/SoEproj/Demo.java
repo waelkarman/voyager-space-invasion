@@ -27,8 +27,9 @@ public class Demo extends Board implements Runnable {
     private int interstage;
     private boolean interstageEnd;
     private boolean lock;
+    private static Demo istance = null; //Vittorio
 
-    public Demo(int shipType, JPanel p, boolean m, int level, int km, boolean mp){
+    private Demo(int shipType, JPanel p, boolean m, int level, int km, boolean mp){
         super(shipType, p, m, level, km, mp);
         posizionato = false;
         stage = 0;
@@ -36,8 +37,23 @@ public class Demo extends Board implements Runnable {
         interstageEnd = true;
         t = new Timer();
         lock = false;
-       
     }
+
+
+    public static Demo setDemo(int shipType, JPanel p, boolean m, int level, int km, boolean mp){
+
+        if(istance == null){
+            istance = new Demo(shipType,p, m, level,km, mp);
+        }
+        return istance;
+
+    }
+
+    public void resetDemo(){ //Vittorio ho cambiato da privato a pubblico
+        istance = null;
+    }
+
+
 
     @Override
     public void initGame(int shipType) {
@@ -362,7 +378,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     synchronized(aliens){
                         AlienGenerator a = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 1);
-                        a.generateAliens(B_HEIGHT/2);
+                        a.generateAliens(B_HEIGHT/2+20);
                     }
                 }else if(!aliens.isEmpty()){
                     SetInterStage(11);
@@ -431,7 +447,7 @@ public class Demo extends Board implements Runnable {
                 if(!lock){
                     lock = true;
                     synchronized(packs){
-                        packs.add(new UpgradePack(600 , 150, 5));
+                        packs.add(new UpgradePack(600 , 170, 5));
                     }
                 }else if(!packs.isEmpty()){
                     SetInterStage(15);
@@ -531,6 +547,7 @@ public class Demo extends Board implements Runnable {
             old.startMusic();
         old.validate();
         old.repaint();
+        resetDemo();
     }
 
     public void SetInterStage(int n){

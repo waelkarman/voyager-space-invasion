@@ -198,7 +198,7 @@ public class GameMainMenu extends javax.swing.JFrame {
             mumZero.stopMusic();
             JPanel principalPanel = this.jPanel1;
             this.getContentPane().remove(jPanel1);
-            Board b = Board.setBoard(ship, principalPanel,music,1,keyModality,mulMode);
+            Board b = new Board(ship, principalPanel,music,1,keyModality,mulMode);
             this.add(b).requestFocusInWindow();
             this.validate();
             this.repaint();
@@ -248,7 +248,7 @@ public class GameMainMenu extends javax.swing.JFrame {
         mumZero.stopMusic();
         JPanel principalPanel = this.jPanel1;
         this.getContentPane().remove(jPanel1);
-        Demo b = new Demo(ship, principalPanel,music,1,keyModality,mulMode);
+        Demo b = Demo.setDemo(ship, principalPanel,music,1,keyModality,mulMode);
         this.add(b).requestFocusInWindow();
         this.validate();
         this.repaint();
