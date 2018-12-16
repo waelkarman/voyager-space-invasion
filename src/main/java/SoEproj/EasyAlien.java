@@ -14,7 +14,7 @@ public class EasyAlien extends Alien {
         points = 50;
         this.moveType = "";
 
-        imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\WeakAlien.png";
+        imagePath = "./src/main/java/SoEproj/Resource/WeakAlien.png";
         loadImage(imagePath);
         getImageDimensions();
     }
@@ -26,7 +26,7 @@ public class EasyAlien extends Alien {
         this.moveType = moveType;
         this.goDown = goDown;
 
-        imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\WeakAlien.png";
+        imagePath = "./src/main/java/SoEproj/Resource/WeakAlien.png";
         loadImage(imagePath);
         getImageDimensions();
     }

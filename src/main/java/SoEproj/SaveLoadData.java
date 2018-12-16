@@ -15,7 +15,7 @@ public class SaveLoadData {
     private final File scoreData;
 
     public SaveLoadData(){
-        scoreData = new File(".\\src\\main\\java\\SoEproj\\ScoreDataSaves");
+        scoreData = new File("./src/main/java/SoEproj/ScoreDataSaves");
     }
     
     public void SaveData(List<ScoreEntry> pd) {

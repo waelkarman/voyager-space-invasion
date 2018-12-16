@@ -17,7 +17,7 @@ public class HardAlien extends Alien implements Runnable{
         amplitude = 50;
         super.points = 100;
 
-        imagePath = ".\\src\\main\\java\\SoEproj\\Resource\\HeavyAlien.png";
+        imagePath = "./src/main/java/SoEproj/Resource/HeavyAlien.png";
         loadImage(imagePath);
         getImageDimensions();
 

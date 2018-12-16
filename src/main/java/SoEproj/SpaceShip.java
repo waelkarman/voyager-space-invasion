@@ -41,9 +41,9 @@ public class SpaceShip extends Sprite {
         this.keyModality = km;
         setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
 
-        laserSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\LaserSound.wav");
-        g_r_sound = new File(".\\src\\main\\java\\SoEproj\\Resource\\R&GSound.wav");
-        FireballSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\FireballSound.wav");
+        laserSound = new File("./src/main/java/SoEproj/Resource/LaserSound.wav");
+        g_r_sound = new File("./src/main/java/SoEproj/Resource/R&GSound.wav");
+        FireballSound = new File("./src/main/java/SoEproj/Resource/FireballSound.wav");
 
         shipMissileFire = new Thread(new FireThread(this));
         shipMissileFire.start();
@@ -106,19 +106,19 @@ public class SpaceShip extends Sprite {
 
         switch(color){
             case 1:{
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/GreenCraft.png";
                 break;
             } 
             case 2:{
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/OrangeCraft.png";
                 break;
             } 
             case 3:{
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/RedCraft.png";
                 break;
             }
             default:{
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/GreenCraft.png";
                 break;
             }
         }

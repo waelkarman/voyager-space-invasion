@@ -77,13 +77,13 @@ public class Board extends JPanel implements Runnable {
         this.menuPanel = p;
         this.keyModality = km;       // game commands switcher
 
-        alienExpl = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionAliens.png");
-        shipExpl = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ExplosionShip.png");
-        alienExplSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\CollisionSound.wav");
-        shipExplSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\FinalCollisionSound.wav");
-        powerUpSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\PowerUp.wav");
-        bossHitSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\ShoothedBoss.wav");
-        boardSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\MusicGame.wav");
+        alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
+        shipExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionShip.png");
+        alienExplSound = new File("./src/main/java/SoEproj/Resource/CollisionSound.wav");
+        shipExplSound = new File("./src/main/java/SoEproj/Resource/FinalCollisionSound.wav");
+        powerUpSound = new File("./src/main/java/SoEproj/Resource/PowerUp.wav");
+        bossHitSound = new File("./src/main/java/SoEproj/Resource/ShoothedBoss.wav");
+        boardSound = new File("./src/main/java/SoEproj/Resource/MusicGame.wav");
         
         if(isMusicOn) {
             mumZero = new MusicManager(boardSound);
@@ -106,11 +106,11 @@ public class Board extends JPanel implements Runnable {
 //---------------------------GAME INITIALIZATION----------------------------------->
     protected void setBackground() {
         if(level == 1)    
-            bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
+            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround1.png");
         if(level == 2)
-            bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround2.png");
+            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround2.png");
         if(level == 3)
-            bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround3.png");
+            bgImgIcon = new ImageIcon("./src/main/java/SoEproj/Resource/BackGround3.png");
 
         background = bgImgIcon.getImage();
     }

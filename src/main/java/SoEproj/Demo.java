@@ -93,100 +93,100 @@ public class Demo extends Board implements Runnable {
         for(int i=0; i<spaceShips.size(); i++){
             SpaceShip ship = spaceShips.get(i);
             if(interstage == 0){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\1.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/1.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 1){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\2.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/2.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 2){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\3.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/3.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()-100, ship.getY()+ship.height, this);    
             }
             if(interstage == 3){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\4.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/4.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 4){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\5.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/5.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()-100, ship.getY()+ship.height, this);
             }
             if(interstage == 5){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\6.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/6.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 6){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\7.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/7.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()-100, ship.getY()+ship.height, this);
             }
             if(interstage == 7){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\8.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/8.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 8){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\9.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/9.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()-100, ship.getY()+ship.height, this);
             }
             if(interstage == 9){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\10.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/10.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 10){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\11.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/11.png");
                 Image image = ii.getImage();
-                ImageIcon ii1 = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\11b.png");
+                ImageIcon ii1 = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/11b.png");
                 Image image1 = ii1.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
                 g.drawImage(image1, ship.getX()-100, ship.getY()+ship.height, this);
             }
             if(interstage == 11){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\12.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/12.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()-100, ship.getY()+ship.height, this);
             }
             if(interstage == 12){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\13.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/13.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 13){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\14.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/14.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 14){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\15.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/15.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()-100, ship.getY()+ship.height, this);
             }
             if(interstage == 15){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\16.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/16.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 16){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\17.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/17.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }
             if(interstage == 17){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\18.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/18.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()-100, ship.getY()+ship.height, this);
             }
             if(interstage == 18){
-                ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\dialogo1\\19.png");
+                ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/dialogo1/19.png");
                 Image image = ii.getImage();
                 g.drawImage(image, ship.getX()+ship.width/2, ship.getY()-2*ship.height, this);
             }

@@ -70,7 +70,7 @@ public class PausePanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\OFF_Icon_1.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:/Users/aless/Documents/NetBeansProjects/SoE-Voyager_on_the_edge_of_the_solar_system_v2/src/main/java/SoEproj/Resource/OFF_Icon_1.png")); // NOI18N
 
         jRadioButton2.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup1.add(jRadioButton2);
@@ -80,7 +80,7 @@ public class PausePanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\ON_Icon_1.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:/Users/aless/Documents/NetBeansProjects/SoE-Voyager_on_the_edge_of_the_solar_system_v2/src/main/java/SoEproj/Resource/ON_Icon_1.png")); // NOI18N
 
         jButton2.setText("RESUME");
         jButton2.addActionListener(new java.awt.event.ActionListener() {

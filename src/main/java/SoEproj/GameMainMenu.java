@@ -26,7 +26,7 @@ public class GameMainMenu extends javax.swing.JFrame {
             loadWindowsIcon();
             loadBackground();
             
-            menuMusic = new File(".\\src\\main\\java\\SoEproj\\Resource\\MusicMenu.wav");
+            menuMusic = new File("./src/main/java/SoEproj/Resource/MusicMenu.wav");
             mumZero = new MusicManager(menuMusic);
             mumZero.loopMusic();
             
@@ -47,12 +47,12 @@ public class GameMainMenu extends javax.swing.JFrame {
     }
  
     private void loadWindowsIcon() {
-        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ico.png");
+        ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/ico.png");
         iconWindows = ii.getImage();         
     }
     
     private void loadBackground(){
-        ImageIcon ii = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\MenuBackground.jpg");
+        ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/MenuBackground.jpg");
         background = ii.getImage();
     }
     
@@ -109,9 +109,9 @@ public class GameMainMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\Voyager_Title_1.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/Voyager_Title_1.png")); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\Vojager_Logo_Menu.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/Vojager_Logo_Menu.png")); // NOI18N
 
         jCheckBox1.setBackground(new java.awt.Color(0, 0, 102));
         jCheckBox1.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
