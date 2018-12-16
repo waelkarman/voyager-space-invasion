@@ -361,7 +361,7 @@ public class Demo extends Board implements Runnable {
                 if(!lock){
                     lock = true;
                     synchronized(aliens){
-                        AlienGenerator a = new AlienGenerator(580, aliens, 1);
+                        AlienGenerator a = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 1);
                         a.generateAliens(B_HEIGHT/2);
                     }
                 }else if(!aliens.isEmpty()){
