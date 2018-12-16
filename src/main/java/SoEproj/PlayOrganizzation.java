@@ -157,7 +157,7 @@ public class PlayOrganizzation extends Board implements Runnable {
         g.drawImage(background, background.getWidth(null) - (int) bgShiftX, 0, null);
     }
 
-    private void DrawInterface(Graphics g) {
+    protected void DrawInterface(Graphics g) {
             DrawShipAndMissiles(g);     //stampa spaceship e missili per spaceship
             DrawPacks(g);               //stampa di tutti i pacchetti
             DrawAliensAndMissiles(g);   //stampa alieni e missili da essi sparati 

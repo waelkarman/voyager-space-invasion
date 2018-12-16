@@ -64,8 +64,7 @@ public class Demo extends Board implements Runnable {
         super.paintComponent(g);
         // TODO Rendere gameState un enum
         if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
-            drawBackground(g);
-            drawGame(g);
+            DrawInterface(g);
             if(posizionato)
                 InterStage(g);
         }

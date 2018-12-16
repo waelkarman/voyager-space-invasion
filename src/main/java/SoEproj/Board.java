@@ -117,18 +117,8 @@ public class Board extends JPanel implements Runnable {
     }
 
 
-    protected void drawBackground(Graphics g) {
-        if (bgShiftX > background.getWidth(null)) {
-            bgShiftX = 0;
-        } else {
-            bgShiftX += BG_SPEED;
-        }
-        g.drawImage(background, (int) -bgShiftX, 0, null);
-        g.drawImage(background, background.getWidth(null) - (int) bgShiftX, 0, null);
-    }
-
-
-    protected void drawGame(Graphics g) {
+    //---------------------GRAPHICS--------------------------------------------------->
+    private void DrawShipAndMissiles(Graphics g) {
         for(int i=0; i<spaceShips.size(); i++){
             SpaceShip ship = spaceShips.get(i);
             
@@ -137,7 +127,6 @@ public class Board extends JPanel implements Runnable {
                 if (ship.isDying()) 
                     ship.die();
             }
-
             synchronized(ship){
                 List<Missile> ms = ship.getMissiles();
                 for (Missile missile : ms) {
@@ -147,36 +136,25 @@ public class Board extends JPanel implements Runnable {
                 }
             }
         }
+    }
 
-        //GAME OVER condition set
-        Boolean alive = false;
-
-        for(int i = 0; i < spaceShips.size(); i++){
-            SpaceShip ship = spaceShips.get(i);
-            
-            if(!ship.isDying())
-                alive = true;
-        }
-
-        if(alive == false)
-            gameState = GameStateEnum.GAME_LOST;
-
+    private void DrawPacks(Graphics g) {
         synchronized(packs) {
             for(UpgradePack pack : packs) {
                 if (pack.isVisible())
                     g.drawImage(pack.getImage(), pack.getX(), pack.getY(), this);
-
                 if (pack.isDying())
                     pack.die();
             }
-        }
+        } 
+    }
 
+    private void DrawAliensAndMissiles(Graphics g){
         synchronized(aliens) {              // they are drawn only if they have not been previously destroyed.
             for (Alien alien : aliens) {
                 if (alien.isVisible()) {
                     g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
                 }
-
                 synchronized(alien){
                     List<Missile> as = alien.getMissiles();
                     for (Missile missile : as) {
@@ -184,34 +162,15 @@ public class Board extends JPanel implements Runnable {
                             g.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
                     }
                 }
-
-                if (alien.isDying()) {
-                    alien.die();
-                    if (alien instanceof Boss1Level || alien instanceof Boss2Level){
-                        this.level += 1;
-                        //System.out.println(level);
-                        setBackground();
-                        aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
-                        threadAliensGen = new Thread(aliensGen);
-                        threadAliensGen.start();
-                    }
-
-                    // se muore il 3 bosso metto gamestate a 2 e il gioco finisce
-                    if (alien instanceof Boss3Level){ 
-                        //condizione di vittoria, deve uscire you win
-                        gameState = GameStateEnum.GAME_LOST;
-                    }
-                    
-                }
             }
-        }
+        }        
+    }
 
+    private void DrawScores(Graphics g){
         g.setColor(Color.WHITE); // In the top-left corner of the window, we draw how many aliens are left.
-
         int yPos = 15;
         int xPos = 5;
         int offset = 0;
-
         for(int i = 0; i < spaceShips.size(); i++) {
             SpaceShip ship = spaceShips.get(i);
             if(i != offset)
@@ -223,6 +182,27 @@ public class Board extends JPanel implements Runnable {
             offset = i;
         }
     }
+
+    private void DrawBackground(Graphics g){
+        if (bgShiftX > background.getWidth(null)) {
+            bgShiftX = 0;
+        } else {
+            bgShiftX += BG_SPEED;
+        }
+        g.drawImage(background, (int) -bgShiftX, 0, null);
+        g.drawImage(background, background.getWidth(null) - (int) bgShiftX, 0, null);
+    }
+
+    protected void DrawInterface(Graphics g) {
+        DrawBackground(g);          //stampa sfondo mobile    
+        DrawShipAndMissiles(g);     //stampa spaceship e missili per spaceship
+        DrawPacks(g);               //stampa di tutti i pacchetti
+        DrawAliensAndMissiles(g);   //stampa alieni e missili da essi sparati 
+        DrawScores(g);              //stampa score 
+            
+    }
+
+//-------------------------END GRAPHICS METHODS---------------------------->
 
 
     public void gameLaunch() {
@@ -479,8 +459,7 @@ public class Board extends JPanel implements Runnable {
         super.paintComponent(g);
         // TODO Rendere gameState un enum
         if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
-            drawBackground(g);
-            drawGame(g);
+            DrawInterface(g);
         }
         else if(gameState == GameStateEnum.GAME_LOST) {   // draw game over background gif after the lose condition
             EndGameFunction(0);     // passing 0 to draw game over background
