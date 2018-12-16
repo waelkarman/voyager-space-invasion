@@ -13,6 +13,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -57,6 +60,13 @@ public class Board extends JPanel implements Runnable {
     protected List<UpgradePack> packs;
     protected MusicManager mumZero;
 
+    private int stage;
+    private Timer t;
+    private TimerTask task;
+    private int interstage;
+    private boolean interstageEnd;
+    private boolean lock;
+
     public Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
         this.isMultiplayer = mp;
         this.level = level;
@@ -78,11 +88,19 @@ public class Board extends JPanel implements Runnable {
             mumZero.loopMusic();
         }
 
+        stage = 0;
+        interstage = 0;
+        interstageEnd = true;
+        t = new Timer();
+        lock = false;
+
         setBackground();
         initGame(shipType);     // shipType may change with level
         gameLaunch();
     }
 
+
+//---------------------------GAME INITIALIZATION----------------------------------->
     protected void setBackground() {
         if(level == 1)    
             bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
@@ -109,15 +127,44 @@ public class Board extends JPanel implements Runnable {
         threadPacksGen = new Thread(packsGen);
 
         aliens = new ArrayList<Alien>();
-        aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
-        threadAliensGen = new Thread(aliensGen);
+        //aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
+        //threadAliensGen = new Thread(aliensGen);
 
-        threadAliensGen.start();
-        threadPacksGen.start();
+        //threadAliensGen.start();
+        //threadPacksGen.start();
+    }
+//---------------------------END GAME INITIALIZATION----------------------------------->
+
+//-------------------STAGE SHIFTER-------------------------------->
+public void setInterStageEnd(boolean finish){
+    this.interstageEnd = finish;
+}
+
+public void setStage(int stg){
+    this.stage = stg;
+}
+
+public void SetInterStage(int n){
+    this.interstage = n;
+}
+//-------------------END STAGE SHIFTER-------------------------------->
+
+
+//---------------------GRAPHICS--------------------------------------------------->
+    // This method will be executed by the painting subsystem whenever you component needs to be rendered
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
+            DrawInterface(g);
+            InterStage(g);
+        }
+        else if(gameState == GameStateEnum.GAME_LOST) {   // draw game over background gif after the lose condition
+            EndGameFunction(0);     // passing 0 to draw game over background
+        }
+        Toolkit.getDefaultToolkit().sync();
     }
 
-
-    //---------------------GRAPHICS--------------------------------------------------->
     private void DrawShipAndMissiles(Graphics g) {
         for(int i=0; i<spaceShips.size(); i++){
             SpaceShip ship = spaceShips.get(i);
@@ -143,7 +190,6 @@ public class Board extends JPanel implements Runnable {
             for(UpgradePack pack : packs) {
                 if (pack.isVisible())
                     g.drawImage(pack.getImage(), pack.getX(), pack.getY(), this);
-                if (pack.isDying())
                     pack.die();
             }
         } 
@@ -154,6 +200,8 @@ public class Board extends JPanel implements Runnable {
             for (Alien alien : aliens) {
                 if (alien.isVisible()) {
                     g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
+                    if (alien.isDying()) 
+                        alien.die();
                 }
                 synchronized(alien){
                     List<Missile> as = alien.getMissiles();
@@ -205,14 +253,122 @@ public class Board extends JPanel implements Runnable {
 //-------------------------END GRAPHICS METHODS---------------------------->
 
 
-    public void gameLaunch() {
-        if(gameState == GameStateEnum.IN_GAME) {
-            boardAnimator = new Thread(this);
-            boardAnimator.start();
-        }
+    
+//--------------------------LEVEL SWITCHER--------------------------------->
+private void InterStage(Graphics g) {
+    if(interstage == 0){            //AGGIUNGI ALIENI PER 2 MIN 
+        System.out.println("LEV 1 - SCONTRO CON ALIENI"); 
     }
 
+    if(interstage == 1){            //AGGIUNGI ALIENI PER 2 MIN 
+        System.out.println("LEV 2 - SCONTRO CON ALIENI"); 
+    }
 
+    if(interstage == 2){            //AGGIUNGI ALIENI PER 2 MIN 
+        System.out.println("LEV 3 - SCONTRO CON ALIENI"); 
+    }
+
+    if(interstage == 3){            //AGGIUNGI ALIENI PER 2 MIN 
+        System.out.println("YOU WIN!");
+    }
+}
+
+private void Story(int stage){
+    if(stage == 0){
+        if(interstage == 0 && !lock){
+            lock = true;
+            aliensGen = new AlienGenerator(background.getWidth(null), aliens, 1);
+            aliensGen.start();
+            interStage(5,0);
+            
+        }else if(interstage == 0 && !interstageEnd){
+            aliensGen.Shutdown();
+            setStage(1);
+            lock = false;
+            interstageEnd = true;
+        } 
+    }
+
+    if(stage == 1){
+        //if(!lock){
+        //    lock = true;
+        //    aliensGen.generateBoss();
+        //}else if(aliens.isEmpty()){
+            setStage(2);
+            SetInterStage(1);
+        //    lock = false;
+        //    interstageEnd = true;
+        //} 
+    }
+
+    if(stage == 2){
+        if(interstage == 1 && !lock){
+            lock = true;
+            this.level = 2;
+            setBackground();
+            aliensGen = new AlienGenerator(background.getWidth(null), aliens, 2);
+            aliensGen.start();
+            interStage(5,1);
+            
+        }else if(interstage == 1 && !interstageEnd){
+            aliensGen.Shutdown();
+            setStage(3);
+            lock = false;
+            interstageEnd = true;
+        } 
+    }
+
+    if(stage == 3){
+        //if(!lock){
+        //    lock = true;
+        //    aliensGen.generateBoss();
+        //}else if(aliens.isEmpty()){
+            setStage(4);
+            SetInterStage(2);
+        //    lock = false;
+        //    interstageEnd = true;
+        //} 
+    }
+
+    if(stage == 4){
+        if(interstage == 2 && !lock){
+            lock = true;
+            this.level = 3;
+            setBackground();
+            aliensGen = new AlienGenerator(background.getWidth(null), aliens, 3);
+            aliensGen.start();
+            interStage(5,2);
+            
+        }else if(interstage == 2 && !interstageEnd){
+            aliensGen.Shutdown();
+            setStage(5);
+            lock = false;
+            interstageEnd = true;
+        } 
+    }
+
+    if(stage == 5){
+        interStage(5,3);
+        //if(!lock){
+        //    lock = true;
+        //    aliensGen.generateBoss();
+        //}else if(aliens.isEmpty()){
+        //    setStage(4);
+        //   SetInterStage(2);
+        //    lock = false;
+        //    interstageEnd = true;
+        //} 
+    }
+
+}
+
+//--------------------------LEVEL SWITCHER END------------------------------->
+
+
+
+
+   
+//-----------------------UPDATE VARIABLES------------------------------->
     protected void updateShip() {
         synchronized(spaceShips) {
             for(int k=0; k < spaceShips.size(); k++){
@@ -272,15 +428,17 @@ public class Board extends JPanel implements Runnable {
 
                     if (alien.isVisible()) 
                         alien.move();
-                    else
-                        synchronized(alien){
-                            if(alien.getMissiles().isEmpty())
-                                aliens.remove(alien);
+                    else{
+                        synchronized(aliens){
+                            aliens.remove(i);
                         }
+                    }                                
                 }
             }
         }
     }
+
+//-----------------------END UPDATE VARIABLES------------------------------->
 
 
     public void checkCollisions() {
@@ -325,8 +483,6 @@ public class Board extends JPanel implements Runnable {
 
                         if(ship.getLife() <= 0){
                             synchronized(ship){
-                                
-                        
                                 ship.setDying(true);
                                 ship.setImage(shipExpl.getImage());
                             }
@@ -390,9 +546,9 @@ public class Board extends JPanel implements Runnable {
 
                                 if(alien.getLife() <= 0){
                                     synchronized(alien){
-                                        alien.setDying(true);
                                         ship.setupScore(alien.getPoints());
                                         alien.setImage(alienExpl.getImage());
+                                        alien.setDying(true);
                                     }
                                     if(isMusicOn) {
                                         MusicManager mumFive = new MusicManager(alienExplSound);
@@ -426,6 +582,13 @@ public class Board extends JPanel implements Runnable {
         old.repaint();
     }
 
+    public void gameLaunch() {
+        if(gameState == GameStateEnum.IN_GAME) {
+            boardAnimator = new Thread(this);
+            boardAnimator.start();
+        }
+    }
+
 
     class TAdapter extends KeyAdapter {
         @Override
@@ -452,21 +615,16 @@ public class Board extends JPanel implements Runnable {
             }
         }
     }
-    
-    // This method will be executed by the painting subsystem whenever you component needs to be rendered
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // TODO Rendere gameState un enum
-        if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
-            DrawInterface(g);
-        }
-        else if(gameState == GameStateEnum.GAME_LOST) {   // draw game over background gif after the lose condition
-            EndGameFunction(0);     // passing 0 to draw game over background
-        }
-        // TODO condizione di win
 
-        Toolkit.getDefaultToolkit().sync();
+    private void GameOverCondition(){   //GAME OVER se tutte le space ship sono morte
+        Boolean alive = false;
+        for(int i = 0; i < spaceShips.size(); i++){
+            SpaceShip ship = spaceShips.get(i);   
+            if(!ship.isDying())
+                alive = true;
+        }
+        if(alive == false)
+            gameState = GameStateEnum.GAME_LOST;
     }
 
     @Override
@@ -474,10 +632,12 @@ public class Board extends JPanel implements Runnable {
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
         while (gameState != GameStateEnum.GAME_LOST) {
+            Story(stage);
             updateShip();
             updateAliens();
             updatePacks();
             checkCollisions();
+            GameOverCondition();
             repaint();
             
             timeDiff = System.currentTimeMillis() - beforeTime;
@@ -495,4 +655,31 @@ public class Board extends JPanel implements Runnable {
         }
         repaint();
     }
+
+
+
+
+    private void interStage(int s, int n){ 
+        SetInterStage(n);
+        task = new NextStage(this);
+        t.schedule(task, s * 1000);
+    }
+
+    class NextStage extends TimerTask  {
+        Board d;
+
+        public NextStage(Board board) {
+            this.d = board;
+        }
+   
+        @Override
+        public void run() {
+            d.setInterStageEnd(false);
+            
+        }
+    }
+
+
+
+
 }

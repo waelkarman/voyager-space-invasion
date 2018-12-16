@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class AlienGenerator implements Runnable {
+public class AlienGenerator extends Thread {
 
     
     private final int ALIEN_NUM = 20;   // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                        
@@ -20,13 +20,22 @@ public class AlienGenerator implements Runnable {
     private int minY = 44;  // max (highest) pixel in which an alien can spawn
     private int maxY = 389; // min (lowest) pixel in which an alien can spawn
     private int range = maxY - minY;    // range in which an alien can appear
-    
+    private boolean running;
 
     public AlienGenerator(int bgWidth, List<Alien> aliens, int level) {
         this.bgWidth = bgWidth;
         this.aliens = aliens;
         this.level = level;
         this.ref = 0;
+        this.running = true;
+    }
+
+    public void setLevel(int lev){
+        this.level = lev;
+    }
+
+    public void Shutdown() {
+        this.running = false;
     }
 
     public void generateAliens(int hb) {
@@ -107,27 +116,17 @@ public class AlienGenerator implements Runnable {
 
     @Override
     public void run(){
-        int i = 0;
-        
-        while(true){
+        while(running){
             synchronized(aliens) {
-                if(i < ALIEN_NUM) {
-                    generateAliens();
-                    i++;
-                }
-                else if(aliens.isEmpty()) {
-                    break;
-                }
+                generateAliens();
             }
-
+                
             try {
-                Thread.sleep(500);
+                Thread.sleep(120*1000/ALIEN_NUM);
             } catch (InterruptedException e) {
                 System.out.println("AlienGenerator sleep: " + e);
             }
         }
-        
-        generateBoss();
         
     }
 }  

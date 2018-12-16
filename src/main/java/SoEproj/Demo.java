@@ -65,8 +65,7 @@ public class Demo extends Board implements Runnable {
         // TODO Rendere gameState un enum
         if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
             DrawInterface(g);
-            if(posizionato)
-                InterStage(g);
+            InterStage(g);
         }
         else if(gameState == GameStateEnum.GAME_LOST) {   // draw game over background gif after the lose condition
             EndGameFunction(0);     // passing 0 to draw game over background
