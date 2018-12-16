@@ -117,6 +117,7 @@ public class Board extends JPanel implements Runnable {
         istance = null;
     }
 
+//---------------------------GAME INITIALIZATION----------------------------------->
     protected void setBackground() {
         if(level == 1)    
             bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
