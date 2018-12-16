@@ -72,7 +72,13 @@ public class Boss3Level extends Alien implements Runnable{
 
             try {
                 Thread.sleep(5000);
-                fire();
+                if(isVisible())
+                    fire();
+                if(!isVisible()){
+                    synchronized(aliens){
+                        aliens.clear();
+                    }
+                }
             } catch (InterruptedException e) {
                 System.out.println("Thread Boss1: " + e.getMessage());
             }

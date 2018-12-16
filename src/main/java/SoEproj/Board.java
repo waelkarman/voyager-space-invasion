@@ -190,7 +190,8 @@ public void SetInterStage(int n){
             for(UpgradePack pack : packs) {
                 if (pack.isVisible())
                     g.drawImage(pack.getImage(), pack.getX(), pack.getY(), this);
-                    pack.die();
+                    if (pack.isDying()) 
+                        pack.die();
             }
         } 
     }
@@ -244,10 +245,9 @@ public void SetInterStage(int n){
     protected void DrawInterface(Graphics g) {
         DrawBackground(g);          //stampa sfondo mobile    
         DrawShipAndMissiles(g);     //stampa spaceship e missili per spaceship
-        DrawPacks(g);               //stampa di tutti i pacchetti
         DrawAliensAndMissiles(g);   //stampa alieni e missili da essi sparati 
         DrawScores(g);              //stampa score 
-            
+        DrawPacks(g);               //stampa di tutti i pacchetti
     }
 
 //-------------------------END GRAPHICS METHODS---------------------------->
@@ -257,19 +257,19 @@ public void SetInterStage(int n){
 //--------------------------LEVEL SWITCHER--------------------------------->
 private void InterStage(Graphics g) {
     if(interstage == 0){            //AGGIUNGI ALIENI PER 2 MIN 
-        System.out.println("LEV 1 - SCONTRO CON ALIENI"); 
+        ;//System.out.println("LEV 1 - SCONTRO CON ALIENI"); 
     }
 
     if(interstage == 1){            //AGGIUNGI ALIENI PER 2 MIN 
-        System.out.println("LEV 2 - SCONTRO CON ALIENI"); 
+        ;//System.out.println("LEV 2 - SCONTRO CON ALIENI"); 
     }
 
     if(interstage == 2){            //AGGIUNGI ALIENI PER 2 MIN 
-        System.out.println("LEV 3 - SCONTRO CON ALIENI"); 
+        ;//System.out.println("LEV 3 - SCONTRO CON ALIENI"); 
     }
 
-    if(interstage == 3){            //AGGIUNGI ALIENI PER 2 MIN 
-        System.out.println("YOU WIN!");
+    if(interstage == 3){            
+        ;//System.out.println("YOU WIN!");
     }
 }
 
@@ -279,7 +279,7 @@ private void Story(int stage){
             lock = true;
             aliensGen = new AlienGenerator(background.getWidth(null), aliens, 1);
             aliensGen.start();
-            interStage(5,0);
+            interStage(10,0);
             
         }else if(interstage == 0 && !interstageEnd){
             aliensGen.Shutdown();
@@ -290,15 +290,15 @@ private void Story(int stage){
     }
 
     if(stage == 1){
-        //if(!lock){
-        //    lock = true;
-        //    aliensGen.generateBoss();
-        //}else if(aliens.isEmpty()){
+        if(!lock){
+            lock = true;
+            aliensGen.generateBoss();
+        }else if(aliens.isEmpty()){
             setStage(2);
             SetInterStage(1);
-        //    lock = false;
-        //    interstageEnd = true;
-        //} 
+            lock = false;
+            interstageEnd = true;
+        } 
     }
 
     if(stage == 2){
@@ -308,7 +308,7 @@ private void Story(int stage){
             setBackground();
             aliensGen = new AlienGenerator(background.getWidth(null), aliens, 2);
             aliensGen.start();
-            interStage(5,1);
+            interStage(10,1);
             
         }else if(interstage == 1 && !interstageEnd){
             aliensGen.Shutdown();
@@ -319,15 +319,15 @@ private void Story(int stage){
     }
 
     if(stage == 3){
-        //if(!lock){
-        //    lock = true;
-        //    aliensGen.generateBoss();
-        //}else if(aliens.isEmpty()){
+        if(!lock){
+            lock = true;
+            aliensGen.generateBoss();
+        }else if(aliens.isEmpty()){
             setStage(4);
             SetInterStage(2);
-        //    lock = false;
-        //    interstageEnd = true;
-        //} 
+            lock = false;
+            interstageEnd = true;
+        } 
     }
 
     if(stage == 4){
@@ -337,7 +337,7 @@ private void Story(int stage){
             setBackground();
             aliensGen = new AlienGenerator(background.getWidth(null), aliens, 3);
             aliensGen.start();
-            interStage(5,2);
+            interStage(10,2);
             
         }else if(interstage == 2 && !interstageEnd){
             aliensGen.Shutdown();
@@ -348,16 +348,22 @@ private void Story(int stage){
     }
 
     if(stage == 5){
-        interStage(5,3);
-        //if(!lock){
-        //    lock = true;
-        //    aliensGen.generateBoss();
-        //}else if(aliens.isEmpty()){
-        //    setStage(4);
-        //   SetInterStage(2);
-        //    lock = false;
-        //    interstageEnd = true;
-        //} 
+        if(!lock){
+            lock = true;
+            aliensGen.generateBoss();
+        }else if(aliens.isEmpty()){
+            setStage(6);
+            SetInterStage(5);
+            lock = false;
+            interstageEnd = true;
+        } 
+    }
+
+    if(stage == 6){
+        if(!lock){
+            lock = true;
+            gameState = GameStateEnum.GAME_WON;
+        }
     }
 
 }
@@ -426,11 +432,13 @@ private void Story(int stage){
                             ms.remove(m);
                     }
 
-                    if (alien.isVisible()) 
-                        alien.move();
+                    if (alien.isVisible()){
+                        alien.move(); 
+                        }
                     else{
-                        synchronized(aliens){
-                            aliens.remove(i);
+                        synchronized(alien){
+                        if(alien.getMissiles().isEmpty())
+                            aliens.remove(alien);
                         }
                     }                                
                 }
@@ -625,6 +633,7 @@ private void Story(int stage){
         }
         if(alive == false)
             gameState = GameStateEnum.GAME_LOST;
+        // set won condition
     }
 
     @Override

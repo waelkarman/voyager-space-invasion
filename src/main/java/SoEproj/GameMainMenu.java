@@ -202,7 +202,6 @@ public class GameMainMenu extends javax.swing.JFrame {
             mumZero.stopMusic();
             JPanel principalPanel = this.jPanel1;
             this.getContentPane().remove(jPanel1);
-            //PlayOrganizzation b = new PlayOrganizzation(ship, principalPanel, music, 1, keyModality, mulMode);
             Board b = new Board(ship, principalPanel, music, 1, keyModality, mulMode);
             this.add(b).requestFocusInWindow();
             this.validate();
