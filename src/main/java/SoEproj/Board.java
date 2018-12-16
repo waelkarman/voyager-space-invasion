@@ -282,7 +282,7 @@ private void Story(int stage){
     if(stage == 0){
         if(interstage == 0 && !lock){
             lock = true;
-            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 1);
+            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
             interStage(120,0);
             
@@ -311,7 +311,7 @@ private void Story(int stage){
             lock = true;
             this.level = 2;
             setBackground();
-            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 2);
+            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
             interStage(120,1);
             
@@ -340,7 +340,7 @@ private void Story(int stage){
             lock = true;
             this.level = 3;
             setBackground();
-            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 3);
+            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
             interStage(120,2);
             
@@ -652,7 +652,7 @@ private void Story(int stage){
         // set won condition
     }
 
-    public void resumeGame(){         //Alessio funzione da richiamare per far ripartire il gioco
+    public void resumeGame(){         
         isPause = false;
         packsGen.resume();
         aliensGen.resume();

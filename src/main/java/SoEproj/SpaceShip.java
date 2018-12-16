@@ -110,7 +110,7 @@ public class SpaceShip extends Sprite {
                 break;
             } 
             case 2:{
-                pathImage = "./src/main/java/SoEproj/Resource/OrangeCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/yCraft.gif";
                 break;
             } 
             case 3:{
