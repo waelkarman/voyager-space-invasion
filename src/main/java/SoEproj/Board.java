@@ -124,14 +124,9 @@ public class Board extends JPanel implements Runnable {
 
         packs = new LinkedList<UpgradePack>();
         packsGen = new PackGenerator(background.getWidth(null), packs);
-        //threadPacksGen = new Thread(packsGen);
+        packsGen.start();
 
         aliens = new ArrayList<Alien>();
-        //aliensGen = new AlienGenerator(background.getWidth(null), aliens, this.level);
-        //threadAliensGen = new Thread(aliensGen);
-
-        //threadAliensGen.start();
-        packsGen.start();
     }
 //---------------------------END GAME INITIALIZATION----------------------------------->
 
@@ -148,7 +143,6 @@ public void SetInterStage(int n){
     this.interstage = n;
 }
 //-------------------END STAGE SHIFTER-------------------------------->
-
 
 //---------------------GRAPHICS--------------------------------------------------->
     // This method will be executed by the painting subsystem whenever you component needs to be rendered
@@ -251,8 +245,6 @@ public void SetInterStage(int n){
     }
 
 //-------------------------END GRAPHICS METHODS---------------------------->
-
-
     
 //--------------------------LEVEL SWITCHER--------------------------------->
 private void InterStage(Graphics g) {
@@ -371,8 +363,6 @@ private void Story(int stage){
 //--------------------------LEVEL SWITCHER END------------------------------->
 
 
-
-
    
 //-----------------------UPDATE VARIABLES------------------------------->
     protected void updateShip() {
@@ -401,7 +391,6 @@ private void Story(int stage){
         }
     }
 
-
     protected void updatePacks() {
         synchronized(packs){
             for (int i=0; i < packs.size(); i++) {
@@ -415,7 +404,6 @@ private void Story(int stage){
             }
         }
     }
-
 
     protected void updateAliens() {
         synchronized(aliens){
