@@ -255,6 +255,7 @@ public void SetInterStage(int n){
         DrawAliensAndMissiles(g);   //stampa alieni e missili da essi sparati 
         DrawScores(g);              //stampa score 
         DrawPacks(g);               //stampa di tutti i pacchetti
+        GameOverCondition();
     }
 
 //-------------------------END GRAPHICS METHODS---------------------------->
@@ -572,6 +573,22 @@ private void Story(int stage){
         }
     }
 
+    private void GameOverCondition(){   //GAME OVER se tutte le space ship sono morte
+        Boolean alive = false;
+        synchronized(spaceShips){    
+            for(int i = 0; i < spaceShips.size(); i++){
+                SpaceShip ship = spaceShips.get(i);   
+                if(!ship.isDying())
+                    alive = true;
+            }
+        }
+        if(alive == false)
+            EndGameFunction(0);
+        else if(level == 3) // TODO LA CONDIZIONE è SBAGLIATA VA CORRETTA 
+            EndGameFunction(1);
+
+    }
+
     //Outcome is passed to the panel to draw the right image (game won or game lost)
     public void EndGameFunction(int outcome) {
         if(mumZero != null)
@@ -580,9 +597,11 @@ private void Story(int stage){
         old.getContentPane().remove(this);
 
         int finalScore = 0;
-        for(int k = 0; k < spaceShips.size(); k++) {
-            SpaceShip ship = spaceShips.get(k);
-            finalScore += ship.getScore();
+        synchronized(spaceShips){
+            for(int k = 0; k < spaceShips.size(); k++) {
+                SpaceShip ship = spaceShips.get(k);
+                finalScore += ship.getScore();
+            }
         }
 
         GameEndPanel gep = new GameEndPanel(outcome, menuPanel, finalScore, isMusicOn);
@@ -640,17 +659,7 @@ private void Story(int stage){
         }
     }
 
-    private void GameOverCondition(){   //GAME OVER se tutte le space ship sono morte
-        Boolean alive = false;
-        for(int i = 0; i < spaceShips.size(); i++){
-            SpaceShip ship = spaceShips.get(i);   
-            if(!ship.isDying())
-                alive = true;
-        }
-        if(alive == false)
-            EndGameFunction(0);
-        // set won condition
-    }
+    
 
     public void resumeGame(){         
         isPause = false;
@@ -688,7 +697,6 @@ private void Story(int stage){
                 updateAliens();
                 updatePacks();
                 checkCollisions();
-                GameOverCondition();
                 repaint();
             
                 timeDiff = System.currentTimeMillis() - beforeTime;
