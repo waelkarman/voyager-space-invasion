@@ -21,21 +21,18 @@ public class GameMainMenu extends javax.swing.JFrame {
     private MusicManager mumZero;
     
     public GameMainMenu() { 
-        
             initComponents();
             initUI();
             loadWindowsIcon();
             loadBackground();
             
             menuMusic = new File(".\\src\\main\\java\\SoEproj\\Resource\\MusicMenu.wav");
-            
             mumZero = new MusicManager(menuMusic);
             mumZero.loopMusic();
             
             ship = 2;
             music = true;
             mulMode = false;
-        
     }
 
     private void initUI() {
@@ -60,7 +57,6 @@ public class GameMainMenu extends javax.swing.JFrame {
     }
     
     private void drawBackground(Graphics g){
-    
         loadBackground();
         g.drawImage(background, 0, 0, null);
     }
@@ -202,7 +198,7 @@ public class GameMainMenu extends javax.swing.JFrame {
             mumZero.stopMusic();
             JPanel principalPanel = this.jPanel1;
             this.getContentPane().remove(jPanel1);
-            Board b = new Board(ship, principalPanel, music, 1, keyModality, mulMode);
+            Board b = Board.setBoard(ship, principalPanel,music,1,keyModality,mulMode);
             this.add(b).requestFocusInWindow();
             this.validate();
             this.repaint();

@@ -1,45 +1,51 @@
 package SoEproj;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.hamcrest.core.Is;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class SaveLoadDataTest 
-{
+public class SaveLoadDataTest {
+
+    private SaveLoadData data1;
+    private SaveLoadData data2;
+    private List<ScoreEntry> list;
+
+
+    @Before
+    public void initList() {
+        assertNull(data1);
+        assertNull(data2);
+        data1 = new SaveLoadData();
+        data2 = new SaveLoadData();
+        ScoreEntry entry1 = new ScoreEntry("Player1", 10);
+        ScoreEntry entry2 = new ScoreEntry("Player2", 15);
+        ScoreEntry entry3 = new ScoreEntry("Player3", 20);
+        list = Arrays.asList(entry1, entry2, entry3);
+    }
+    
 
     @Test
-    public void SaveLoadDataTest()
-    {
-        SaveLoadData one = new SaveLoadData();
-        SaveLoadData two = new SaveLoadData();
-        assertNotEquals(one,two);
+    public void saveDataTest() {
+        assertNotEquals(data1, data2);
+        data1.SaveData(list);
+        data2.SaveData(list);
+        assertEquals(data1.LoadData(), data2.LoadData());
     }
 
-    @Test(expected = IOException.class)
-    public void SaveDateTest() throws IOException
-    {
-        SaveLoadData one = new SaveLoadData();
-        ArrayList anArray = new ArrayList<>();
-        one.SaveData(anArray);
-    }
-   
-    @Test(expected = Exception.class)
-    public void LoadDataTest() throws IOException, ClassNotFoundException
-    {
-        SaveLoadData one = new SaveLoadData();
-        ArrayList anArray = new ArrayList<>();
-        ArrayList sameArray;
-        one.SaveData(anArray);
-        sameArray = one.LoadData();
-        assertEquals(anArray, sameArray);
+
+    @Test
+    public void loadDataTest() {
+        assertEquals(data1.LoadData(), data2.LoadData());
     }
 
 }

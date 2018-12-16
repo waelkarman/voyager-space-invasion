@@ -5,17 +5,34 @@
  */
 package SoEproj;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 /**
  *
  * @author aless
  */
 public class PausePanel extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form PausePanel
      */
-    public PausePanel() {
+    private Board prevBoard;
+    private JPanel menuPanel;
+    private MusicManager mumZero;
+    private boolean isMusicOn;
+    
+    
+    public PausePanel(Board b, JPanel p, MusicManager mum, boolean m) {
+    //nel costruttore ti passo istance che è praticamente la Board
+    // quando esci da questo pannello per far ripartire il gioco ho creato istance.resumeGame();
         initComponents();
+        this.prevBoard = b;
+        this.mumZero = mum;
+        this.menuPanel = p;
+        this.isMusicOn = m;
+        
     }
 
     /**
@@ -47,17 +64,30 @@ public class PausePanel extends javax.swing.JPanel {
 
         jRadioButton1.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup1.add(jRadioButton1);
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\OFF_Icon_1.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\OFF_Icon_1.png")); // NOI18N
 
         jRadioButton2.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup1.add(jRadioButton2);
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\ON_Icon_1.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\ON_Icon_1.png")); // NOI18N
 
         jButton2.setText("RESUME");
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\PauseLabel.png")); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -80,7 +110,7 @@ public class PausePanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel3)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,24 +120,53 @@ public class PausePanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jRadioButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jRadioButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(59, 59, 59))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(62, Short.MAX_VALUE))))
+                        .addContainerGap(185, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if(mumZero != null)
+            mumZero.stopMusic();      
+        GameMainMenu old = (GameMainMenu) SwingUtilities.getWindowAncestor(this);        
+        old.getContentPane().remove(this);
+        old.add(menuPanel);
+        prevBoard.resetBoard();
+        if(isMusicOn)
+            old.startMusic();
+            
+        old.validate();
+        old.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
+        old.getContentPane().remove(this);
+        prevBoard.resumeGame();
+        old.add(prevBoard).requestFocusInWindow();
+        old.validate();
+        old.repaint();       
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        isMusicOn = true;
+        mumZero.startMusic();
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+       isMusicOn = false;
+       mumZero.stopMusic();
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -8,27 +8,26 @@ import java.util.Random;
 
 public class AlienGenerator extends Thread {
 
-    
-    private final int ALIEN_NUM = 120;   // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                        
-    private final int bgWidth;
+    private final int B_SCORE_SPACE = 30;   // space that is occupied by player's score
+    private final int ALIEN_NUM = 120;       // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                      
+    private final int B_WIDTH;
     
     private List<Alien> aliens;
     private int level;
     private int ref;
 
     private Random r = new Random();
-    private int minY = 44;  // max (highest) pixel in which an alien can spawn
-    private int maxY = 389; // min (lowest) pixel in which an alien can spawn
-    private int range = maxY - minY;    // range in which an alien can appear
+    private int range;    // range in which an alien can appear
     private boolean running;
 
-    public AlienGenerator(int bgWidth, List<Alien> aliens, int level) {
-        this.bgWidth = bgWidth;
+    public AlienGenerator(int B_WIDTH, int B_HEIGHT, List<Alien> aliens, int level) {
+        this.B_WIDTH = B_WIDTH;
         this.aliens = aliens;
         this.level = level;
         this.ref = 0;
         this.running = true;
-    }
+        this.range = B_HEIGHT - B_SCORE_SPACE;
+	}
 
     public void setLevel(int lev){
         this.level = lev;
@@ -39,7 +38,7 @@ public class AlienGenerator extends Thread {
     }
 
     public void generateAliens(int hb) {
-        int x = bgWidth;
+        int x = B_WIDTH;
         int h = hb;
         
         switch(this.level){
@@ -69,8 +68,8 @@ public class AlienGenerator extends Thread {
     }
 
     public void generateAliens() {
-        int x = bgWidth;
-        int h = r.nextInt(range) + minY;
+        int x = B_WIDTH;
+        int h = r.nextInt(range) + B_SCORE_SPACE;
         
         switch(this.level){
             case 1: // lev. 1 : Only EasyAliens
@@ -102,13 +101,13 @@ public class AlienGenerator extends Thread {
     public void generateBoss() {
         synchronized(this.aliens){
             if(level == 1){
-                this.aliens.add(new Boss1Level(bgWidth, range/2, aliens));
+                this.aliens.add(new Boss1Level(B_WIDTH, range/2, aliens));
             }
             if(level == 2){
-                this.aliens.add(new Boss2Level(bgWidth, range/2, aliens));
+                this.aliens.add(new Boss2Level(B_WIDTH, range/2, aliens));
             }
             if(level == 3){
-                this.aliens.add(new Boss3Level(bgWidth, range/2, aliens));
+                this.aliens.add(new Boss3Level(B_WIDTH, range/2, aliens));
             }
         }
     }

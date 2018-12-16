@@ -286,7 +286,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
             mumZero.stopMusic();
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
-        Board b = new Board(ship, menuPanel,music,level,keyModality,mulMode);
+        Board b = Board.setBoard(ship, menuPanel,music,level,keyModality,mulMode);
         old.add(b).requestFocusInWindow();
         old.validate();
         old.repaint();

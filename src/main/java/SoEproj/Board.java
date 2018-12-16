@@ -24,10 +24,10 @@ import javax.swing.SwingUtilities;
 
 public class Board extends JPanel implements Runnable {
 
-    protected final int B_WIDTH = 600;
-    protected final int B_HEIGHT = 450;
+    protected final int B_WIDTH = 590;
+    protected final int B_HEIGHT = 435;
     protected final int DELAY = 15;
-    protected final double BG_SPEED = 0.5;    // background speed
+    protected final double BG_SPEED = 0.3;    // background speed
 
     protected final ImageIcon alienExpl;
     protected final ImageIcon shipExpl;
@@ -36,6 +36,9 @@ public class Board extends JPanel implements Runnable {
     protected final File powerUpSound;
     protected final File bossHitSound;
     protected File boardSound;
+
+    private static Board istance = null; //Vittorio
+    private Boolean isPause = false;
 
     protected boolean isMusicOn;
 
@@ -67,7 +70,7 @@ public class Board extends JPanel implements Runnable {
     private boolean interstageEnd;
     private boolean lock;
 
-    public Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
+    private Board(int shipType, JPanel p, boolean m, int level, int km, boolean mp) {
         this.isMultiplayer = mp;
         this.level = level;
         // Images and soundtracks initialization
@@ -99,8 +102,21 @@ public class Board extends JPanel implements Runnable {
         gameLaunch();
     }
 
+ 
 
-//---------------------------GAME INITIALIZATION----------------------------------->
+    public static Board setBoard(int shipType, JPanel p, boolean m, int level, int km, boolean mp){
+
+        if(istance == null){
+            istance = new Board(shipType,p, m, level,km, mp);
+        }
+        return istance;
+
+    }
+
+    public void resetBoard(){ //Vittorio ho cambiato da privato a pubblico
+        istance = null;
+    }
+
     protected void setBackground() {
         if(level == 1)    
             bgImgIcon = new ImageIcon(".\\src\\main\\java\\SoEproj\\Resource\\BackGround1.png");
@@ -123,7 +139,7 @@ public class Board extends JPanel implements Runnable {
             spaceShips.add( new SpaceShip(0, B_HEIGHT/2 + 60, shipType + 1 % 3 , isMusicOn, keyModality + 1 % 2) ); // +1 % 2 for set a different type
 
         packs = new LinkedList<UpgradePack>();
-        packsGen = new PackGenerator(background.getWidth(null), packs);
+        packsGen = new PackGenerator(background.getWidth(null),background.getHeight(null), packs);// TODO MERGE costruttore cambiato da controllare
         packsGen.start();
 
         aliens = new ArrayList<Alien>();
@@ -269,7 +285,7 @@ private void Story(int stage){
     if(stage == 0){
         if(interstage == 0 && !lock){
             lock = true;
-            aliensGen = new AlienGenerator(background.getWidth(null), aliens, 1);
+            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 1);
             aliensGen.start();
             interStage(125,0);
             
@@ -298,7 +314,7 @@ private void Story(int stage){
             lock = true;
             this.level = 2;
             setBackground();
-            aliensGen = new AlienGenerator(background.getWidth(null), aliens, 2);
+            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 2);
             aliensGen.start();
             interStage(125,1);
             
@@ -327,7 +343,7 @@ private void Story(int stage){
             lock = true;
             this.level = 3;
             setBackground();
-            aliensGen = new AlienGenerator(background.getWidth(null), aliens, 3);
+            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 3);
             aliensGen.start();
             interStage(125,2);
             
@@ -576,6 +592,7 @@ private void Story(int stage){
         old.add(gep).requestFocusInWindow();
         old.validate();
         old.repaint();
+        resetBoard();
     }
 
     public void gameLaunch() {
@@ -601,7 +618,22 @@ private void Story(int stage){
 
         @Override
         public void keyPressed(KeyEvent e) {
-            try{
+
+            int key = e.getKeyCode();                       
+                if (key == KeyEvent.VK_P){        
+                    if (isPause == false){
+                        System.out.println("METTI LA PAUSA");
+                        isPause = true;
+                        packsGen.suspend();
+                        aliensGen.suspend();
+                        pauseGameFunction();
+                    }else{
+                        System.out.println("TOGLI LA PAUSA");
+                        resumeGame();
+                    }
+                }
+
+             try{
                 for(int k=0; k < spaceShips.size(); k++) {
                     SpaceShip ship = spaceShips.get(k);
                     ship.keyPressed(e);
@@ -624,33 +656,60 @@ private void Story(int stage){
         // set won condition
     }
 
+    public void resumeGame(){         //Alessio funzione da richiamare per far ripartire il gioco
+        isPause = false;
+        packsGen.resume();
+        aliensGen.resume();
+        boardAnimator.resume();
+    }
+
+
+    public void pauseGame(){           
+        boardAnimator.suspend();
+    }
+  
+    public void pauseGameFunction(){  //Alessio funzione per il passaggio a PausePanel
+        JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
+        old.getContentPane().remove(this);
+        PausePanel gep = new PausePanel(istance,menuPanel,mumZero,isMusicOn);   //Alessio ti passo l'istanza di questa board cosi che puoi lavorarci nel PausePanel
+        old.add(gep).requestFocusInWindow();           //TI ho commentato il costruttore e cosa si dovrebbere fare
+        old.validate();
+        old.repaint();
+        pauseGame();  
+    }
+
     @Override
     public void run() {
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
         while (gameState != GameStateEnum.GAME_LOST) {
-            Story(stage);
-            updateShip();
-            updateAliens();
-            updatePacks();
-            checkCollisions();
-            GameOverCondition();
-            repaint();
+            if(isPause == true){
+                pauseGame();
+            }
+            else{
+                Story(stage);
+                updateShip();
+                updateAliens();
+                updatePacks();
+                checkCollisions();
+                GameOverCondition();
+                repaint();
             
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
-            if (sleep < 0) {
-                sleep = 2;
-            }
+                timeDiff = System.currentTimeMillis() - beforeTime;
+                sleep = DELAY - timeDiff;
+                if (sleep < 0) {
+                    sleep = 2;
+                }
 
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                System.out.println("Thread Board: " + e.getMessage());
+                try {
+                    Thread.sleep(sleep);
+                } catch (InterruptedException e) {
+                    System.out.println("Thread Board: " + e.getMessage());
+                }
+                beforeTime = System.currentTimeMillis();
             }
-            beforeTime = System.currentTimeMillis();
+            repaint();
         }
-        repaint();
     }
 
 

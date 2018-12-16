@@ -12,6 +12,10 @@ import java.util.List;
 public class SpaceShip extends Sprite {
     
     private final File laserSound;
+    private final File g_r_sound;
+    private final File FireballSound;
+
+        
 
     private float dx;
     private float dy;
@@ -38,6 +42,8 @@ public class SpaceShip extends Sprite {
         setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
 
         laserSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\LaserSound.wav");
+        g_r_sound = new File(".\\src\\main\\java\\SoEproj\\Resource\\R&GSound.wav");
+        FireballSound = new File(".\\src\\main\\java\\SoEproj\\Resource\\FireballSound.wav");
 
         shipMissileFire = new Thread(new FireThread(this));
         shipMissileFire.start();
@@ -126,9 +132,8 @@ public class SpaceShip extends Sprite {
     }
 
     public void setupSPACE(float SPACE) {
-        if(this.SPACE<4){
+        if(this.SPACE<4)
             this.SPACE += SPACE;
-        }
     }
 
     public synchronized void setupLife(int life) {
@@ -157,15 +162,30 @@ public class SpaceShip extends Sprite {
         missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToRight" ));
 
         if(missileType.equals("3Missiles")) {
-            missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToTop" ));
-            missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToBottom" ));
-        }  
-
+            missiles.add(new Missile(x + width, y + height/2, missileType, "leftToTop" ));
+            missiles.add(new Missile(x + width, y + height/2, missileType, "leftToBottom" ));            
+        } 
+        
         if(music){
-            mumZero = new MusicManager(laserSound);
-            mumZero.startMusic();
+            if(missileType.equals("3Missiles") || missileType.equals("Laser")) {
+                mumZero = new MusicManager(laserSound);
+                mumZero.startMusic();
+            }
+            else if(missileType.equals("GreenShoot") || missileType.equals("blueFireball")) {
+                mumZero = new MusicManager(g_r_sound);
+                mumZero.startMusic();   
+            }
+            else if(missileType.equals("fireball")) {
+                mumZero = new MusicManager(FireballSound);
+                mumZero.startMusic();  
+            }
+            else{
+                mumZero = new MusicManager(laserSound);
+                mumZero.startMusic();
+            }
         }
     }
+
 
     public void move() {       
         x += dx;
@@ -177,8 +197,8 @@ public class SpaceShip extends Sprite {
         if(x > B_WIDTH - this.width)
             x = B_WIDTH - this.width;
 
-        if(y < 0) 
-            y = 0;
+        if(y < B_SCORE_SPACE) 
+            y = B_SCORE_SPACE;
 
         if(y > B_HEIGHT - this.height)
             y = B_HEIGHT - this.height;

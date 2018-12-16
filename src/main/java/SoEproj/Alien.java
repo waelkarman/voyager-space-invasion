@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public abstract class Alien extends Sprite {
 
-    protected final int INITIAL_X = B_WIDTH;
     protected List<Missile> missiles;
     protected int points;
     protected int life;
@@ -26,10 +25,6 @@ public abstract class Alien extends Sprite {
 
     public int getPoints() {
         return this.points;
-    }
-    
-    public int getINITIAL_X() {
-        return this.INITIAL_X;
     }
 
     public synchronized int getLife(){

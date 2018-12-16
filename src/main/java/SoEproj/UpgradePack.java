@@ -43,12 +43,12 @@ public class UpgradePack extends Sprite{
             }
             case 3:{
                 type = 3;   //"Life";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Grbox.png";//Original box
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\heart.gif";//Original box
                 break;
             }
             case 4:{
                 type = 4;   //"Speed";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Obox.png"; //Orange box
+                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\flash.png"; //Orange box
                 break;
             }
             case 5:{
@@ -64,11 +64,6 @@ public class UpgradePack extends Sprite{
             case 7:{
                 type = 7;   //"VioletLaser";
                 pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Pbox.png"; //Purple box
-                break;
-            }
-            case 8:{
-                type = 8;   //"pollo";
-                pathImage = ".\\src\\main\\java\\SoEproj\\Resource\\Grbox.png"; //Original box
                 break;
             }
         }
