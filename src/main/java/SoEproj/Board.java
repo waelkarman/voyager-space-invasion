@@ -254,6 +254,7 @@ public void SetInterStage(int n){
         DrawAliensAndMissiles(g);   //stampa alieni e missili da essi sparati 
         DrawScores(g);              //stampa score 
         DrawPacks(g);               //stampa di tutti i pacchetti
+        GameOverCondition();
     }
 
 //-------------------------END GRAPHICS METHODS---------------------------->
@@ -281,7 +282,7 @@ private void Story(int stage){
     if(stage == 0){
         if(interstage == 0 && !lock){
             lock = true;
-            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 1);
+            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
             interStage(120,0);
         }else if(interstage == 0 && !interstageEnd){
@@ -309,7 +310,7 @@ private void Story(int stage){
             lock = true;
             this.level = 2;
             setBackground();
-            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 2);
+            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
             interStage(120,1);
             
@@ -338,7 +339,7 @@ private void Story(int stage){
             lock = true;
             this.level = 3;
             setBackground();
-            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 3);
+            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
             interStage(120,2);
             
@@ -365,7 +366,7 @@ private void Story(int stage){
     if(stage == 6){
         if(!lock){
             lock = true;
-            EndGameFunction(0);// TODO WON condition
+            EndGameFunction(1);// TODO WON condition
         }
     }
 
@@ -568,6 +569,21 @@ private void Story(int stage){
         }
     }
 
+    private void GameOverCondition(){   //GAME OVER se tutte le space ship sono morte
+        Boolean alive = false;
+        synchronized(spaceShips){    
+            for(int i = 0; i < spaceShips.size(); i++){
+                SpaceShip ship = spaceShips.get(i);   
+                if(!ship.isDying())
+                    alive = true;
+            }
+        }
+        if(alive == false)
+            EndGameFunction(0);
+        
+
+    }
+
     //Outcome is passed to the panel to draw the right image (game won or game lost)
     public void EndGameFunction(int outcome) {
         if(mumZero != null)
@@ -576,9 +592,11 @@ private void Story(int stage){
         old.getContentPane().remove(this);
 
         int finalScore = 0;
-        for(int k = 0; k < spaceShips.size(); k++) {
-            SpaceShip ship = spaceShips.get(k);
-            finalScore += ship.getScore();
+        synchronized(spaceShips){
+            for(int k = 0; k < spaceShips.size(); k++) {
+                SpaceShip ship = spaceShips.get(k);
+                finalScore += ship.getScore();
+            }
         }
 
         GameEndPanel gep = new GameEndPanel(outcome, menuPanel, finalScore, isMusicOn);
@@ -637,19 +655,9 @@ private void Story(int stage){
         }
     }
 
-    private void GameOverCondition(){   //GAME OVER se tutte le space ship sono morte
-        Boolean alive = false;
-        for(int i = 0; i < spaceShips.size(); i++){
-            SpaceShip ship = spaceShips.get(i);   
-            if(!ship.isDying())
-                alive = true;
-        }
-        if(alive == false)
-            EndGameFunction(0);
-        // set won condition
-    }
+    
 
-    public void resumeGame(){         //Alessio funzione da richiamare per far ripartire il gioco
+    public void resumeGame(){         
         isPause = false;
         packsGen.resume();
         aliensGen.resume();
@@ -684,7 +692,6 @@ private void Story(int stage){
                 updateAliens();
                 updatePacks();
                 checkCollisions();
-                GameOverCondition();
                 repaint();
             
                 timeDiff = System.currentTimeMillis() - beforeTime;
