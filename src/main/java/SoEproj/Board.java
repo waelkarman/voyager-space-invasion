@@ -152,7 +152,7 @@ public void setStage(int stg){
     this.stage = stg;
 }
 
-public void SetInterStage(int n){
+public void setInterStage(int n){
     this.interstage = n;
 }
 //-------------------END STAGE SHIFTER-------------------------------->
@@ -163,8 +163,8 @@ public void SetInterStage(int n){
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
-            DrawInterface(g);
-            InterStage(g);
+            drawInterface(g);
+            interStage(g);
         }
         else if(gameState == GameStateEnum.GAME_LOST) {   // draw game over background gif after the lose condition
             EndGameFunction(0);     // passing 0 to draw game over background
@@ -248,7 +248,7 @@ public void SetInterStage(int n){
         g.drawImage(background, background.getWidth(null) - (int) bgShiftX, 0, null);
     }
 
-    protected void DrawInterface(Graphics g) {
+    protected void drawInterface(Graphics g) {
         DrawBackground(g);          //stampa sfondo mobile    
         DrawShipAndMissiles(g);     //stampa spaceship e missili per spaceship
         DrawAliensAndMissiles(g);   //stampa alieni e missili da essi sparati 
@@ -260,7 +260,7 @@ public void SetInterStage(int n){
 //-------------------------END GRAPHICS METHODS---------------------------->
     
 //--------------------------LEVEL SWITCHER--------------------------------->
-private void InterStage(Graphics g) {
+private void interStage(Graphics g) {
     if(interstage == 0){            //AGGIUNGI ALIENI PER 2 MIN 
         ;//System.out.println("LEV 1 - SCONTRO CON ALIENI"); 
     }
@@ -278,7 +278,7 @@ private void InterStage(Graphics g) {
     }
 }
 
-private void Story(int stage){
+private void story(int stage){
     if(stage == 0){
         if(interstage == 0 && !lock){
             lock = true;
@@ -299,7 +299,7 @@ private void Story(int stage){
             aliensGen.generateBoss();
         }else if(aliens.isEmpty()){
             setStage(2);
-            SetInterStage(1);
+            setInterStage(1);
             lock = false;
             interstageEnd = true;
         } 
@@ -328,7 +328,7 @@ private void Story(int stage){
             aliensGen.generateBoss();
         }else if(aliens.isEmpty()){
             setStage(4);
-            SetInterStage(2);
+            setInterStage(2);
             lock = false;
             interstageEnd = true;
         } 
@@ -357,7 +357,7 @@ private void Story(int stage){
             aliensGen.generateBoss();
         }else if(aliens.isEmpty()){
             setStage(6);
-            SetInterStage(5);
+            setInterStage(5);
             lock = false;
             interstageEnd = true;
         } 
@@ -687,7 +687,7 @@ private void Story(int stage){
             if(isPause == true)
                 pauseGame();
             else{
-                Story(stage);
+                story(stage);
                 updateShip();
                 updateAliens();
                 updatePacks();
@@ -712,7 +712,7 @@ private void Story(int stage){
 
 
     private void interStage(int s, int n){ 
-        SetInterStage(n);
+        setInterStage(n);
         task = new NextStage(this);
         t.schedule(task, s * 1000);
     }
