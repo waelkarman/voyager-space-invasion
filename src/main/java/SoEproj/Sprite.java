@@ -46,11 +46,11 @@ public abstract class Sprite {
         height = image.getHeight(null);
         y = y - height/2;       // center the immage verticaly in its position (Missile)
 
-        if(y + height/2 > B_HEIGHT)
+        if(y < B_SCORE_SPACE)
+                y = B_SCORE_SPACE;
+
+        if(y + height > B_HEIGHT)
             y = B_HEIGHT - height;
-        else 
-            if(y - height/2 < B_SCORE_SPACE)
-                y = B_SCORE_SPACE + height/2;
     }
 
     protected void loadImage(String imageName) {

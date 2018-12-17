@@ -7,17 +7,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 
-/**
- *
- * @author aless
- */
 public class MusicManager {
 
     private Clip clip;
     private AudioInputStream inputStream;
         
-    public MusicManager(File f) {
-        
+    public MusicManager(File f) {        
         try {
             clip = AudioSystem.getClip();
             inputStream = AudioSystem.getAudioInputStream(f);

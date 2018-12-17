@@ -15,7 +15,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
@@ -37,7 +36,7 @@ public class Board extends JPanel implements Runnable {
     protected final File bossHitSound;
     protected File boardSound;
 
-    private Boolean isPause = false;
+    private Boolean isPause;
 
     protected boolean isMusicOn;
 
@@ -76,6 +75,7 @@ public class Board extends JPanel implements Runnable {
         this.isMusicOn = m;          // TODO music may change in each level
         this.menuPanel = p;
         this.keyModality = km;       // game commands switcher
+        this.isPause = false;
 
         alienExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionAliens.png");
         shipExpl = new ImageIcon("./src/main/java/SoEproj/Resource/ExplosionShip.png");
@@ -89,15 +89,15 @@ public class Board extends JPanel implements Runnable {
             mumZero = new MusicManager(boardSound);
             mumZero.loopMusic();
         }
-        if(level == 1 ){
+        if(level == 1){
             stage = 0;
             interstage = 0;
         }
-        if(level == 2 ){
+        if(level == 2){
             stage = 2;
             interstage = 1;
         }
-        if(level == 3 ){
+        if(level == 3){
             stage = 4;
             interstage = 2;
         }
@@ -226,16 +226,15 @@ public void SetInterStage(int n){
         g.setColor(Color.WHITE); // In the top-left corner of the window, we draw how many aliens are left.
         int yPos = 15;
         int xPos = 5;
-        int offset = 0;
+        
         for(int i = 0; i < spaceShips.size(); i++) {
             SpaceShip ship = spaceShips.get(i);
-            if(i != offset)
-                yPos += 16;
-            
+
             synchronized(ship){
                 g.drawString("Player " + (i+1) + " --- Lives: " + ship.getLife() + "    Score: " + ship.getScore(), xPos, yPos);
             }
-            offset = i;
+            
+            yPos += 16;
         }
     }
 
@@ -285,7 +284,6 @@ private void Story(int stage){
             aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, 1);
             aliensGen.start();
             interStage(120,0);
-            
         }else if(interstage == 0 && !interstageEnd){
             aliensGen.Shutdown();
             setStage(1);
@@ -372,7 +370,6 @@ private void Story(int stage){
     }
 
 }
-
 //--------------------------LEVEL SWITCHER END------------------------------->
 
 
@@ -433,13 +430,12 @@ private void Story(int stage){
                             ms.remove(m);
                     }
 
-                    if (alien.isVisible()){
+                    if (alien.isVisible())
                         alien.move(); 
-                        }
                     else{
                         synchronized(alien){
-                        if(alien.getMissiles().isEmpty())
-                            aliens.remove(alien);
+                            if(alien.getMissiles().isEmpty())
+                                aliens.remove(alien);
                         }
                     }                                
                 }
@@ -465,7 +461,7 @@ private void Story(int stage){
                 for(int i=0; i < packs.size(); i++){        // checking collisions between upbox and spaceship
                     packHitbox = packs.get(i).getShape();
                     packHitbox.intersect(shipHitbox);       // intersection is empty if shapes aren't collided
-                    if (!packHitbox.isEmpty() && !packs.get(i).isDying()) {   // isVisible() to avoid multiple check
+                    if (!packHitbox.isEmpty() && !packs.get(i).isDying()) {   // isDying() to avoid multiple check
                         synchronized(ship){
                             packs.get(i).updateSpaceShip(ship);
                         }
@@ -591,6 +587,7 @@ private void Story(int stage){
         old.repaint();
     }
 
+
     public void gameLaunch() {
         if(gameState == GameStateEnum.IN_GAME) {
             boardAnimator = new Thread(this);
@@ -614,22 +611,22 @@ private void Story(int stage){
 
         @Override
         public void keyPressed(KeyEvent e) {
-
             int key = e.getKeyCode();                       
-                if (key == KeyEvent.VK_P){        
-                    if (isPause == false){
-                        System.out.println("METTI LA PAUSA");
-                        isPause = true;
-                        packsGen.suspend();
-                        aliensGen.suspend();
-                        pauseGameFunction();
-                    }else{
-                        System.out.println("TOGLI LA PAUSA");
-                        resumeGame();
-                    }
+            
+            if (key == KeyEvent.VK_P){        
+                if (isPause == false){
+                    System.out.println("METTI LA PAUSA");
+                    isPause = true;
+                    packsGen.suspend();
+                    aliensGen.suspend();
+                    pauseGameFunction();
+                }else{
+                    System.out.println("TOGLI LA PAUSA");
+                    resumeGame();
                 }
+            }
 
-             try{
+            try{
                 for(int k=0; k < spaceShips.size(); k++) {
                     SpaceShip ship = spaceShips.get(k);
                     ship.keyPressed(e);
@@ -679,9 +676,8 @@ private void Story(int stage){
         long beforeTime, timeDiff, sleep;
         beforeTime = System.currentTimeMillis();
         while (gameState != GameStateEnum.GAME_LOST) {
-            if(isPause == true){
+            if(isPause == true)
                 pauseGame();
-            }
             else{
                 Story(stage);
                 updateShip();
@@ -693,9 +689,8 @@ private void Story(int stage){
             
                 timeDiff = System.currentTimeMillis() - beforeTime;
                 sleep = DELAY - timeDiff;
-                if (sleep < 0) {
+                if (sleep < 0)
                     sleep = 2;
-                }
 
                 try {
                     Thread.sleep(sleep);
@@ -709,8 +704,6 @@ private void Story(int stage){
     }
 
 
-
-
     private void interStage(int s, int n){ 
         SetInterStage(n);
         task = new NextStage(this);
@@ -718,20 +711,16 @@ private void Story(int stage){
     }
 
     class NextStage extends TimerTask  {
-        Board d;
+        private Board b;
 
         public NextStage(Board board) {
-            this.d = board;
+            this.b = board;
         }
    
         @Override
         public void run() {
-            d.setInterStageEnd(false);
-            
+            b.setInterStageEnd(false);    
         }
     }
-
-
-
 
 }
