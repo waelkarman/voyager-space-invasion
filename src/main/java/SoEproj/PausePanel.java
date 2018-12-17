@@ -166,8 +166,9 @@ public class PausePanel extends javax.swing.JPanel {
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
        isMusicOn = false;
-       mumZero.stopMusic();
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+       if(mumZero != null)
+        mumZero.stopMusic();      
+       }//GEN-LAST:event_jRadioButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -153,7 +153,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setBackground(new java.awt.Color(255, 255, 102));
-        jButton1.setIcon(new javax.swing.ImageIcon("/src/main/java/SoEproj/Resource/START game_1.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/START game_1.png")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
