@@ -9,7 +9,7 @@ import java.util.Random;
 public class AlienGenerator extends Thread {
 
     private final int B_SCORE_SPACE = 30;   // space that is occupied by player's score
-    private final int ALIEN_NUM = 120;       // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                      
+    private final int ALIEN_NUM = 10;       // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                      
     private final int B_WIDTH;
     
     private List<Alien> aliens;
@@ -121,7 +121,7 @@ public class AlienGenerator extends Thread {
             }
                 
             try {
-                Thread.sleep(120*1000/ALIEN_NUM);
+                Thread.sleep(12*1000/ALIEN_NUM);
             } catch (InterruptedException e) {
                 System.out.println("AlienGenerator sleep: " + e);
             }

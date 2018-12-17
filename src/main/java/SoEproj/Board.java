@@ -285,7 +285,7 @@ private void Story(int stage){
             lock = true;
             aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
-            interStage(120,0);
+            interStage(12,0);
             
         }else if(interstage == 0 && !interstageEnd){
             aliensGen.Shutdown();
