@@ -80,7 +80,7 @@ public class Demo extends Board implements Runnable {
         super.paintComponent(g);
         // TODO Rendere gameState un enum
         if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
-            DrawInterface(g);
+            drawInterface(g);
             InterStage(g);
         }
         else if(gameState == GameStateEnum.GAME_LOST) {   // draw game over background gif after the lose condition
@@ -201,7 +201,7 @@ public class Demo extends Board implements Runnable {
             if(stage == 0){
                     posizionato = ship.ForceMove(150, B_HEIGHT/2);
                     if(posizionato){
-                        SetInterStage(0);
+                        setInterStage(0);
                         setStage(1);
                     }
                 }
@@ -211,7 +211,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,0);
                 }else if(interstage == 0 && !interstageEnd){
-                    SetInterStage(1);
+                    setInterStage(1);
                     lock = false;
                     interstageEnd = true;
                 } 
@@ -220,7 +220,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,1);
                 }else if(interstage == 1 && !interstageEnd){
-                    SetInterStage(2);
+                    setInterStage(2);
                     lock = false;
                     interstageEnd = true;
                 } 
@@ -229,7 +229,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,2);
                 }else if(interstage == 2 && !interstageEnd){
-                    SetInterStage(3);
+                    setInterStage(3);
                     lock = false;
                     interstageEnd = true;
                 } 
@@ -238,7 +238,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,3);
                 }else if(interstage == 3 && !interstageEnd){
-                    SetInterStage(4);
+                    setInterStage(4);
                     lock = false;
                     interstageEnd = true;
                 } 
@@ -247,7 +247,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,4);
                 }else if(interstage == 4 && !interstageEnd){
-                    SetInterStage(5);
+                    setInterStage(5);
                     lock = false;
                     interstageEnd = true;
                 } 
@@ -256,7 +256,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,5);
                 }else if(interstage == 5 && !interstageEnd){
-                    SetInterStage(-1);
+                    setInterStage(-1);
                     setStage(2);
                     lock = false;
                     interstageEnd = true;
@@ -303,7 +303,7 @@ public class Demo extends Board implements Runnable {
                 posizionato = ship.ForceMove(150, B_HEIGHT/2);
                 if(posizionato){
                     setStage(8);
-                    SetInterStage(6);
+                    setInterStage(6);
                 }
             }
             
@@ -313,7 +313,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,6);
                 }else if(interstage == 6 && !interstageEnd){
-                    SetInterStage(7);
+                    setInterStage(7);
                     lock = false;
                     interstageEnd = true;
                 } 
@@ -322,7 +322,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,7);
                 }else if(interstage == 7 && !interstageEnd){
-                    SetInterStage(-1);
+                    setInterStage(-1);
                     setStage(9);
                     lock = false;
                     interstageEnd = true;
@@ -335,7 +335,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     ship.missiles.add(new Missile(ship.getX() + ship.width, ship.getY() + ship.height / 2, "Laser", "leftToRight" ));
                 }else if(ship.missiles.isEmpty()){
-                    SetInterStage(8);
+                    setInterStage(8);
                     setStage(10);
                     lock = false;
                 }
@@ -347,7 +347,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,8);
                 }else if(interstage == 8 && !interstageEnd){
-                    SetInterStage(9);
+                    setInterStage(9);
                     lock = false;
                     interstageEnd = true;
                 }
@@ -356,7 +356,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,9);
                 }else if(interstage == 9 && !interstageEnd){
-                    SetInterStage(10);
+                    setInterStage(10);
                     lock = false;
                     interstageEnd = true;
                 }
@@ -365,7 +365,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,10);
                 }else if(interstage == 10 && !interstageEnd){
-                    SetInterStage(-1);
+                    setInterStage(-1);
                     setStage(11);
                     lock = false;
                     interstageEnd = true;
@@ -381,7 +381,7 @@ public class Demo extends Board implements Runnable {
                         a.generateAliens(B_HEIGHT/2+20);
                     }
                 }else if(!aliens.isEmpty()){
-                    SetInterStage(11);
+                    setInterStage(11);
                     setStage(12);
                     lock = false;
                 }
@@ -392,7 +392,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(3,11);
                 }else if(interstage == 11 && !interstageEnd){
-                    SetInterStage(12);
+                    setInterStage(12);
                     lock = false;
                     interstageEnd = true;
                 }
@@ -401,7 +401,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(2,12);
                 }else if(interstage == 12 && !interstageEnd){
-                    SetInterStage(-1);
+                    setInterStage(-1);
                     setStage(13);
                     lock = false;
                     interstageEnd = true;
@@ -415,7 +415,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     ship.missiles.add(new Missile(ship.getX() + ship.width, ship.getY() + ship.height / 2, "Laser", "leftToRight" ));  
                 }else if(ship.missiles.isEmpty()){
-                    SetInterStage(13);
+                    setInterStage(13);
                     setStage(14);
                     lock = false;
                 }
@@ -426,7 +426,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,13);
                 }else if(interstage == 13 && !interstageEnd){
-                    SetInterStage(14);
+                    setInterStage(14);
                     lock = false;
                     interstageEnd = true;
                 }
@@ -435,7 +435,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(5,14);
                 }else if(interstage == 14 && !interstageEnd){
-                    SetInterStage(-1);
+                    setInterStage(-1);
                     setStage(15);
                     lock = false;
                     interstageEnd = true;
@@ -450,7 +450,7 @@ public class Demo extends Board implements Runnable {
                         packs.add(new UpgradePack(600 , 170, 5));
                     }
                 }else if(!packs.isEmpty()){
-                    SetInterStage(15);
+                    setInterStage(15);
                     setStage(16);
                     lock = false;
                 }
@@ -461,7 +461,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,15);
                 }else if(interstage == 15 && !interstageEnd){
-                    SetInterStage(-1);
+                    setInterStage(-1);
                     setStage(17);
                     lock = false;
                     interstageEnd = true;
@@ -473,7 +473,7 @@ public class Demo extends Board implements Runnable {
                 posizionato = ship.ForceMove(270, 150); 
                 if(posizionato){
                     setStage(18);
-                    SetInterStage(16);
+                    setInterStage(16);
                 }
             
             }
@@ -484,7 +484,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,16);
                 }else if(interstage == 16 && !interstageEnd){
-                    SetInterStage(-1);
+                    setInterStage(-1);
                     setStage(19);
                     lock = false;
                     interstageEnd = true;
@@ -496,7 +496,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     ship.missiles.add(new Missile(ship.getX() + ship.width, ship.getY() + ship.height / 2, "blueFireball", "leftToRight" ));  
                 }else if(ship.missiles.isEmpty()){
-                    SetInterStage(17);
+                    setInterStage(17);
                     setStage(20);
                     lock = false;
                 }
@@ -507,7 +507,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,17);
                 }else if(interstage == 17 && !interstageEnd){
-                    SetInterStage(18);
+                    setInterStage(18);
                     lock = false;
                     interstageEnd = true;
                 }
@@ -516,7 +516,7 @@ public class Demo extends Board implements Runnable {
                     lock = true;
                     interStage(4,18);
                 }else if(interstage == 18 && !interstageEnd){
-                    SetInterStage(19);
+                    setInterStage(19);
                     lock = false;
                     interstageEnd = true;
                 }
@@ -550,7 +550,7 @@ public class Demo extends Board implements Runnable {
         resetDemo();
     }
 
-    public void SetInterStage(int n){
+    public void setInterStage(int n){
         this.interstage = n;
     }
     public int getText(){
@@ -590,7 +590,7 @@ public class Demo extends Board implements Runnable {
 
     
     private void interStage(int s, int n){ 
-        SetInterStage(n);
+        setInterStage(n);
         task = new NextStage(this);
         t.schedule(task, s * 1000);
     }
