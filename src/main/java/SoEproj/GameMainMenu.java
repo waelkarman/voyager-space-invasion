@@ -134,6 +134,11 @@ public class GameMainMenu extends javax.swing.JFrame {
         jButton4.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/DEMO_1.png")); // NOI18N
         jButton4.setBorder(null);
         jButton4.setBorderPainted(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(255, 255, 102));
         jButton5.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/SCOREBOARD_1.png")); // NOI18N
