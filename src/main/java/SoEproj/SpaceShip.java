@@ -106,7 +106,7 @@ public class SpaceShip extends Sprite {
 
         switch(color){
             case 1:{
-                pathImage = "./src/main/java/SoEproj/Resource/GreenCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/GreenCraftMove.gif";
                 break;
             } 
             case 2:{
@@ -114,11 +114,11 @@ public class SpaceShip extends Sprite {
                 break;
             } 
             case 3:{
-                pathImage = "./src/main/java/SoEproj/Resource/RedCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/RedCraftMove.gif";
                 break;
             }
             default:{
-                pathImage = "./src/main/java/SoEproj/Resource/GreenCraft.png";
+                pathImage = "./src/main/java/SoEproj/Resource/GreenCraftMove.gif";
                 break;
             }
         }
