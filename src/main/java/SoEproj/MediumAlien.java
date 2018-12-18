@@ -20,9 +20,8 @@ public class MediumAlien extends Alien implements Runnable{
 
 
     public void move() {        
-        if (x < 0) {
+        if (x + width < 0)
             setDying(true);
-        }
 
         x -= SPACE;
     }

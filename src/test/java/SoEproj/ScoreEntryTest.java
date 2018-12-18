@@ -2,21 +2,15 @@ package SoEproj;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
-import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
 public class ScoreEntryTest {
     ScoreEntry score1, score2, score3, score4;
 
     @Before
-    public void initList() {
+    public void initScores() {
         score1 = new ScoreEntry("player", 500);
         score2 = new ScoreEntry("player", 350);
         score3 = new ScoreEntry("player1", 350);

@@ -1,7 +1,6 @@
 package SoEproj;
 
 
-import java.lang.Runnable;
 import java.util.List;
 import java.util.Random;
 

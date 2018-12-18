@@ -82,7 +82,7 @@ public class Missile extends Sprite {
             }
             case "rightToLeft":{
                 x -= SPACE + 2;     // the missile must be faster than aliens
-                if (x < 0)
+                if (x  + width < 0)
                     visible = false;
                 break;
             }
@@ -115,7 +115,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x -= SPACE + 2;
-                if (x > B_WIDTH)
+                if (x + width < 0)
                     visible = false;
                 break;
             }
@@ -126,7 +126,7 @@ public class Missile extends Sprite {
                     countX = 0;
                 }
                 x -= SPACE + 2;
-                if (x > B_WIDTH)
+                if (x + width < 0)
                     visible = false;
                 break;
             }

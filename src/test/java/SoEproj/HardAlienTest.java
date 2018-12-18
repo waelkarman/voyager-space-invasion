@@ -1,0 +1,65 @@
+package SoEproj;
+
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+
+public class HardAlienTest implements CommonsValues{
+
+    private HardAlien alien;
+
+
+    @Before
+    public void initAlien() {
+        alien = new HardAlien(B_WIDTH, 150);
+    }
+    
+
+    @Test
+    public void checkCoordinates() {
+        assertEquals(alien.getX(), B_WIDTH);
+        assertEquals(alien.getY(), 150);
+    }
+
+
+    @Test
+    public void checkDefaultValue() {
+        assertEquals(alien.getLife(), 2);
+        assertEquals(alien.getPoints(), 100);
+        assertNotNull(alien.getMissiles());
+        assertNotNull(alien.getSPACE());
+        assertNotNull(alien.getShape());
+    }
+
+
+    @Test
+    public void checkMove() {
+        alien.move();
+        assertEquals(alien.getX(), B_WIDTH - 3/2);
+        assertNotEquals(alien.getY(), 150);
+    }
+
+
+    @Test(timeout = 5000)
+    public void checkIsDying() {
+        while(alien.getX() >= 0)
+            alien.move();
+
+        assertTrue(alien.isDying());
+    }
+
+
+    @Test
+    public void checkFire() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        synchronized(alien.getMissiles()){
+            assertTrue(alien.getMissiles().size() > 0);
+        }
+    }
+
+}

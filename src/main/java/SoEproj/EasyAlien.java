@@ -3,8 +3,9 @@ package SoEproj;
 
 public class EasyAlien extends Alien {
 
+    private final int SHIFT_BOSS = 65;   // move shift of boss helper aliens
     private final String imagePath;
-    private final String moveType;  // changes alien movements  
+    private final String moveType;  // changes alien movements 
     private boolean goDown;         // to set boss helpers go up and down as thier boss
     
 
@@ -34,7 +35,7 @@ public class EasyAlien extends Alien {
 
     public void move() {  
         if(moveType == "BossHelper") {
-            if (x >= B_WIDTH - 65)
+            if (x >= B_WIDTH - SHIFT_BOSS)
                 x -= SPACE;
             
             if (goDown) {
@@ -49,9 +50,9 @@ public class EasyAlien extends Alien {
             }
         }
         else{
-            if (x < 0)
-                setDying(true);
             x -= SPACE;
+            if (x + width < 0)
+                setDying(true);
         }
     }
 }
