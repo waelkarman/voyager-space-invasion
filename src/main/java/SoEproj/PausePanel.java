@@ -145,7 +145,7 @@ public class PausePanel extends javax.swing.JPanel {
         old.add(menuPanel);
         if(isMusicOn)
             old.startMusic();
-            
+        Demo.resetDemo();
         old.validate();
         old.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed

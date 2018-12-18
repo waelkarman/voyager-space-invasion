@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,6 +33,7 @@ public class Demo extends Board implements Runnable {
 
     private Demo(int shipType, JPanel p, boolean m, int level, int km, boolean mp){
         super(shipType, p, m, level, km, mp);
+        addKeyListener(new TAdapter());
         posizionato = false;
         stage = 0;
         interstage = -1;
@@ -49,7 +52,7 @@ public class Demo extends Board implements Runnable {
 
     }
 
-    public void resetDemo(){ //Vittorio ho cambiato da privato a pubblico
+    public static void resetDemo(){ //Vittorio ho cambiato da privato a pubblico
         istance = null;
     }
 
@@ -585,6 +588,50 @@ public class Demo extends Board implements Runnable {
             beforeTime = System.currentTimeMillis();
         }
         repaint();
+    }
+
+
+    class TAdapter extends KeyAdapter {
+        //@Override
+        //public void keyReleased(KeyEvent e) {
+            //try {
+            //    for(int k=0;k<spaceShips.size();k++){
+            //        SpaceShip Ship = spaceShips.get(k);
+            //        Ship.keyReleased(e);
+            //    }
+            //} catch (InterruptedException e1) {
+            //    e1.printStackTrace();
+            //}
+        //}
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();                       
+            
+            if (key == KeyEvent.VK_P){        
+                if (isPause == false){
+                    System.out.println("METTI LA PAUSA");
+                    isPause = true;
+                    pauseGameFunction();
+                }
+                
+            }
+
+            //try{
+            //    for(int k=0; k < spaceShips.size(); k++) {
+            //        SpaceShip ship = spaceShips.get(k);
+            //        ship.keyPressed(e);
+            //    }
+            //} catch (InterruptedException e1) {
+            //    e1.printStackTrace();
+            //}
+        }
+    }
+
+    @Override
+    public void resumeGame(){         
+        isPause = false;
+        boardAnimator.resume();
     }
 
 
