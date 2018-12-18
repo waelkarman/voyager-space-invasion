@@ -137,7 +137,7 @@ public class SpaceShip extends Sprite {
     }
 
     public synchronized void setupLife(int life) {
-        if(this.life < 3)        // max 3 lives
+        if(this.life < 3 || life<0)        // max 3 lives
             this.life += life;
     }
 
