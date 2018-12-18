@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class HardAlienTest implements CommonsValues{
+public class HardAlienTest implements CommonValues{
 
     private HardAlien alien;
 

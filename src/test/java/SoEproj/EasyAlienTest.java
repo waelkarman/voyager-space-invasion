@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class EasyAlienTest implements CommonsValues{
+public class EasyAlienTest implements CommonValues{
 
     private EasyAlien alien1;
     private EasyAlien alienBossHelper;

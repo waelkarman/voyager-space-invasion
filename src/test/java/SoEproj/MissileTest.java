@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class MissileTest implements CommonsValues{
+public class MissileTest implements CommonValues{
 
     private Missile m;
 
