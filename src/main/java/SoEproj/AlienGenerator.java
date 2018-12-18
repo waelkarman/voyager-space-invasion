@@ -121,7 +121,7 @@ public class AlienGenerator extends Thread {
             }
                 
             try {
-                Thread.sleep(120*1000/ALIEN_NUM);
+                Thread.sleep(12*1000/ALIEN_NUM);
             } catch (InterruptedException e) {
                 System.out.println("AlienGenerator sleep: " + e);
             }

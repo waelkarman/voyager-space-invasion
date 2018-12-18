@@ -586,8 +586,13 @@ private void story(int stage){
 
     //Outcome is passed to the panel to draw the right image (game won or game lost)
     public void EndGameFunction(int outcome) {
+        
         if(mumZero != null)
             mumZero.stopMusic();
+        Boolean MusicState = isMusicOn;
+        isMusicOn = false;
+
+
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
 
@@ -599,7 +604,7 @@ private void story(int stage){
             }
         }
 
-        GameEndPanel gep = new GameEndPanel(outcome, menuPanel, finalScore, isMusicOn);
+        GameEndPanel gep = new GameEndPanel(outcome, menuPanel, finalScore, MusicState);
         old.add(gep).requestFocusInWindow();
         old.validate();
         old.repaint();

@@ -127,7 +127,7 @@ public class SettingPanel extends javax.swing.JPanel {
         jLabel10.setText("I Satanassi Infernali");
 
         jLabel11.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel11.setIcon(new javax.swing.ImageIcon("C:/Users/aless/Documents/NetBeansProjects/SoE-Voyager_on_the_edge_of_the_solar_system_v2/src/main/java/SoEproj/Resource/logo1-5.png")); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/logo1-5.png")); // NOI18N
 
         jRadioButton5.setBackground(new java.awt.Color(0, 0, 102));
         buttonGroup2.add(jRadioButton5);
@@ -176,16 +176,17 @@ public class SettingPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:/Users/aless/Documents/NetBeansProjects/SoE-Voyager_on_the_edge_of_the_solar_system_v2/src/main/java/SoEproj/Resource/canadian_notebook_!-3.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/canadian_notebook_!-3.png")); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:/Users/aless/Documents/NetBeansProjects/SoE-Voyager_on_the_edge_of_the_solar_system_v2/src/main/java/SoEproj/Resource/canadian_notebook_0.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/canadian_notebook_0.png")); // NOI18N
 
         jLabel16.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel16.setIcon(new javax.swing.ImageIcon("C:/Users/aless/Documents/NetBeansProjects/SoE-Voyager_on_the_edge_of_the_solar_system_v2/src/main/java/SoEproj/Resource/ON_Icon_1.png")); // NOI18N
+        jLabel16.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/ON_Icon_1.png")); // NOI18N
 
-        jLabel17.setIcon(new javax.swing.ImageIcon("C:/Users/aless/Documents/NetBeansProjects/SoE-Voyager_on_the_edge_of_the_solar_system_v2/src/main/java/SoEproj/Resource/OFF_Icon_1.png")); // NOI18N
+        jLabel17.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OFF_Icon_1.png")); // NOI18N
 
-        jButton1.setText("M\nE\nN\nU\n");
+        jButton1.setBackground(new java.awt.Color(255, 255, 102));
+        jButton1.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/MENU set_1.png")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -226,7 +227,7 @@ public class SettingPanel extends javax.swing.JPanel {
                                 .addComponent(jLabel10)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 305, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel15)
@@ -236,8 +237,8 @@ public class SettingPanel extends javax.swing.JPanel {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel11)
-                                .addGap(18, 18, Short.MAX_VALUE)
-                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jSeparator1)
@@ -323,12 +324,12 @@ public class SettingPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
