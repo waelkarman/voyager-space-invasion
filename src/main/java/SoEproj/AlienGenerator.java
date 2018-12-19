@@ -18,6 +18,7 @@ public class AlienGenerator extends Thread {
     private Random r;
     private int range;          // range in which an alien can appear
     private boolean running;
+    private int time;
 
     public AlienGenerator(int B_WIDTH, int B_HEIGHT, List<Alien> aliens, int level) {
         this.B_WIDTH = B_WIDTH;
@@ -27,6 +28,10 @@ public class AlienGenerator extends Thread {
         this.running = true;
         this.range = B_HEIGHT - B_SCORE_SPACE;
         this.r = new Random();
+        if (level == 2)
+            this.time = 80;
+        else
+            this.time = 120;
 	}
 
     public void setLevel(int level){
@@ -121,7 +126,7 @@ public class AlienGenerator extends Thread {
             }
                 
             try {
-                Thread.sleep(120*1000/ALIEN_NUM);
+                Thread.sleep(time*1000/ALIEN_NUM);
             } catch (InterruptedException e) {
                 System.out.println("AlienGenerator sleep: " + e);
             }

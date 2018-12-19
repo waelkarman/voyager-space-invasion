@@ -5,15 +5,13 @@ import java.util.List;
 
 
 public class Boss3Level extends Alien implements Runnable{
-
-    // TODO Cambiare immagine boss1
     private String imagePath = "./src/main/java/SoEproj/Resource/Boss3Image.gif";
     private boolean goDown = true;          // to set boss go at first down and then up
     private final int TOT_LIFE = life;
     private List<Alien> aliens;
 
     public Boss3Level(int x, int y, List<Alien> aliens) {
-        super(x, y, 20);
+        super(x, y, 30);
         this.aliens = aliens;
         SPACE = 3/2;
         super.points = 800;

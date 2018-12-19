@@ -15,8 +15,6 @@ public class SpaceShip extends Sprite {
     private final File g_r_sound;
     private final File FireballSound;
 
-        
-
     private float dx;
     private float dy;
     protected List<Missile> missiles;

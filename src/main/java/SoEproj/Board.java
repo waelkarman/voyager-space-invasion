@@ -25,8 +25,8 @@ public class Board extends JPanel implements Runnable {
 
     protected final int B_WIDTH = 590;
     protected final int B_HEIGHT = 435;
-    protected final int DELAY = 15;
-    protected final double BG_SPEED = 0.3;    // background speed
+    protected final int DELAY = 15;             // refresh rate in millis
+    protected final double BG_SPEED = 0.3;      // background speed
 
     protected final ImageIcon alienExpl;
     protected final ImageIcon shipExpl;
@@ -172,7 +172,7 @@ public void setInterStage(int n){
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void DrawShipAndMissiles(Graphics g) {
+    private void drawShipAndMissiles(Graphics g) {
         for(int i=0; i<spaceShips.size(); i++){
             SpaceShip ship = spaceShips.get(i);
             
@@ -192,7 +192,7 @@ public void setInterStage(int n){
         }
     }
 
-    private void DrawPacks(Graphics g) {
+    private void drawPacks(Graphics g) {
         synchronized(packs) {
             for(UpgradePack pack : packs) {
                 if (pack.isVisible())
@@ -203,7 +203,7 @@ public void setInterStage(int n){
         } 
     }
 
-    private void DrawAliensAndMissiles(Graphics g){
+    private void drawAliensAndMissiles(Graphics g){
         synchronized(aliens) {              // they are drawn only if they have not been previously destroyed.
             for (Alien alien : aliens) {
                 if (alien.isVisible()) {
@@ -222,7 +222,7 @@ public void setInterStage(int n){
         }        
     }
 
-    private void DrawScores(Graphics g){
+    private void drawScores(Graphics g){
         g.setColor(Color.WHITE); // In the top-left corner of the window, we draw how many aliens are left.
         int yPos = 15;
         int xPos = 5;
@@ -238,7 +238,7 @@ public void setInterStage(int n){
         }
     }
 
-    private void DrawBackground(Graphics g){
+    private void drawBackground(Graphics g){
         if (bgShiftX > background.getWidth(null)) {
             bgShiftX = 0;
         } else {
@@ -249,12 +249,12 @@ public void setInterStage(int n){
     }
 
     protected void drawInterface(Graphics g) {
-        DrawBackground(g);          //stampa sfondo mobile    
-        DrawShipAndMissiles(g);     //stampa spaceship e missili per spaceship
-        DrawAliensAndMissiles(g);   //stampa alieni e missili da essi sparati 
-        DrawScores(g);              //stampa score 
-        DrawPacks(g);               //stampa di tutti i pacchetti
-        GameOverCondition();
+        drawBackground(g);          //stampa sfondo mobile    
+        drawShipAndMissiles(g);     //stampa spaceship e missili per spaceship
+        drawAliensAndMissiles(g);   //stampa alieni e missili da essi sparati 
+        drawScores(g);              //stampa score 
+        drawPacks(g);               //stampa di tutti i pacchetti
+        gameOverCondition();
     }
 
 //-------------------------END GRAPHICS METHODS---------------------------->
@@ -569,7 +569,7 @@ private void story(int stage){
         }
     }
 
-    private void GameOverCondition(){   //GAME OVER se tutte le space ship sono morte
+    private void gameOverCondition(){   //GAME OVER se tutte le space ship sono morte
         Boolean alive = false;
         synchronized(spaceShips){    
             for(int i = 0; i < spaceShips.size(); i++){

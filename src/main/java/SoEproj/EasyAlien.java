@@ -11,7 +11,7 @@ public class EasyAlien extends Alien {
 
     public EasyAlien(int x, int y) {
         super(x, y, 1);             // 1 is the life
-        SPACE = 1;
+        SPACE = 3/2;
         points = 50;
         this.moveType = "";
 
