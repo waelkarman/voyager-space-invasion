@@ -55,7 +55,7 @@ public class HardAlienTest implements CommonValues{
     @Test
     public void testFire() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -46,6 +46,11 @@ public class HardAlien extends Alien implements Runnable{
     
     @Override
     public void run() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.out.println("Thread Hard Alien: " + e.getMessage());
+        }
         while(isVisible()){
             try {
                 fire();
