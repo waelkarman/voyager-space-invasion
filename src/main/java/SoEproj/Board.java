@@ -23,6 +23,7 @@ import javax.swing.SwingUtilities;
 
 public class Board extends JPanel implements Runnable {
 
+    protected final int TIME_LEVEL = 60;
     protected final int B_WIDTH = 590;
     protected final int B_HEIGHT = 435;
     protected final int DELAY = 15;             // refresh rate in millis
@@ -266,7 +267,7 @@ private void story(int stage){
             lock = true;
             aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
-            interStage(120,0);
+            interStage(TIME_LEVEL,0);
         }else if(interstage == 0 && !interstageEnd){
             aliensGen.Shutdown();
             setStage(1);
@@ -294,7 +295,7 @@ private void story(int stage){
             setBackground();
             aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
-            interStage(120,1);
+            interStage(TIME_LEVEL,1);
             
         }else if(interstage == 1 && !interstageEnd){
             aliensGen.Shutdown();
@@ -323,7 +324,7 @@ private void story(int stage){
             setBackground();
             aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
             aliensGen.start();
-            interStage(120,2);
+            interStage(TIME_LEVEL,2);
             
         }else if(interstage == 2 && !interstageEnd){
             aliensGen.Shutdown();

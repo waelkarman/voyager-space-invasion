@@ -1,7 +1,6 @@
 package SoEproj;
 
 
-import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -12,7 +11,6 @@ import java.io.File;
 public class GameMainMenu extends javax.swing.JFrame {
 
     private Image iconWindows;
-    private Image background;
     private int ship;
     private boolean music;
     private int keyModality;
@@ -24,7 +22,6 @@ public class GameMainMenu extends javax.swing.JFrame {
             initComponents();
             initUI();
             loadWindowsIcon();
-            loadBackground();
             
             menuMusic = new File("./src/main/java/SoEproj/Resource/MusicMenu.wav");
             mumZero = new MusicManager(menuMusic);
@@ -49,16 +46,6 @@ public class GameMainMenu extends javax.swing.JFrame {
     private void loadWindowsIcon() {
         ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/ico.png");
         iconWindows = ii.getImage();         
-    }
-    
-    private void loadBackground(){
-        ImageIcon ii = new ImageIcon("./src/main/java/SoEproj/Resource/MenuBackground.jpg");
-        background = ii.getImage();
-    }
-    
-    private void drawBackground(Graphics g){
-        loadBackground();
-        g.drawImage(background, 0, 0, null);
     }
 
     /**
