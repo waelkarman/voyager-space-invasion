@@ -26,7 +26,7 @@ public class Boss3Level extends Alien implements Runnable{
     
     @Override
     public void move() {            // Boss enters in scene and then moves up and down
-        if (x >= B_WIDTH - 50) {
+        if (x > B_WIDTH - 50) {
             x -= SPACE;
         }
         else {

@@ -2,6 +2,7 @@ package SoEproj;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -16,6 +17,7 @@ public class Boss1LevelTest implements CommonValues{
 
     @Before
     public void initAlien() {
+        aliens = new ArrayList<Alien>();
         boss = new Boss1Level(B_WIDTH, 150, aliens);
     }
     
@@ -29,8 +31,8 @@ public class Boss1LevelTest implements CommonValues{
 
     @Test
     public void testDefaultValue() {
-        assertEquals(boss.getLife(), 2);
-        assertEquals(boss.getPoints(), 100);
+        assertEquals(boss.getLife(), 20);
+        assertEquals(boss.getPoints(), 800);
         assertNotNull(boss.getMissiles());
         assertNotNull(boss.getSPACE());
         assertNotNull(boss.getShape());
@@ -41,17 +43,24 @@ public class Boss1LevelTest implements CommonValues{
 
     @Test
     public void testMove() {
+        while (boss.getX() > B_WIDTH - 50) {
+            boss.move();
+        }
+        assertEquals(boss.getX(), B_WIDTH - 50);
+        assertEquals(boss.getY(), 150);
+        
         boss.move();
-        assertEquals(boss.getX(), B_WIDTH - 3/2);
+
         assertNotEquals(boss.getY(), 150);
     }
 
 
-    @Test(timeout = 5000)
+    @Test
     public void testIsDying() {
-        while(boss.getX() >= 0)
-            boss.move();
+        
+        assertFalse(boss.isDying());
 
+        boss.setDying(true);
         assertTrue(boss.isDying());
     }
 
@@ -59,7 +68,7 @@ public class Boss1LevelTest implements CommonValues{
     @Test
     public void testFire() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(6000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -67,5 +76,4 @@ public class Boss1LevelTest implements CommonValues{
             assertTrue(boss.getMissiles().size() > 0);
         }
     }
-
 }
