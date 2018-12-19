@@ -106,7 +106,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OrangeCraft.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png")); // NOI18N
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jRadioButton4.setBackground(new java.awt.Color(0, 0, 102));
@@ -152,22 +152,22 @@ public class GameOptionPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setBackground(new java.awt.Color(255, 255, 102));
-        jButton1.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/START game_1.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\START game_1.png")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/RedCraft.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png")); // NOI18N
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GreenCraft.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png")); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround1_Logo.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround1_Logo.png")); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround2_Logo.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround2_Logo.png")); // NOI18N
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround3_Logo.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround3_Logo.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -265,19 +265,19 @@ public class GameOptionPanel extends javax.swing.JPanel {
 
     private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked
         jTextArea1.setText(null);
-        jTextArea1.setText("Selezione navicella arancione");
+        jTextArea1.setText("The orange spacecraft travels thanks to propellers powered\nby nitrous oxide, it leaves a trail of blue color when it is moving");
         ship=2;
     }//GEN-LAST:event_jRadioButton1MouseClicked
 
     private void jRadioButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton2MouseClicked
         jTextArea1.setText(null);
-        jTextArea1.setText("Selezione navicella rossa");
+        jTextArea1.setText("The red spacecraft is equipped with a propeller over-powered\nby a mixture of gases that release a purple and blue trail");
         ship=3;
     }//GEN-LAST:event_jRadioButton2MouseClicked
 
     private void jRadioButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton3MouseClicked
        jTextArea1.setText(null);
-       jTextArea1.setText("Selezione navicella verde");
+       jTextArea1.setText("The green spacecraft is powered by highly recyclable material\nand its flame is bright red, with yellow sparks");
        ship=1;
     }//GEN-LAST:event_jRadioButton3MouseClicked
 
@@ -294,19 +294,19 @@ public class GameOptionPanel extends javax.swing.JPanel {
 
     private void jRadioButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton4MouseClicked
        jTextArea1.setText(null);
-       jTextArea1.setText("Parti da Mondo 1");
+       jTextArea1.setText("The place farthest from the Earth, populated only by stars\n and nebulae. Strange creatures roam this side of the Solar \nSystem,but there is no trace of the house.");
        level=1;
     }//GEN-LAST:event_jRadioButton4MouseClicked
 
     private void jRadioButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton5MouseClicked
        jTextArea1.setText(null);
-       jTextArea1.setText("Parti da Mondo 2");
+       jTextArea1.setText("Visiting the unexplored space passes through the desolate\nlands of uninhabited planets, no form of life known to man\nresides in these areas, which have become the home of even\nmore brutal alien forms");
        level=2;
     }//GEN-LAST:event_jRadioButton5MouseClicked
 
     private void jRadioButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton6MouseClicked
        jTextArea1.setText(null);
-       jTextArea1.setText("Parti da Mondo 3");
+       jTextArea1.setText("The Earth is now near, returning home is no longer a mirage,\nnow it is very short. However, the exploration of the Solar\nSystem has attracted the attention of some truly strong alien\nforms. Will you be able to see your house again?");
        level=3;
     }//GEN-LAST:event_jRadioButton6MouseClicked
 

@@ -463,27 +463,18 @@ private void story(int stage){
                 for (Alien alien : aliens) {
                     alienHitbox = alien.getShape();
                     alienHitbox.intersect(shipHitbox);
-                    if (!alienHitbox.isEmpty() && !alien.isDying()) {   // intersection is empty if shapes aren't collided
-                        alien.setDying(true);
-                        ship.setDying(true);
+                    if (!alienHitbox.isEmpty() && !alien.isDying() && !ship.isDying()) {   // intersection is empty if shapes aren't collided
                         alien.setImage(alienExpl.getImage());
                         ship.setImage(shipExpl.getImage());
-
-                        if(ship.getLife() <= 0){
-                            synchronized(ship){
-                                ship.setDying(true);
-                                ship.setImage(shipExpl.getImage());
-                            }
+                        alien.setDying(true);
+                        ship.setDying(true);
+                        
+                        if(isMusicOn){
                             
-                            if(isMusicOn){
-                            
-                                MusicManager mumTwo = new MusicManager(bossHitSound);
+                                MusicManager mumTwo = new MusicManager(shipExplSound);
                                 mumTwo.startMusic();
 
                             }
-                            
-                        }
-
                     }
 
                     synchronized (alien) {          // checking collisions between alien missiles and spaceship
@@ -491,23 +482,20 @@ private void story(int stage){
                         for (Missile missile : alienMissiles) {
                             missileHitbox = missile.getShape();
                             missileHitbox.intersect(shipHitbox);
-                            if (!missileHitbox.isEmpty() && missile.isVisible()) {     // intersection is empty if shapes aren't collided
+                            if (!missileHitbox.isEmpty() && missile.isVisible() && !ship.isDying()) {     // intersection is empty if shapes aren't collided
                                 ship.setupLife(-1);
                                 missile.setVisible(false);
-
-                                if(ship.getLife() <= 0){
-                                    synchronized(ship){
-                                        ship.setDying(true);
-                                        ship.setImage(shipExpl.getImage());
-                                    }
-                                    if(isMusicOn) {
+                                
+                                if(isMusicOn) {
                                     
                                         MusicManager mumThree = new MusicManager(shipExplSound);
                                         mumThree.startMusic();
-                                    }
+                                }
+                                if(ship.getLife() <= 0){
+                                        ship.setImage(shipExpl.getImage());
+                                        ship.setDying(true);
                                 }
                             }
-
                         }
                     }
 
