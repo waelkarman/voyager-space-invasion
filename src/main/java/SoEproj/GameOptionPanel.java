@@ -106,7 +106,7 @@ public class GameOptionPanel extends javax.swing.JPanel {
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 102));
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\OrangeCraft.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OrangeCraft.png")); // NOI18N
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jRadioButton4.setBackground(new java.awt.Color(0, 0, 102));
@@ -152,22 +152,22 @@ public class GameOptionPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setBackground(new java.awt.Color(255, 255, 102));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\START game_1.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/START game_1.png")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\RedCraft.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/RedCraft.png")); // NOI18N
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\GreenCraft.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/GreenCraft.png")); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround1_Logo.png")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround1_Logo.png")); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround2_Logo.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround2_Logo.png")); // NOI18N
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\BackGround3_Logo.png")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/BackGround3_Logo.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

@@ -55,7 +55,7 @@ public class PausePanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(0, 0, 102));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 102));
-        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\MENU_1.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/MENU_1.png")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -70,19 +70,19 @@ public class PausePanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\OFF_Icon_1.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/OFF_Icon_1.png")); // NOI18N
 
         jButton2.setBackground(new java.awt.Color(255, 255, 102));
-        jButton2.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\RESUME_1.png")); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/RESUME_1.png")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\PauseLabel.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/PauseLabel.png")); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\aless\\Documents\\NetBeansProjects\\SoE-Voyager_on_the_edge_of_the_solar_system_v2\\src\\main\\java\\SoEproj\\Resource\\VoyagerPauseIcon.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("./src/main/java/SoEproj/Resource/VoyagerPauseIcon.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

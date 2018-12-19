@@ -25,7 +25,7 @@ public class ScoreEntry implements Comparable<ScoreEntry>, Serializable {
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
         String date = LocalDate.now().format(formatter);
         return String.format("%15s%10d%12s", name, score, date);
         //return "Player: " + name + ",\tScore: " + score;
