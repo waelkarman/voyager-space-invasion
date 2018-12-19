@@ -164,7 +164,6 @@ public void setInterStage(int n){
         super.paintComponent(g);
         if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
             drawInterface(g);
-            interStage(g);
         }
         else if(gameState == GameStateEnum.GAME_LOST) {   // draw game over background gif after the lose condition
             EndGameFunction(0);     // passing 0 to draw game over background
@@ -260,23 +259,6 @@ public void setInterStage(int n){
 //-------------------------END GRAPHICS METHODS---------------------------->
     
 //--------------------------LEVEL SWITCHER--------------------------------->
-private void interStage(Graphics g) {
-    if(interstage == 0){            //AGGIUNGI ALIENI PER 2 MIN 
-        ;//System.out.println("LEV 1 - SCONTRO CON ALIENI"); 
-    }
-
-    if(interstage == 1){            //AGGIUNGI ALIENI PER 2 MIN 
-        ;//System.out.println("LEV 2 - SCONTRO CON ALIENI"); 
-    }
-
-    if(interstage == 2){            //AGGIUNGI ALIENI PER 2 MIN 
-        ;//System.out.println("LEV 3 - SCONTRO CON ALIENI"); 
-    }
-
-    if(interstage == 3){            
-        ;//System.out.println("YOU WIN!");
-    }
-}
 
 private void story(int stage){
     if(stage == 0){
