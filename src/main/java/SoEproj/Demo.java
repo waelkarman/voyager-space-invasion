@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -528,7 +529,7 @@ public class Demo extends Board implements Runnable {
                     lock = false;
                     interstageEnd = true;
                     gameState = GameStateEnum.GAME_LOST;
-                    EndGameFunction(0);
+                    EndGameFunction();
                 }
             }
 
@@ -536,19 +537,22 @@ public class Demo extends Board implements Runnable {
 
     }
 
+
+
     public void EndGameFunction() {
-        if(mumZero != null)
-            mumZero.stopMusic();   
         
+        if(mumZero != null)
+            mumZero.stopMusic();      
         GameMainMenu old = (GameMainMenu) SwingUtilities.getWindowAncestor(this);        
         old.getContentPane().remove(this);
         old.add(menuPanel);
         if(isMusicOn)
             old.startMusic();
+        Demo.resetDemo();
         old.validate();
         old.repaint();
-        resetDemo();
     }
+
 
     public void setInterStage(int n){
         this.interstage = n;
