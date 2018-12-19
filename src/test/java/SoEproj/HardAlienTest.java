@@ -17,24 +17,26 @@ public class HardAlienTest implements CommonValues{
     
 
     @Test
-    public void checkCoordinates() {
+    public void testCoordinates() {
         assertEquals(alien.getX(), B_WIDTH);
         assertEquals(alien.getY(), 150);
     }
 
 
     @Test
-    public void checkDefaultValue() {
+    public void testDefaultValue() {
         assertEquals(alien.getLife(), 2);
         assertEquals(alien.getPoints(), 100);
         assertNotNull(alien.getMissiles());
         assertNotNull(alien.getSPACE());
         assertNotNull(alien.getShape());
+        assertTrue(alien.isVisible());
+        assertFalse(alien.isDying());
     }
 
 
     @Test
-    public void checkMove() {
+    public void testMove() {
         alien.move();
         assertEquals(alien.getX(), B_WIDTH - 3/2);
         assertNotEquals(alien.getY(), 150);
@@ -42,7 +44,7 @@ public class HardAlienTest implements CommonValues{
 
 
     @Test(timeout = 5000)
-    public void checkIsDying() {
+    public void testIsDying() {
         while(alien.getX() >= 0)
             alien.move();
 
@@ -51,7 +53,7 @@ public class HardAlienTest implements CommonValues{
 
 
     @Test
-    public void checkFire() {
+    public void testFire() {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

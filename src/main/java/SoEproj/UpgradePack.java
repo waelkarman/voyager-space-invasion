@@ -10,13 +10,16 @@ import java.util.TimerTask;
 public class UpgradePack extends Sprite{
 
     private int type;
-    private Timer t;
-    private TimerTask task;
+    private Timer timerAmmo;
+    private Timer timerSpeed;
+    private TimerTask taskAmmo;
+    private TimerTask taskSpeed;
 
     public UpgradePack(int x, int y, int randomUpgrade) {
         super(x, y);
         SPACE = 1;
-        this.t = new Timer();
+        this.timerAmmo = new Timer();
+        this.timerSpeed = new Timer();
 
         setPackIcon(randomUpgrade);
     }
@@ -73,17 +76,21 @@ public class UpgradePack extends Sprite{
     }
 
     private void scheduleResetUpgrade(SpaceShip s){
-        t.cancel();
-        t = new Timer();
-        task = new ResetUpgradeAmmo(s);
-        t.schedule(task, 10 * 1000);
+        if(taskAmmo != null)
+            taskAmmo.cancel();
+        timerAmmo.cancel();
+        timerAmmo = new Timer();
+        taskAmmo = new ResetUpgradeAmmo(s);
+        timerAmmo.schedule(taskAmmo, 10 * 1000);
     }
 
     private void scheduleResetSpace(SpaceShip s, float space){
-        t.cancel();
-        t = new Timer();
-        task = new ResetUpgradeSpace(s, space);
-        t.schedule(task, 10 * 1000);
+        if(taskSpeed != null)
+            taskSpeed.cancel();
+        timerSpeed.cancel();
+        timerSpeed = new Timer();
+        taskSpeed = new ResetUpgradeSpace(s, space);
+        timerSpeed.schedule(taskSpeed, 10 * 1000);
     }
 
     public synchronized void updateSpaceShip(SpaceShip s) {
@@ -109,7 +116,7 @@ public class UpgradePack extends Sprite{
             }
             case 4:{
                 s.setupSPACE(3/2);
-                scheduleResetSpace(s, -3/2);
+                scheduleResetSpace(s, 3/2);
                 break;
             }
             case 5:{
@@ -125,11 +132,6 @@ public class UpgradePack extends Sprite{
             case 7:{
                 scheduleResetUpgrade(s);
                 s.setMissileType("VioletLaser");
-                break;
-            }
-            case 8:{
-                scheduleResetUpgrade(s);
-                s.setMissileType("pollo");
                 break;
             }
         }
@@ -156,7 +158,7 @@ public class UpgradePack extends Sprite{
 
 
     class ResetUpgradeAmmo extends TimerTask  {
-        SpaceShip s;
+        private SpaceShip s;
    
         public ResetUpgradeAmmo(SpaceShip s) {
             this.s = s;
@@ -170,8 +172,8 @@ public class UpgradePack extends Sprite{
 
 
     class ResetUpgradeSpace extends TimerTask  {
-        SpaceShip s;
-        float space;
+        private SpaceShip s;
+        private float space;
    
         public ResetUpgradeSpace(SpaceShip s, float space) {
             this.s = s;
@@ -180,7 +182,7 @@ public class UpgradePack extends Sprite{
    
         @Override
         public void run() {
-            s.setupSPACE(space);
+            s.setSPACE(space);
         }
     }
 }

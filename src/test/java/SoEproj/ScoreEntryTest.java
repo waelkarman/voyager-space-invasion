@@ -18,22 +18,22 @@ public class ScoreEntryTest {
     }
     
     @Test
-    public void getNameTest() {
+    public void testGetName() {
         assertEquals(score1.getName(), score2.getName());
     }
 
     @Test
-    public void getScoreTest() {
+    public void testGetScore() {
         assertEquals(score2.getScore(), score3.getScore());
     }
 
     @Test
-    public void toStringTest() {
+    public void testToString() {
         assertEquals(score1.toString(), score4.toString());
     }
 
     @Test
-    public void compareToTest() {
+    public void testCompareTo() {
         assertNotEquals(score2.compareTo(score4), 0);
     }
 }

@@ -20,7 +20,7 @@ public class SpaceShip extends Sprite {
     private float dx;
     private float dy;
     protected List<Missile> missiles;
-    private Boolean firing = false;
+    private Boolean firing;
     private String missileType; // set damage, speed and image
     private boolean music;
     private Thread shipMissileFire;
@@ -39,6 +39,7 @@ public class SpaceShip extends Sprite {
         this.SPACE = 3/2;       // speed
         this.music = music;
         this.keyModality = km;
+        this.firing = false;
         setColor(color);        // spaceship color: 1-Green, 2-Orange, 3-Red
 
         laserSound = new File("./src/main/java/SoEproj/Resource/LaserSound.wav");
@@ -49,40 +50,26 @@ public class SpaceShip extends Sprite {
         shipMissileFire.start();
     }
 
-    //TODO private method cannt be tested with junit
-    //Don't test private methods.
-    //Give the methods package access.
-    //Use a nested test class.
-    //Use reflection.
-
-    public int getScore() {
-        return this.score;
-    }
-
-    public void setupScore(int points){
-        this.score += points ;
-    }
 
     public synchronized boolean ForceMove(int pos_x, int pos_y){
         boolean posizione = true;
         dx = 0;
         dy = 0; 
         
-        if(this.getX()>pos_x && abs(pos_x-this.getX())>SPACE ){
+        if(this.getX() > pos_x && Math.abs(pos_x-this.getX()) > SPACE ){
             dx = -SPACE;
             posizione = false;
         }
-        if(this.getX()<pos_x && abs(pos_x-this.getX())>SPACE){
+        if(this.getX() < pos_x && Math.abs(pos_x-this.getX()) > SPACE){
             dx = +SPACE;
             posizione = false;
         }
         
-        
-        if(this.getY()>pos_y && abs(pos_y-this.getY())>SPACE){
+        if(this.getY() > pos_y && Math.abs(pos_y-this.getY()) > SPACE){
             dy = -SPACE;
             posizione = false;
         }
-        if(this.getY()<pos_y && abs(this.getY()-pos_y)>SPACE){
+        if(this.getY() < pos_y && Math.abs(this.getY()-pos_y) > SPACE){
             dy = +SPACE;
             posizione = false;
         }
@@ -90,16 +77,6 @@ public class SpaceShip extends Sprite {
         return posizione;
     }
 
-    private int abs(int a) {
-        if(a >= 0)
-        {  
-            return a;
-        }
-        else
-        {  
-            return -a;
-        }
-    }
 
     private void setColor(int color) {
         String pathImage = "";
@@ -130,14 +107,22 @@ public class SpaceShip extends Sprite {
     public synchronized int getLife() {
         return this.life;
     }
+    
+    public int getScore() {
+        return this.score;
+    }
+
+    public void setupScore(int points){
+        this.score += points ;
+    }
 
     public void setupSPACE(float SPACE) {
-        if(this.SPACE<4)
+        if(this.SPACE<4 || SPACE < 0)
             this.SPACE += SPACE;
     }
 
     public synchronized void setupLife(int life) {
-        if(this.life < 3)        // max 3 lives
+        if(this.life < 3 || life < 0)        // max 3 lives
             this.life += life;
     }
 
@@ -158,7 +143,6 @@ public class SpaceShip extends Sprite {
     }
 
     public synchronized void fire() {
-
         missiles.add(new Missile(x + width, y + height / 2, missileType, "leftToRight" ));
 
         if(missileType.equals("3Missiles")) {
@@ -167,22 +151,19 @@ public class SpaceShip extends Sprite {
         } 
         
         if(music){
-            if(missileType.equals("3Missiles") || missileType.equals("Laser")) {
+            if(missileType.equals("3Missiles") || missileType.equals("Laser"))
                 mumZero = new MusicManager(laserSound);
-                mumZero.startMusic();
-            }
-            else if(missileType.equals("GreenShoot") || missileType.equals("blueFireball")) {
+
+            else if(missileType.equals("GreenShoot") || missileType.equals("blueFireball"))
                 mumZero = new MusicManager(g_r_sound);
-                mumZero.startMusic();   
-            }
-            else if(missileType.equals("fireball")) {
+            
+            else if(missileType.equals("fireball")) 
                 mumZero = new MusicManager(FireballSound);
-                mumZero.startMusic();  
-            }
-            else{
+            
+            else
                 mumZero = new MusicManager(laserSound);
-                mumZero.startMusic();
-            }
+             
+            mumZero.startMusic();
         }
     }
 
@@ -200,14 +181,12 @@ public class SpaceShip extends Sprite {
         if(y < B_SCORE_SPACE) 
             y = B_SCORE_SPACE;
 
-        if(y > B_HEIGHT - this.height)
+        if(y + this.height > B_HEIGHT)
             y = B_HEIGHT - this.height;
     }
 
-    //TODO JUNIT all next methods is not tested
-    // TODO risolvere certe combinazioni di tasti che non funzionano (es. space+down+right)
+    
     public void keyPressed(KeyEvent e)  throws InterruptedException {
-
         int key = e.getKeyCode();
         
         if(keyModality == 1){
@@ -217,76 +196,60 @@ public class SpaceShip extends Sprite {
                     missiles.notifyAll();
                 }   
             }
-            if (key == KeyEvent.VK_A) {
+            if (key == KeyEvent.VK_A) 
                 dx = -SPACE;
-            }
-            if (key == KeyEvent.VK_D) {
+            if (key == KeyEvent.VK_D) 
                 dx = SPACE;
-            }
-            if (key == KeyEvent.VK_W) {
+            if (key == KeyEvent.VK_W) 
                 dy = -SPACE;
-            }
-            if (key == KeyEvent.VK_S) {
+            if (key == KeyEvent.VK_S) 
                 dy = SPACE;
-            }
-        }else if(keyModality == 0){
+        }
+        else if(keyModality == 0){
             if (key == KeyEvent.VK_SPACE) {
                 synchronized(missiles){
                     setFiring(true);
                     missiles.notifyAll();
                 }   
             }
-            if (key == KeyEvent.VK_LEFT) {
+            if (key == KeyEvent.VK_LEFT) 
                 dx = -SPACE;
-            }
-            if (key == KeyEvent.VK_RIGHT) {
+            if (key == KeyEvent.VK_RIGHT) 
                 dx = SPACE;
-            }
-            if (key == KeyEvent.VK_UP) {
+            if (key == KeyEvent.VK_UP) 
                 dy = -SPACE;
-            }
-            if (key == KeyEvent.VK_DOWN) {
+            if (key == KeyEvent.VK_DOWN) 
                 dy = SPACE;
-            }
         }
     }
 
-    public void keyReleased(KeyEvent e) throws InterruptedException {
 
+    public void keyReleased(KeyEvent e) throws InterruptedException {
         int key = e.getKeyCode();
         
         if(keyModality == 1){
-            if (key == KeyEvent.VK_K) { // modificato SPACE con K in modo che in caso di multi player si possa avere dei comandi separati
+            if (key == KeyEvent.VK_K)
                 setFiring(false);
-            }
-            if (key == KeyEvent.VK_A) {
+            if (key == KeyEvent.VK_A)
                 dx = 0;
-            }
-            if (key == KeyEvent.VK_D) {
+            if (key == KeyEvent.VK_D)
                 dx = 0;
-            }
-            if (key == KeyEvent.VK_W) {
+            if (key == KeyEvent.VK_W)
                 dy = 0;
-            }
-            if (key == KeyEvent.VK_S) {
+            if (key == KeyEvent.VK_S)
                 dy = 0;
-            }
-        }else if (keyModality == 0){
-            if (key == KeyEvent.VK_SPACE) {
+        }
+        else if (keyModality == 0){
+            if (key == KeyEvent.VK_SPACE)
                 setFiring(false);
-            }
-            if (key == KeyEvent.VK_LEFT) {
+            if (key == KeyEvent.VK_LEFT)
                 dx = 0;
-            }
-            if (key == KeyEvent.VK_RIGHT) {
+            if (key == KeyEvent.VK_RIGHT)
                 dx = 0;
-            }
-            if (key == KeyEvent.VK_UP) {
+            if (key == KeyEvent.VK_UP)
                 dy = 0;
-            }
-            if (key == KeyEvent.VK_DOWN) {
+            if (key == KeyEvent.VK_DOWN)
                 dy = 0;
-            }
         }
     }
 

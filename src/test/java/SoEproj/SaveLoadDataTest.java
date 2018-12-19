@@ -35,7 +35,7 @@ public class SaveLoadDataTest {
     
 
     @Test
-    public void saveDataTest() {
+    public void testSaveData() {
         assertNotEquals(data1, data2);
         data1.SaveData(list);
         data2.SaveData(list);
@@ -44,7 +44,7 @@ public class SaveLoadDataTest {
 
 
     @Test
-    public void loadDataTest() {
+    public void testLoadData() {
         assertEquals(data1.LoadData(), data2.LoadData());
     }
 
