@@ -7,8 +7,9 @@ import java.util.Random;
 
 public class AlienGenerator extends Thread {
 
+    private final int TIME_LEVEL = 60;
     private final int B_SCORE_SPACE = 30;    // space that is occupied by player's score
-    private final int ALIEN_NUM = 100;       // total amount of generated aliens (the game duration in seconds is ALIEN_NUM / 2)                      
+    private final int ALIEN_NUM = 50;       // total amount of generated aliens                  
     private final int B_WIDTH;
     
     private List<Alien> aliens;
@@ -18,7 +19,6 @@ public class AlienGenerator extends Thread {
     private Random r;
     private int range;          // range in which an alien can appear
     private boolean running;
-    private int time;
 
     public AlienGenerator(int B_WIDTH, int B_HEIGHT, List<Alien> aliens, int level) {
         this.B_WIDTH = B_WIDTH;
@@ -28,10 +28,6 @@ public class AlienGenerator extends Thread {
         this.running = true;
         this.range = B_HEIGHT - B_SCORE_SPACE;
         this.r = new Random();
-        if (level == 2)
-            this.time = 80;
-        else
-            this.time = 120;
 	}
 
     public void setLevel(int level){
@@ -126,7 +122,7 @@ public class AlienGenerator extends Thread {
             }
                 
             try {
-                Thread.sleep(time*1000/ALIEN_NUM);
+                Thread.sleep(TIME_LEVEL*1000/ALIEN_NUM);
             } catch (InterruptedException e) {
                 System.out.println("AlienGenerator sleep: " + e);
             }

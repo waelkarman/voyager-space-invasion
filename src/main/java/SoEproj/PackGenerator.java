@@ -36,7 +36,7 @@ public class PackGenerator extends Thread {
             }
 
             try {
-                randomSleep = (3 + random.nextInt(5)) * 1000;   // next box is generated after 3-8 seconds
+                randomSleep = (5 + random.nextInt(10)) * 1000;   // next box is generated after 5-15 seconds
                 Thread.sleep(randomSleep);
             } catch (InterruptedException e) {
                 System.out.println("Pack generation interrupted %s" + e.getMessage());

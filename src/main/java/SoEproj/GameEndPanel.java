@@ -51,7 +51,6 @@ public class GameEndPanel extends javax.swing.JPanel {
     public void addToScoreBoard(String name) {
         SaveLoadData sld = new SaveLoadData();
         scoreboard = sld.LoadData();
-        ScoreEntry newScore = new ScoreEntry(name, score);
         
         // A new score is inserted only if greater than 0 and greater than the last recorded score
         if (score > 0) {
