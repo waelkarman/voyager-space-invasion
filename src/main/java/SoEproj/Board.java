@@ -36,7 +36,7 @@ public class Board extends JPanel implements Runnable {
     protected final File bossHitSound;
     protected File boardSound;
 
-    private Boolean isPause;
+    protected Boolean isPause;
 
     protected boolean isMusicOn;
 
