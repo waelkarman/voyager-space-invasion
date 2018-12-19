@@ -72,7 +72,7 @@ public class Board extends JPanel implements Runnable {
         this.isMultiplayer = mp;
         this.level = level;
         // Images and soundtracks initialization
-        this.isMusicOn = m;          // TODO music may change in each level
+        this.isMusicOn = m;         
         this.menuPanel = p;
         this.keyModality = km;       // game commands switcher
         this.isPause = false;
