@@ -27,7 +27,6 @@ public class UpgradePack extends Sprite{
     private void setPackIcon(int randomUpgrade) {
         String pathImage = "";
        
-        //TODO: immagini
         switch(randomUpgrade){      //different pack color based on the upgrade type
             case 0:{
                 type = 0;   //"3Missiles";

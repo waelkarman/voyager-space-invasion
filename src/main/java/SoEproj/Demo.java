@@ -15,9 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-//TODO pulizia codice
-//TODO risolvere bug proiettili sparati e tipo
-//TODO correggere path windows in linux
 public class Demo extends Board implements Runnable {
 
     private Boolean posizionato;
@@ -79,7 +76,6 @@ public class Demo extends Board implements Runnable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // TODO Rendere gameState un enum
         if(gameState == GameStateEnum.IN_GAME) {        // draw background and game elements
             drawInterface(g);
             InterStage(g);
@@ -540,7 +536,6 @@ public class Demo extends Board implements Runnable {
 
 
     public void EndGameFunction() {
-        
         if(mumZero != null)
             mumZero.stopMusic();      
         GameMainMenu old = (GameMainMenu) SwingUtilities.getWindowAncestor(this);        

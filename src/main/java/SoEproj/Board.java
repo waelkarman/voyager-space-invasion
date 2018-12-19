@@ -136,7 +136,7 @@ public class Board extends JPanel implements Runnable {
             spaceShips.add( new SpaceShip(0, B_HEIGHT/2 + 60, shipType + 1 % 3 , isMusicOn, keyModality + 1 % 2) ); // +1 % 2 for set a different type
 
         packs = new LinkedList<UpgradePack>();
-        packsGen = new PackGenerator(background.getWidth(null),background.getHeight(null), packs);// TODO MERGE costruttore cambiato da controllare
+        packsGen = new PackGenerator(background.getWidth(null),background.getHeight(null), packs);
         packsGen.start();
 
         aliens = new ArrayList<Alien>();
@@ -366,7 +366,7 @@ private void story(int stage){
     if(stage == 6){
         if(!lock){
             lock = true;
-            EndGameFunction(1);// TODO WON condition
+            EndGameFunction(1);
         }
     }
 
