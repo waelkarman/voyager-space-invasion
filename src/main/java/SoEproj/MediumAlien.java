@@ -70,10 +70,15 @@ public class MediumAlien extends Alien implements Runnable{
 
     @Override
     public void run() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.out.println("Thread Hard Alien: " + e.getMessage());
+        }
         while(isVisible()){
             try {
                 fire();
-                Thread.sleep(8000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 System.out.println("Thread Medium Alien: " + e.getMessage());
             }

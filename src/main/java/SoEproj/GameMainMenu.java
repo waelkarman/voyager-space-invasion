@@ -252,7 +252,7 @@ public class GameMainMenu extends javax.swing.JFrame {
         else
             mulMode = false;
     }//GEN-LAST:event_jCheckBox1ActionPerformed
-
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         mumZero.stopMusic();
         JPanel principalPanel = this.jPanel1;
