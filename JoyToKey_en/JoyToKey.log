@@ -1,45 +1,39 @@
-2018/12/20 09:37:34.763 Info   C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
-2018/12/20 09:37:34.763 Info   Starting JoyToKey Ver6.1.1
-2018/12/20 09:37:34.763 Info   ExeFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
-2018/12/20 09:37:34.763 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\
-2018/12/20 09:37:34.763 Info   IniFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.ini
-2018/12/20 09:37:34.763 Info   Windows Version = 6.2
-2018/12/20 09:37:34.764 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#232)
-2018/12/20 09:37:34.765 Info   LicenseKey "" is not valid
-2018/12/20 09:37:34.841 Info   Loading XInput1_3.dll (Joystick.cpp#128)
-2018/12/20 09:37:34.843 Info   Initialized XInput (Joystick.cpp#146)
-2018/12/20 09:37:34.869 Info   Detected a DI joystick: {7017C020-0381-11E9-8001-444553540000}, USB Gamepad , USB Gamepad 
-2018/12/20 09:37:34.869 Info   Preferred index = -1
-2018/12/20 09:37:34.870 Info   numAxis = 6
-2018/12/20 09:37:34.870 Info   numPOVs = 0
-2018/12/20 09:37:34.870 Info   numButtons = 10
-2018/12/20 09:37:34.870 Info   EnumDeviceObject: Axis offset=0 type=102 name=Asse Y
-2018/12/20 09:37:34.870 Info   EnumDeviceObject: Axis offset=4 type=2 name=Asse X
-2018/12/20 09:37:34.870 Info   EnumDeviceObject: Axis offset=8 type=602 name=Asse X
-2018/12/20 09:37:34.870 Info   EnumDeviceObject: Axis offset=12 type=702 name=Asse X
-2018/12/20 09:37:34.870 Info   EnumDeviceObject: Axis offset=16 type=802 name=Asse X
-2018/12/20 09:37:34.870 Info   EnumDeviceObject: Axis offset=20 type=902 name=Asse 9
-2018/12/20 09:37:34.872 Info   Detected a DI joystick: {DEC7EF90-043A-11E9-8001-444553540000}, USB Gamepad , USB Gamepad 
-2018/12/20 09:37:34.873 Info   Preferred index = -1
-2018/12/20 09:37:34.874 Info   numAxis = 6
-2018/12/20 09:37:34.874 Info   numPOVs = 0
-2018/12/20 09:37:34.874 Info   numButtons = 10
-2018/12/20 09:37:34.874 Info   EnumDeviceObject: Axis offset=0 type=102 name=Asse Y
-2018/12/20 09:37:34.874 Info   EnumDeviceObject: Axis offset=4 type=2 name=Asse X
-2018/12/20 09:37:34.874 Info   EnumDeviceObject: Axis offset=8 type=602 name=Asse X
-2018/12/20 09:37:34.874 Info   EnumDeviceObject: Axis offset=12 type=702 name=Asse X
-2018/12/20 09:37:34.874 Info   EnumDeviceObject: Axis offset=16 type=802 name=Asse X
-2018/12/20 09:37:34.874 Info   EnumDeviceObject: Axis offset=20 type=902 name=Asse 9
-2018/12/20 09:37:34.875 Info   DetectJoysticks: Detected 2 DI joystick(s)
-2018/12/20 09:37:34.878 Info   Joystick #1: USB Gamepad
-2018/12/20 09:37:34.878 Info   Joystick #2: USB Gamepad
-2018/12/20 09:37:34.878 Info   2 joysticks are detected (Joystick.cpp#168)
-2018/12/20 09:37:34.878 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
-2018/12/20 09:37:34.882 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
-2018/12/20 09:37:34.905 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
-2018/12/20 10:24:29.374 Info   Received PBT_APMSUSPEND: Disabling a timer... (Main.cpp#433)
-2018/12/20 10:35:39.826 Info   Received PBT_APMRESUMESUSPEND: Reinitializing joysticks... (Main.cpp#438)
-2018/12/20 10:35:39.826 Info   Loading XInput1_3.dll (Joystick.cpp#128)
-2018/12/20 10:35:39.826 Info   Initialized XInput (Joystick.cpp#146)
-2018/12/20 10:35:39.981 Info   0 joysticks are detected (Joystick.cpp#168)
-2018/12/20 10:35:40.182 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)
+2018/12/20 10:57:09.129 Info   C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
+2018/12/20 10:57:09.129 Info   Starting JoyToKey Ver6.1.1
+2018/12/20 10:57:09.129 Info   ExeFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.exe
+2018/12/20 10:57:09.129 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\
+2018/12/20 10:57:09.129 Info   IniFile=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\JoyToKey.ini
+2018/12/20 10:57:09.129 Info   Windows Version = 6.2
+2018/12/20 10:57:09.129 Info   Loaded VistaAPI.dll (Utils\Utils.cpp#232)
+2018/12/20 10:57:09.129 Info   LicenseKey "" is not valid
+2018/12/20 10:57:09.380 Info   Loading XInput1_3.dll (Joystick.cpp#128)
+2018/12/20 10:57:09.384 Info   Initialized XInput (Joystick.cpp#146)
+2018/12/20 10:57:09.412 Info   Detected a DI joystick: {7017C020-0381-11E9-8001-444553540000}, USB Gamepad , USB Gamepad 
+2018/12/20 10:57:09.412 Info   Preferred index = -1
+2018/12/20 10:57:09.412 Info   numAxis = 6
+2018/12/20 10:57:09.412 Info   numPOVs = 0
+2018/12/20 10:57:09.412 Info   numButtons = 10
+2018/12/20 10:57:09.412 Info   EnumDeviceObject: Axis offset=0 type=102 name=Asse Y
+2018/12/20 10:57:09.412 Info   EnumDeviceObject: Axis offset=4 type=2 name=Asse X
+2018/12/20 10:57:09.412 Info   EnumDeviceObject: Axis offset=8 type=602 name=Asse X
+2018/12/20 10:57:09.412 Info   EnumDeviceObject: Axis offset=12 type=702 name=Asse X
+2018/12/20 10:57:09.412 Info   EnumDeviceObject: Axis offset=16 type=802 name=Asse X
+2018/12/20 10:57:09.412 Info   EnumDeviceObject: Axis offset=20 type=902 name=Asse 9
+2018/12/20 10:57:09.420 Info   Detected a DI joystick: {DEC7EF90-043A-11E9-8001-444553540000}, USB Gamepad , USB Gamepad 
+2018/12/20 10:57:09.420 Info   Preferred index = -1
+2018/12/20 10:57:09.420 Info   numAxis = 6
+2018/12/20 10:57:09.420 Info   numPOVs = 0
+2018/12/20 10:57:09.420 Info   numButtons = 10
+2018/12/20 10:57:09.420 Info   EnumDeviceObject: Axis offset=0 type=102 name=Asse Y
+2018/12/20 10:57:09.420 Info   EnumDeviceObject: Axis offset=4 type=2 name=Asse X
+2018/12/20 10:57:09.420 Info   EnumDeviceObject: Axis offset=8 type=602 name=Asse X
+2018/12/20 10:57:09.420 Info   EnumDeviceObject: Axis offset=12 type=702 name=Asse X
+2018/12/20 10:57:09.420 Info   EnumDeviceObject: Axis offset=16 type=802 name=Asse X
+2018/12/20 10:57:09.420 Info   EnumDeviceObject: Axis offset=20 type=902 name=Asse 9
+2018/12/20 10:57:09.420 Info   DetectJoysticks: Detected 2 DI joystick(s)
+2018/12/20 10:57:09.424 Info   Joystick #1: USB Gamepad
+2018/12/20 10:57:09.424 Info   Joystick #2: USB Gamepad
+2018/12/20 10:57:09.424 Info   2 joysticks are detected (Joystick.cpp#168)
+2018/12/20 10:57:09.424 Info   ConfigDir=C:\Users\waelk\MEGA\GitRepos\SoE\SoE-Voyager_on_the_edge_of_the_solar_system\JoyToKey_en\*.cfg (ConfigFileManager.cpp#43)
+2018/12/20 10:57:09.444 Info   Failed to find AppLink.dat (AppLink\AppLinkManager.cpp#32)
+2018/12/20 10:57:09.480 Info   TimerInit: Initializing timer with x1 speed mode (interval = 16 msec)

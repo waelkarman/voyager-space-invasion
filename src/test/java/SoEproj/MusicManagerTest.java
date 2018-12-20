@@ -47,7 +47,6 @@ public class MusicManagerTest {
             inputStream = AudioSystem.getAudioInputStream(f2);
             assertEquals(inputStream, muM2.getStream());
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         

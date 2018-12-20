@@ -31,7 +31,7 @@ public class Boss3LevelTest implements CommonValues{
 
     @Test
     public void testDefaultValue() {
-        assertEquals(boss.getLife(), 20);
+        assertEquals(boss.getLife(), 120);
         assertEquals(boss.getPoints(), 800);
         assertNotNull(boss.getMissiles());
         assertNotNull(boss.getSPACE());
