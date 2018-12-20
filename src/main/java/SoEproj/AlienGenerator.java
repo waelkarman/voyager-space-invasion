@@ -61,12 +61,12 @@ public class AlienGenerator extends Thread {
                     ref = 0;
                 } else
                     aliens.add(new HardAlien(x, h)); 
-                
                 break;
         }
 
         ref++;
     }
+
 
     public void generateAliens() {
         int x = B_WIDTH;
@@ -84,10 +84,10 @@ public class AlienGenerator extends Thread {
                 } else
                     aliens.add(new MediumAlien(x, h));
                 break;
-
+            
             case 3: // lev. 3 : HardAliens and MediumAliens, ratio 2:1
                 if (ref % 3 == 0) {
-                    aliens.add(new MediumAlien(x, h));
+                    //aliens.add(new MediumAlien(x, h));
                     ref = 0;
                 } else
                     aliens.add(new HardAlien(x, h)); 

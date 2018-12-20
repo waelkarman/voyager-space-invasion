@@ -136,6 +136,10 @@ public class SpaceShip extends Sprite {
         this.missileType = missiletype;
     }
 
+    public synchronized String getMissileType() {
+        return this.missileType;
+    }
+
     public synchronized  List<Missile> getMissiles() {
         return missiles;
     }

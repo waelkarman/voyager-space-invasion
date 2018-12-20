@@ -141,6 +141,10 @@ public class UpgradePack extends Sprite{
         return this.type;
     }
 
+    public synchronized void setType(int type) {
+        this.type = type;
+    }
+
     public void move() {   
         x -= SPACE;
 

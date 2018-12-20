@@ -13,7 +13,7 @@ public class HardAlien extends Alien implements Runnable{
     public HardAlien(int x, int y) {
         super(x, y, 2);
         meanY = y;
-        SPACE = 3/2;
+        SPACE = 2;
         amplitude = 50;
         super.points = 100;
 
@@ -46,10 +46,16 @@ public class HardAlien extends Alien implements Runnable{
     
     @Override
     public void run() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            System.out.println("Thread Hard Alien: " + e.getMessage());
+        }
+
         while(isVisible()){
             try {
                 fire();
-                Thread.sleep(5000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 System.out.println("Thread Hard Alien: " + e.getMessage());
             }

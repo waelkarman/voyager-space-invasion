@@ -70,7 +70,7 @@ public class Boss1Level extends Alien implements Runnable{
                 Thread.sleep(5000);
                 if(isVisible())
                     fire();
-                if(!isVisible()){
+                else{
                     synchronized(aliens){
                         aliens.clear();
                     }

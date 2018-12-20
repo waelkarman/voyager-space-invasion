@@ -173,19 +173,21 @@ public void setInterStage(int n){
     }
 
     private void drawShipAndMissiles(Graphics g) {
-        for(int i=0; i<spaceShips.size(); i++){
-            SpaceShip ship = spaceShips.get(i);
-            
-            if (ship.isVisible()) {
-                g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
-                if (ship.isDying()) 
-                    ship.die();
-            }
-            synchronized(ship){
-                List<Missile> ms = ship.getMissiles();
-                for (Missile missile : ms) {
-                    if (missile.isVisible()) {
-                        g.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
+        synchronized(spaceShips) {
+            for(int i=0; i<spaceShips.size(); i++){
+                SpaceShip ship = spaceShips.get(i);
+                
+                if (ship.isVisible()) {
+                    g.drawImage(ship.getImage(), ship.getX(), ship.getY(), this);
+                    if (ship.isDying()) 
+                        ship.die();
+                }
+                synchronized(ship){
+                    List<Missile> ms = ship.getMissiles();
+                    for (Missile missile : ms) {
+                        if (missile.isVisible()) {
+                            g.drawImage(missile.getImage(), missile.getX(), missile.getY(), this);
+                        }
                     }
                 }
             }
@@ -227,14 +229,16 @@ public void setInterStage(int n){
         int yPos = 15;
         int xPos = 5;
         
-        for(int i = 0; i < spaceShips.size(); i++) {
-            SpaceShip ship = spaceShips.get(i);
+        synchronized(spaceShips) {
+            for(int i = 0; i < spaceShips.size(); i++) {
+                SpaceShip ship = spaceShips.get(i);
 
-            synchronized(ship){
-                g.drawString("Player " + (i+1) + " --- Lives: " + ship.getLife() + "    Score: " + ship.getScore(), xPos, yPos);
+                synchronized(ship){
+                    g.drawString("Player " + (i+1) + " --- Lives: " + ship.getLife() + "    Score: " + ship.getScore(), xPos, yPos);
+                }
+                
+                yPos += 16;
             }
-            
-            yPos += 16;
         }
     }
 
@@ -437,99 +441,101 @@ private void story(int stage){
         Area missileHitbox;
         SpaceShip ship;
 
-        for(int k=0; k < spaceShips.size(); k++) {
-            ship = spaceShips.get(k);
-            shipHitbox = ship.getShape();
+        synchronized(spaceShips) {
+            for(int k=0; k < spaceShips.size(); k++) {
+                ship = spaceShips.get(k);
+                shipHitbox = ship.getShape();
 
-            synchronized (packs) {
-                for(int i=0; i < packs.size(); i++){        // checking collisions between upbox and spaceship
-                    packHitbox = packs.get(i).getShape();
-                    packHitbox.intersect(shipHitbox);       // intersection is empty if shapes aren't collided
-                    if (!packHitbox.isEmpty() && !packs.get(i).isDying()) {   // isDying() to avoid multiple check
-                        synchronized(ship){
-                            packs.get(i).updateSpaceShip(ship);
-                        }
+                synchronized (packs) {
+                    for(int i=0; i < packs.size(); i++){        // checking collisions between upbox and spaceship
+                        packHitbox = packs.get(i).getShape();
+                        packHitbox.intersect(shipHitbox);       // intersection is empty if shapes aren't collided
+                        if (!packHitbox.isEmpty() && !packs.get(i).isDying()) {   // isDying() to avoid multiple check
+                            synchronized(ship){
+                                packs.get(i).updateSpaceShip(ship);
+                            }
 
-                        packs.get(i).setDying(true);
+                            packs.get(i).setDying(true);
 
-                        if(isMusicOn) {
-                            MusicManager mumOne = new MusicManager(powerUpSound);
-                            mumOne.startMusic();
+                            if(isMusicOn) {
+                                MusicManager mumOne = new MusicManager(powerUpSound);
+                                mumOne.startMusic();
+                            }
                         }
                     }
                 }
-            }
 
-            synchronized (aliens) {                 // checking collisions between aliens and spaceship
-                for (Alien alien : aliens) {
-                    alienHitbox = alien.getShape();
-                    alienHitbox.intersect(shipHitbox);
-                    if (!alienHitbox.isEmpty() && !alien.isDying() && !ship.isDying()) {   // intersection is empty if shapes aren't collided
-                        alien.setImage(alienExpl.getImage());
-                        ship.setImage(shipExpl.getImage());
-                        alien.setDying(true);
-                        ship.setDying(true);
-                        
-                        if(isMusicOn){
+                synchronized (aliens) {                 // checking collisions between aliens and spaceship
+                    for (Alien alien : aliens) {
+                        alienHitbox = alien.getShape();
+                        alienHitbox.intersect(shipHitbox);
+                        if (!alienHitbox.isEmpty() && !alien.isDying() && !ship.isDying()) {   // intersection is empty if shapes aren't collided
+                            alien.setImage(alienExpl.getImage());
+                            ship.setImage(shipExpl.getImage());
+                            alien.setDying(true);
+                            ship.setDying(true);
                             
-                                MusicManager mumTwo = new MusicManager(shipExplSound);
-                                mumTwo.startMusic();
-
-                            }
-                    }
-
-                    synchronized (alien) {          // checking collisions between alien missiles and spaceship
-                        List<Missile> alienMissiles = alien.getMissiles();
-                        for (Missile missile : alienMissiles) {
-                            missileHitbox = missile.getShape();
-                            missileHitbox.intersect(shipHitbox);
-                            if (!missileHitbox.isEmpty() && missile.isVisible() && !ship.isDying()) {     // intersection is empty if shapes aren't collided
-                                ship.setupLife(-1);
-                                missile.setVisible(false);
+                            if(isMusicOn){
                                 
-                                if(isMusicOn) {
-                                    
-                                        MusicManager mumThree = new MusicManager(shipExplSound);
-                                        mumThree.startMusic();
+                                    MusicManager mumTwo = new MusicManager(shipExplSound);
+                                    mumTwo.startMusic();
+
                                 }
-                                if(ship.getLife() <= 0){
-                                        ship.setImage(shipExpl.getImage());
-                                        ship.setDying(true);
+                        }
+
+                        synchronized (alien) {          // checking collisions between alien missiles and spaceship
+                            List<Missile> alienMissiles = alien.getMissiles();
+                            for (Missile missile : alienMissiles) {
+                                missileHitbox = missile.getShape();
+                                missileHitbox.intersect(shipHitbox);
+                                if (!missileHitbox.isEmpty() && missile.isVisible() && !ship.isDying()) {     // intersection is empty if shapes aren't collided
+                                    ship.setupLife(-1);
+                                    missile.setVisible(false);
+                                    
+                                    if(isMusicOn) {
+                                        
+                                            MusicManager mumThree = new MusicManager(shipExplSound);
+                                            mumThree.startMusic();
+                                    }
+                                    if(ship.getLife() <= 0){
+                                            ship.setImage(shipExpl.getImage());
+                                            ship.setDying(true);
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    alienHitbox = alien.getShape();
-                    synchronized (ship) {           // checking collisions between spaceship missiles and aliens
-                        List<Missile> shipMissiles = ship.getMissiles();
-                        for (Missile missile : shipMissiles) {
-                            missileHitbox = missile.getShape();
-                            missileHitbox.intersect(alienHitbox);
+                        alienHitbox = alien.getShape();
+                        synchronized (ship) {           // checking collisions between spaceship missiles and aliens
+                            List<Missile> shipMissiles = ship.getMissiles();
+                            for (Missile missile : shipMissiles) {
+                                missileHitbox = missile.getShape();
+                                missileHitbox.intersect(alienHitbox);
 
-                            if (!missileHitbox.isEmpty() && !alien.isDying()) {     // intersection is empty if shapes aren't collided
-                                alien.setupLife(missile.getDamage());
-                                
-                                if(alien.getLife() > 0){
-                                    if(isMusicOn){
-                                        
-                                        MusicManager mumFour = new MusicManager(bossHitSound);
-                                        mumFour.startMusic();
+                                if (!missileHitbox.isEmpty() && !alien.isDying()) {     // intersection is empty if shapes aren't collided
+                                    alien.setupLife(missile.getDamage());
                                     
+                                    if(alien.getLife() > 0){
+                                        if(isMusicOn){
+                                            
+                                            MusicManager mumFour = new MusicManager(bossHitSound);
+                                            mumFour.startMusic();
+                                        
+                                        }
                                     }
-                                }
 
-                                missile.setVisible(false);
+                                    missile.setVisible(false);
 
-                                if(alien.getLife() <= 0){
-                                    synchronized(alien){
-                                        ship.setupScore(alien.getPoints());
-                                        alien.setImage(alienExpl.getImage());
-                                        alien.setDying(true);
-                                    }
-                                    if(isMusicOn) {
-                                        MusicManager mumFive = new MusicManager(alienExplSound);
-                                        mumFive.startMusic();
+                                    if(alien.getLife() <= 0){
+                                        synchronized(alien){
+                                            ship.setupScore(alien.getPoints());
+                                            alien.setImage(alienExpl.getImage());
+                                            alien.setDying(true);
+                                        }
+                                        if(isMusicOn) {
+                                            MusicManager mumFive = new MusicManager(alienExplSound);
+                                            mumFive.startMusic();
+                                        }
                                     }
                                 }
                             }
@@ -593,13 +599,15 @@ private void story(int stage){
     class TAdapter extends KeyAdapter {
         @Override
         public void keyReleased(KeyEvent e) {
-            try {
+            synchronized(spaceShips) {
                 for(int k=0;k<spaceShips.size();k++){
                     SpaceShip Ship = spaceShips.get(k);
-                    Ship.keyReleased(e);
+                    try {
+                        Ship.keyReleased(e);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                 }
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
             }
         }
 
@@ -609,24 +617,24 @@ private void story(int stage){
             
             if (key == KeyEvent.VK_P){        
                 if (isPause == false){
-                    System.out.println("METTI LA PAUSA");
                     isPause = true;
                     packsGen.suspend();
                     aliensGen.suspend();
                     pauseGameFunction();
                 }else{
-                    System.out.println("TOGLI LA PAUSA");
                     resumeGame();
                 }
             }
 
-            try{
+            synchronized(spaceShips) {
                 for(int k=0; k < spaceShips.size(); k++) {
                     SpaceShip ship = spaceShips.get(k);
-                    ship.keyPressed(e);
+                    try {
+                        ship.keyPressed(e);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                 }
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
             }
         }
     }
