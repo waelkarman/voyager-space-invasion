@@ -9,7 +9,7 @@ public class AlienGenerator extends Thread {
 
     private final int TIME_LEVEL = 60;
     private final int B_SCORE_SPACE = 30;    // space that is occupied by player's score
-    private final int ALIEN_NUM = 60;       // total amount of generated aliens                  
+    private final int ALIEN_NUM = 70;       // total amount of generated aliens                  
     private final int B_WIDTH;
     
     private List<Alien> aliens;
@@ -87,7 +87,7 @@ public class AlienGenerator extends Thread {
             
             case 3: // lev. 3 : HardAliens and MediumAliens, ratio 2:1
                 if (ref % 3 == 0) {
-                    //aliens.add(new MediumAlien(x, h));
+                    aliens.add(new MediumAlien(x, h));
                     ref = 0;
                 } else
                     aliens.add(new HardAlien(x, h)); 
