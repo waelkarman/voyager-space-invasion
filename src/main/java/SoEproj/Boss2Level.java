@@ -11,7 +11,7 @@ public class Boss2Level extends Alien implements Runnable{
     private List<Alien> aliens;
 
     public Boss2Level(int x, int y, List<Alien> aliens) {
-        super(x, y, 30);
+        super(x, y, 100);
         this.aliens = aliens;
         SPACE = 3/2;
         super.points = 800;

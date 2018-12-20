@@ -8,15 +8,15 @@ import java.util.Random;
 public class PackGenerator extends Thread {
 
     private final int B_SCORE_SPACE = 30;   // space that is occupied by player's score
-    private final int bgWidth;
+    private final int B_WIDTH;
     
     private List<UpgradePack> packs;
     private Random random;
     private int range;    // range in which a pack can appear
 
 
-    public PackGenerator(int bgWidth, int B_HEIGHT, List<UpgradePack> packs) {
-        this.bgWidth = bgWidth;
+    public PackGenerator(int B_WIDTH, int B_HEIGHT, List<UpgradePack> packs) {
+        this.B_WIDTH = B_WIDTH;
         this.packs = packs;
         random = new Random();
         range = B_HEIGHT - B_SCORE_SPACE;
@@ -32,7 +32,7 @@ public class PackGenerator extends Thread {
                 h = random.nextInt(range) + B_SCORE_SPACE;
                 randomUpgrade = random.nextInt(9);
 
-                packs.add(new UpgradePack(bgWidth + 40 , h, randomUpgrade));
+                packs.add(new UpgradePack(B_WIDTH + 40 , h, randomUpgrade));
             }
 
             try {

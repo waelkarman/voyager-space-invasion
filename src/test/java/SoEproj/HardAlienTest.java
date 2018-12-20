@@ -38,7 +38,7 @@ public class HardAlienTest implements CommonValues{
     @Test
     public void testMove() {
         alien.move();
-        assertEquals(alien.getX(), B_WIDTH - 3/2);
+        assertEquals(alien.getX(), B_WIDTH - 2);
         assertNotEquals(alien.getY(), 150);
     }
 

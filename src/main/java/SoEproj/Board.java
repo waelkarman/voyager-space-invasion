@@ -137,7 +137,7 @@ public class Board extends JPanel implements Runnable {
             spaceShips.add( new SpaceShip(0, B_HEIGHT/2 + 60, shipType + 1 % 3 , isMusicOn, keyModality + 1 % 2) ); // +1 % 2 for set a different type
 
         packs = new LinkedList<UpgradePack>();
-        packsGen = new PackGenerator(background.getWidth(null),background.getHeight(null), packs);
+        packsGen = new PackGenerator(B_WIDTH, B_HEIGHT, packs);
         packsGen.start();
 
         aliens = new ArrayList<Alien>();
@@ -269,7 +269,7 @@ private void story(int stage){
     if(stage == 0){
         if(interstage == 0 && !lock){
             lock = true;
-            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
+            aliensGen = new AlienGenerator(B_WIDTH, B_HEIGHT, aliens, this.level);
             aliensGen.start();
             interStage(TIME_LEVEL,0);
         }else if(interstage == 0 && !interstageEnd){
@@ -297,7 +297,7 @@ private void story(int stage){
             lock = true;
             this.level = 2;
             setBackground();
-            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
+            aliensGen = new AlienGenerator(B_WIDTH, B_HEIGHT, aliens, this.level);
             aliensGen.start();
             interStage(TIME_LEVEL,1);
             
@@ -326,7 +326,7 @@ private void story(int stage){
             lock = true;
             this.level = 3;
             setBackground();
-            aliensGen = new AlienGenerator(background.getWidth(null),background.getHeight(null), aliens, this.level);
+            aliensGen = new AlienGenerator(B_WIDTH, B_HEIGHT, aliens, this.level);
             aliensGen.start();
             interStage(TIME_LEVEL,2);
             
