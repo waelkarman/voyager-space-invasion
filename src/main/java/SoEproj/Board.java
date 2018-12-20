@@ -618,6 +618,12 @@ private void story(int stage){
             if (key == KeyEvent.VK_P){        
                 if (isPause == false){
                     isPause = true;
+                    synchronized(spaceShips) {
+                        for(int k=0; k < spaceShips.size(); k++) {
+                            SpaceShip ship = spaceShips.get(k);
+                            ship.setFiring(false);
+                        }
+                    }
                     packsGen.suspend();
                     aliensGen.suspend();
                     pauseGameFunction();
