@@ -16,7 +16,7 @@ public class EasyAlienTest implements CommonValues{
         alien1 = new EasyAlien(100, 150);
         alienBossHelper = new EasyAlien(B_WIDTH, 300, "BossHelper", true);
     }
-    
+
 
     @Test
     public void testCoordinates() {
