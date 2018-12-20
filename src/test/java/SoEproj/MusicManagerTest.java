@@ -3,11 +3,9 @@ package SoEproj;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.junit.Before;
 import org.junit.Test;
