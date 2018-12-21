@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: SoEproj.HardAlienTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 4.008 s <<< FAILURE! - in SoEproj.HardAlienTest
+testCoordinates(SoEproj.HardAlienTest)  Time elapsed: 0.002 s  <<< FAILURE!
+java.lang.AssertionError: expected:<135> but was:<150>
+	at SoEproj.HardAlienTest.testCoordinates(HardAlienTest.java:22)
+
+testIsDying(SoEproj.HardAlienTest)  Time elapsed: 0.003 s  <<< FAILURE!
+java.lang.AssertionError
+	at SoEproj.HardAlienTest.testIsDying(HardAlienTest.java:51)
+

@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: SoEproj.MediumAlienTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.973 s <<< FAILURE! - in SoEproj.MediumAlienTest
+testMove(SoEproj.MediumAlienTest)  Time elapsed: 0.001 s  <<< FAILURE!
+java.lang.AssertionError: expected:<136> but was:<150>
+	at SoEproj.MediumAlienTest.testMove(MediumAlienTest.java:42)
+
+testCoordinates(SoEproj.MediumAlienTest)  Time elapsed: 0.002 s  <<< FAILURE!
+java.lang.AssertionError: expected:<136> but was:<150>
+	at SoEproj.MediumAlienTest.testCoordinates(MediumAlienTest.java:22)
+
+testIsDying(SoEproj.MediumAlienTest)  Time elapsed: 0.004 s  <<< FAILURE!
+java.lang.AssertionError
+	at SoEproj.MediumAlienTest.testIsDying(MediumAlienTest.java:51)
+

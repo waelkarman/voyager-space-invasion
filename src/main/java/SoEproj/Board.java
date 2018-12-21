@@ -61,7 +61,8 @@ public class Board extends JPanel implements Runnable {
     protected List<Alien> aliens;
     protected List<UpgradePack> packs;
     protected MusicManager mumZero;
-
+    
+    private int finalScore = 0;
     private int stage;
     private Timer t;
     private TimerTask task;
@@ -474,6 +475,7 @@ private void story(int stage){
                             ship.setImage(shipExpl.getImage());
                             alien.setDying(true);
                             ship.setDying(true);
+                            finalScore += ship.getScore();
                             
                             if(isMusicOn){
                                 
@@ -500,6 +502,7 @@ private void story(int stage){
                                     if(ship.getLife() <= 0){
                                             ship.setImage(shipExpl.getImage());
                                             ship.setDying(true);
+                                            finalScore += ship.getScore();
                                     }
                                 }
                             }
@@ -573,13 +576,12 @@ private void story(int stage){
         JFrame old = (JFrame) SwingUtilities.getWindowAncestor(this);
         old.getContentPane().remove(this);
 
-        int finalScore = 0;
-        synchronized(spaceShips){
+        /*synchronized(spaceShips){
             for(int k = 0; k < spaceShips.size(); k++) {
                 SpaceShip ship = spaceShips.get(k);
                 finalScore += ship.getScore();
             }
-        }
+        }*/
 
         GameEndPanel gep = new GameEndPanel(outcome, menuPanel, finalScore, MusicState);
         old.add(gep).requestFocusInWindow();
