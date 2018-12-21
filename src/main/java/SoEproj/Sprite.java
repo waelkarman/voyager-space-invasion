@@ -49,6 +49,12 @@ public abstract class Sprite {
     protected void loadImage(String imageName) {
         ImageIcon ii = new ImageIcon(imageName);
         image = ii.getImage();
+
+        if(y < B_SCORE_SPACE)
+            y = B_SCORE_SPACE;
+
+        if(y + height > B_HEIGHT)
+            y = B_HEIGHT - height;
     }
 
     public Image getImage() {
