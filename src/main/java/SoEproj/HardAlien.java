@@ -26,11 +26,11 @@ public class HardAlien extends Alien implements Runnable{
     }
 
     public void move() {
+        x -= SPACE;
+        
         if (x  + width < 0)
             setDying(true);
         
-        x -= SPACE;
-
         // oscillation
         y = (int) (meanY + amplitude * Math.cos(2*3.14*x/360));     // degree to radiants
 

@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class Boss1LevelTest implements CommonValues{
+public class Boss1LevelTest implements CommonValues {
 
     private Boss1Level boss;
     private List<Alien> aliens;

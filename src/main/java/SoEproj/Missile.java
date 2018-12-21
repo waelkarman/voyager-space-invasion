@@ -69,6 +69,19 @@ public class Missile extends Sprite {
     public int getDamage() {
         return this.damage;
     }
+    
+    @Override
+    protected void getImageDimensions() {
+        width = image.getWidth(null);
+        height = image.getHeight(null);
+        y = y - height/2;       // center the immage verticaly in its position
+
+        if(y < B_SCORE_SPACE)
+                y = B_SCORE_SPACE;
+
+        if(y + height > B_HEIGHT)
+            y = B_HEIGHT - height;
+    }
 
     // Missiles move in one direction only. They disappear after they reach the right window border
     public void move() {   

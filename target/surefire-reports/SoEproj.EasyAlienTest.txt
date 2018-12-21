@@ -1,16 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: SoEproj.EasyAlienTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.002 s <<< FAILURE! - in SoEproj.EasyAlienTest
-testMove(SoEproj.EasyAlienTest)  Time elapsed: 0 s  <<< FAILURE!
-java.lang.AssertionError: expected:<134> but was:<150>
-	at SoEproj.EasyAlienTest.testMove(EasyAlienTest.java:57)
-
-testCoordinates(SoEproj.EasyAlienTest)  Time elapsed: 0 s  <<< FAILURE!
-java.lang.AssertionError: expected:<134> but was:<150>
-	at SoEproj.EasyAlienTest.testCoordinates(EasyAlienTest.java:25)
-
-testIsDying(SoEproj.EasyAlienTest)  Time elapsed: 0 s  <<< FAILURE!
-java.lang.AssertionError
-	at SoEproj.EasyAlienTest.testIsDying(EasyAlienTest.java:68)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in SoEproj.EasyAlienTest

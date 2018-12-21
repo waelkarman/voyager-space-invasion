@@ -19,7 +19,7 @@ public class MissileTest implements CommonValues{
     @Test
     public void testCoordinates() {
         assertEquals(m.getX(), B_WIDTH);
-        assertEquals(m.getY(), 150);
+        assertEquals(m.getY(), 150 - m.getHeight()/2);
     }
 
 
@@ -33,13 +33,13 @@ public class MissileTest implements CommonValues{
     public void testMove() {
         m.move();
         assertEquals(m.getX(), B_WIDTH-4);
-        assertEquals(m.getY(), 150);
+        assertEquals(m.getY(), 150 - m.getHeight()/2);
     }
 
 
     @Test
     public void testIsDying() {
-        while(m.getX() >= 0)
+        while(m.getX() + m.getWidth() >= 0)
             m.move();
 
         assertFalse(m.isVisible());

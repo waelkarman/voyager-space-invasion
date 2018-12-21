@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: SoEproj.UpgradePackTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 21.943 s <<< FAILURE! - in SoEproj.UpgradePackTest
-testMove(SoEproj.UpgradePackTest)  Time elapsed: 0.003 s  <<< FAILURE!
-java.lang.AssertionError: expected:<137> but was:<150>
-	at SoEproj.UpgradePackTest.testMove(UpgradePackTest.java:36)
-
-testCoordinates(SoEproj.UpgradePackTest)  Time elapsed: 0.002 s  <<< FAILURE!
-java.lang.AssertionError: expected:<137> but was:<150>
-	at SoEproj.UpgradePackTest.testCoordinates(UpgradePackTest.java:22)
-
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 21.997 s - in SoEproj.UpgradePackTest

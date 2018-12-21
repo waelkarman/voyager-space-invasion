@@ -62,7 +62,7 @@ public class EasyAlienTest implements CommonValues{
 
     @Test(timeout = 5000)
     public void testIsDying() {
-        while(alien1.getX() >= 0)
+        while(alien1.getX() + alien1.getWidth() >= 0)
             alien1.move();
 
         assertTrue(alien1.isDying());

@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: SoEproj.Boss2LevelTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 6.008 s <<< FAILURE! - in SoEproj.Boss2LevelTest
-testMove(SoEproj.Boss2LevelTest)  Time elapsed: 0.005 s  <<< FAILURE!
-java.lang.AssertionError: expected:<113> but was:<150>
-	at SoEproj.Boss2LevelTest.testMove(Boss2LevelTest.java:50)
-
-testCoordinates(SoEproj.Boss2LevelTest)  Time elapsed: 0.003 s  <<< FAILURE!
-java.lang.AssertionError: expected:<113> but was:<150>
-	at SoEproj.Boss2LevelTest.testCoordinates(Boss2LevelTest.java:28)
-
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.989 s - in SoEproj.Boss2LevelTest

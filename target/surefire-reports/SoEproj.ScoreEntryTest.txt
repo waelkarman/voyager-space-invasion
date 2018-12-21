@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: SoEproj.ScoreEntryTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s - in SoEproj.ScoreEntryTest
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s - in SoEproj.ScoreEntryTest

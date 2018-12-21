@@ -45,7 +45,7 @@ public class MediumAlienTest implements CommonValues{
 
     @Test(timeout = 5000)
     public void testIsDying() {
-        while(alien.getX() >= 0)
+        while(alien.getX() + alien.getWidth() >= 0)
             alien.move();
 
         assertTrue(alien.isDying());

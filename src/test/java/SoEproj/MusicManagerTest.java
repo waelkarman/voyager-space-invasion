@@ -39,16 +39,4 @@ public class MusicManagerTest {
 
         assertNotNull(muM2);
     }
-
-    @Test
-    public void testGetStream() {
-        AudioInputStream inputStream;
-        try {
-            inputStream = AudioSystem.getAudioInputStream(f2);
-            assertEquals(inputStream, muM2.getStream());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-    }
 }
